@@ -1,3 +1,4 @@
+from email import message
 from bottle import default_app, get, static_file, run, view
 import sqlite3
 
@@ -15,24 +16,31 @@ def script():
 @view("index.html")
 def _():
       
+    message = "Database is not connected"
     # connect to database
     db = sqlite3.connect("database/database.sqlite")
 
-    # get tweet info from database
-    user = db.execute("""
-        SELECT *
-        FROM users
-        WHERE user_id = :user_id
-    """,(1,)).fetchone()
+    if db:
+          
+      message = "Database is connected"
+      # get tweet info from database
+      user = db.execute("""
+          SELECT *
+          FROM users
+          WHERE user_id = :user_id
+      """,(1,)).fetchone()
     
-    user = {
-      "user_id": user[0],
-      "user_display_name": user[1],
-      "user_username": user[2],
-      "user_email": user[3],
-    }
+    if user:
+      user = {
+        "user_id": user[0],
+        "user_display_name": user[1],
+        "user_username": user[2],
+        "user_email": user[3],
+      }
+      message += f" and SELECTED this user: {user[1]}"
+    
 
-    return dict(user=user)
+    return dict(message=message)
 
 ##############################
 try:
