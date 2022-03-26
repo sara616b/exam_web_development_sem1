@@ -1,0 +1,77 @@
+EXAM PROJECT
+
+Questions about it must be posted on our general chat, so everyone knows about it
+
+Hand-in: Wiseflow as instructed by email from administration
+
+When to hand-in? You will get an email from administration with the date and time
+
+What do you hand-in?
+
+Code: All the code in a ZIP file. All of it. If you use a database (which is not mandatory) you also need to export the database and make that file part of the ZIP.
+
+Report: One page with the link to the PythonAnywhere that you created.
+
+What happens if you don't hand-in the report and/or the code?
+
+You get a 00 automatically and you will not attend the exam
+
+Be at least 30 minutes at the exam before the time that was assigned to you
+
+The project:
+
+All points are a MUST do unless explicitly described otherwise
+
+A user must be able to:
+
+Every part that you should have a SPA can be done as a normal page, this means reloading the UI
+
+Sing Up - A simple page that redirects somewhere. You can also just make it a SPA if wanted
+
+Sign In / login - A simple page that redirects somewhere. You can also just make it a SPA if wanted
+
+Logout - Simple page or SPA if you want to
+
+Use a session - You can do this in the login
+
+Use a JWT - You can implement this as part of the cookie in the session
+
+Tweet - It is a SPA, the page should not reload
+
+Delete tweet -  It is a SPA, the page should not reload
+
+Update tweet -  It is a SPA, the page should not reload
+
+Follow someone -  It is a SPA, the page should not reload - Optional
+
+See pages from other users - A simple page that doesn't have to be a SPA, but you can if you want to
+
+Choose 1 extra functionality that you find challenging/interesting in twitter and implement it
+
+Optional - Send an email when the user creates an account (Sign up). This feature may or may not work in PythonAnywhere. If it fails on PythonAnywhere, just make sure you can send the email from localhost/127.0.0.1
+
+Must be able to upload an image somewhere in the system
+
+Admin panel must - This is a "stand-alone" feature. This means that it doesn't have to be part of the twitter application, but can be a whole different solution. The administrator can see all tweets and delete them if wanted. It is a SPA, so deleting a tweet doesn't reload the whole page
+
+The system must:
+
+Make it look like twitter using any CSS library or plain CSS. We use tailwind, so welcome to do it
+
+Have back-end validation
+
+Have front-end validation - Use any library you want, or create your own
+
+Keep the data in lists and/or dictionaries. I suggest you use SQLITE
+
+Use a database if you want to, this is optional
+
+The page must be uploaded to PythonAnywhere
+
+Use proper HTTP methods: GET, POST, PUT, DELETE
+
+Use proper status codes: 20x, 30x, 40x, 50x
+
+Use try-except
+
+Use regular expressions when needed
