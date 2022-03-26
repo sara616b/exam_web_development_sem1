@@ -1,9 +1,15 @@
-from bottle import default_app, get, static_file, run
+from bottle import default_app, get, static_file, run, view
 
+# STYLESHEET #########################
+@get("/static/style.css")
+def style():
+    return static_file("/static/style.css", root=".")
+    
 ##############################
 @get("/")
+@view("index.html")
 def _():
-    return "Hi"
+    return
 
 ##############################
 try:
