@@ -18,7 +18,7 @@ def _():
       
     message = "Database is not connected"
     # connect to database
-    db = sqlite3.connect("database/database.sqlite")
+    db = sqlite3.connect("./database/database.db") or None
 
     if db:
           
@@ -31,13 +31,13 @@ def _():
       """,(1,)).fetchone()
     
     if user:
+      message += f" and SELECTED this user: {user[1]}"
       user = {
         "user_id": user[0],
         "user_display_name": user[1],
         "user_username": user[2],
         "user_email": user[3],
       }
-      message += f" and SELECTED this user: {user[1]}"
     
 
     return dict(message=message)
