@@ -7,7 +7,7 @@ def style():
     return static_file("/static/style.css", root=".")
 # SCRIPT #########################
 @get("/static/script.js")
-def style():
+def script():
     return static_file("/static/script.js", root=".")
     
 ##############################
