@@ -1,3 +1,460 @@
-body {
+* {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  transition: all 0.18s;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.button {
+  border-radius: 2rem;
+  padding: 0.3rem 1rem;
+  font-weight: bold;
+  text-transform: lowercase;
+  background-color: #f8f2ea;
+  color: black;
+  border: #f8f2ea 0.2rem solid;
+}
+.button.color {
+  background-color: #dda900;
+  color: white;
+  border: #dda900 0.2rem solid;
+}
+.button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: #f8f2ea 0.2rem solid;
+}
+.button:hover.color {
+  background-color: white;
+  color: #dda900;
+  border: #dda900 0.2rem solid;
+}
+
+.link {
+  color: #4d3220;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  text-transform: lowercase;
+  font-weight: 500;
+}
+.link:hover {
+  cursor: pointer;
+  color: #dda900;
+}
+
+#index {
+  display: grid;
+  grid-template-columns: 5fr 3fr;
+  height: 100vh;
+}
+#index header {
+  grid-column: 1/2;
+  background-color: #dda900;
+  overflow: hidden;
+  height: 100vh;
+}
+#index header svg {
+  position: relative;
+  right: 0;
+  fill: white;
+  width: 151%;
+  height: 126%;
+  transform: translateX(-22%);
+}
+#index main {
+  grid-column: 2/3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+#index main section {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+#index main section h1 {
+  font-size: 3rem;
+  color: #dda900;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+#login,
+#signup {
+  background-color: rgba(221, 169, 0, 0.658);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#login section:first-of-type,
+#signup section:first-of-type {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  width: 300px;
+  margin: 0 auto;
+}
+#login section:first-of-type svg,
+#signup section:first-of-type svg {
+  fill: white;
+  height: 100px;
+}
+#login section:first-of-type h1,
+#signup section:first-of-type h1 {
+  font-size: 2.5rem;
+}
+#login #modal,
+#signup #modal {
+  width: 300px;
+  height: auto;
+  margin: 2rem auto;
+  background-color: white;
+  border-radius: 1.5rem;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#login #modal header,
+#signup #modal header {
+  padding-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+#login #modal main form,
+#signup #modal main form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#login #modal main form input[type=text],
+#login #modal main form input[type=password],
+#signup #modal main form input[type=text],
+#signup #modal main form input[type=password] {
+  padding: 0.3rem 0.5rem;
+  border: #f8f2ea solid thin;
+  border-radius: 0.4rem;
+}
+#login #modal footer,
+#signup #modal footer {
+  padding-top: 0.5rem;
+  text-align: center;
+}
+
+#signup #modal {
+  width: 400px;
+}
+#signup #modal span {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+#signup #modal span.extra {
+  color: #4d3220;
+}
+#signup #modal span.error {
   color: red;
 }
+
+#home {
+  display: grid;
+  grid-template-areas: "nav main main aside";
+  height: 100vh;
+}
+#home nav,
+#home aside {
+  max-width: 300px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+#home nav div,
+#home aside div {
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: calc(100vh - 2rem);
+}
+#home nav {
+  grid-area: nav;
+  justify-self: end;
+}
+#home nav header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 0.4rem;
+}
+#home nav header svg {
+  fill: #dda900;
+  width: 80px;
+  height: 80px;
+}
+#home nav main button {
+  margin-bottom: 0.4rem;
+}
+#home nav footer {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  width: calc(100% - 2rem);
+  border-radius: 1.5rem;
+  padding: 0.5rem 1rem;
+}
+#home nav footer:hover {
+  background-color: #f8f2ea;
+  cursor: pointer;
+}
+#home nav footer section {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#home nav footer section p {
+  padding: 0 0.4rem;
+}
+#home nav footer section svg {
+  width: 40px;
+  height: 40px;
+  fill: #4d3220;
+  border-radius: 50%;
+}
+#home > main {
+  grid-area: main;
+  min-width: 400px;
+  margin: auto;
+  max-width: 600px;
+}
+#home > main > header {
+  padding: 1rem 0.4rem;
+  position: sticky;
+  background-color: white;
+  opacity: 0.97;
+  font-weight: bold;
+  top: 0;
+}
+#home > main main > header {
+  padding: 1rem 0.4rem;
+  border: solid #f8f2ea thin;
+}
+#home > main main > header form {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+}
+#home > main main > header form section {
+  width: auto;
+}
+#home > main main > header form section svg {
+  width: 40px;
+  height: 40px;
+}
+#home > main main > header form section + section {
+  width: 100%;
+  display: grid;
+}
+#home > main main > header form section + section textarea {
+  outline: none;
+  border: none;
+  padding: 0.4rem;
+  resize: none;
+  overflow: auto;
+  height: 5rem;
+  border-bottom: thin #f8f2ea solid;
+}
+#home > main main > header form section + section textarea:focus {
+  outline: solid 2px #dda900;
+  border: none;
+}
+#home > main main > header form section + section footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+}
+#home > main main > header form section + section footer section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+}
+#home > main main > header form section + section footer section label,
+#home > main main > header form section + section footer section p {
+  width: auto;
+  height: auto;
+}
+#home > main main > header form section + section footer section input {
+  display: none;
+}
+#home > main main > header form section + section footer button {
+  width: auto;
+}
+#home > main > main article {
+  padding: 1rem 0.5rem;
+  border: solid #f8f2ea thin;
+  display: flex;
+  flex-direction: row;
+}
+#home > main > main article section {
+  width: 40px;
+}
+#home > main > main article section svg {
+  width: 40px;
+  height: 40px;
+  fill: #4d3220;
+}
+#home > main > main article section + section {
+  width: 100%;
+  padding-left: 0.4rem;
+}
+#home > main > main article section + section header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#home > main > main article section + section header section {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  padding-top: 0.2rem;
+  gap: 0.4rem;
+}
+#home > main > main article section + section header section:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+#home > main > main article section + section header section p {
+  font-weight: bold;
+}
+#home > main > main article section + section header section p + p {
+  font-weight: 300;
+  color: #4d3220;
+}
+#home > main > main article section + section main {
+  padding: 0.2rem 0;
+}
+#home > main > main article section + section footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#home > main > main article section + section footer section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  width: auto;
+}
+#home > main > main article section + section footer section svg {
+  stroke: black;
+  stroke-width: 3rem;
+  width: 50px;
+  height: 30px;
+  fill: white;
+}
+#home > main > main article section + section footer section svg:hover {
+  stroke: #dda900;
+  cursor: pointer;
+}
+#home > main > main article aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 0.2rem;
+  gap: 0.4rem;
+  width: auto;
+}
+#home > main > main article aside .button {
+  max-width: 100px;
+  width: 100%;
+}
+#home > main > main article aside section {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  width: 100%;
+}
+#home aside {
+  grid-area: aside;
+  justify-self: start;
+}
+#home aside div main {
+  background-color: #f8f2ea;
+  border-radius: 1.5rem;
+}
+#home aside div main header {
+  padding: 1.2rem 1rem 0.6rem 1rem;
+  font-weight: bold;
+  border-radius: 1.5rem 1.5rem 0 0;
+}
+#home aside div main footer {
+  padding: 0.6rem 1rem 1.2rem 1rem;
+  border-radius: 0 0 1.5rem 1.5rem;
+  border-style: inset;
+  border: solid #f8f2ea thin;
+}
+#home aside div main footer:hover {
+  background-color: white;
+  color: #dda900;
+  cursor: pointer;
+}
+#home aside div main main {
+  border-top: solid #4d3220 thin;
+  border-bottom: solid #4d3220 thin;
+  border-radius: 0;
+}
+#home aside div main main article {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2rem 0.8rem;
+}
+#home aside div main main article:hover {
+  background-color: white;
+  cursor: pointer;
+}
+#home aside div main main article section {
+  height: 100%;
+  width: auto;
+  padding: 0.4rem 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#home aside div main main article section section {
+  height: 100%;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#home aside div main main article section p {
+  padding: 0 0.4rem;
+}
+#home aside div main main article section svg {
+  width: 40px;
+  height: 40px;
+  fill: #4d3220;
+  border-radius: 50%;
+}
+
+/*# sourceMappingURL=style.css.map */
