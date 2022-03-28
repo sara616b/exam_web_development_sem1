@@ -1,43 +1,48 @@
 % include('header')
+% include('index_view')
 <main id="signup">
-    <section>
-        % include('logo_icon')
-        <h1>buzzer</h1>
+    <section id="background" onclick="window.location.href = '/'">
     </section>
-    <section id="modal">
-        <header>
-            Sign up
-        </header>
-        <main>
-            <form>
-                <label for="signup_display_name">
-                    Display name
-                    <span class="extra"><br>This is the name that other users will see.</span>
-                    <input type="text" name="signup_display_name" id="signup_display_name" placeholder="Name">
-                </label>
-                <label for="signup_username">
-                    Username
-                    <input type="text" name="signup_username" id="signup_username" placeholder="Username">
-                </label>
-                <label for="signup_email">
-                    E-mail
-                    <input type="text" name="signup_email" id="signup_email" placeholder="a@a.com">
-                </label>
-                <label for="signup_password">
-                    Password
-                    <input type="password" name="signup_password" id="signup_password" placeholder="*****">
-                </label>
-                <label for="signup_password_repeat">
-                    Repeat password
-                    <input type="password" name="signup_password_repeat" id="signup_password_repeat"
-                        placeholder="*****">
-                </label>
-                <input class="button color" type="submit" value="Sign up">
-            </form>
-        </main>
-        <footer class="link">
-            Already have an account? Log in here!
-        </footer>
-    </section>
+    <main>
+        <section>
+            % include('logo_icon')
+            <h1>buzzer</h1>
+        </section>
+        <section id="modal">
+            <header>
+                Sign up
+            </header>
+            <main>
+                <form method="post" action="/signup">
+                    <label for="signup_display_name">
+                        Display name
+                        <span class="extra"><br>This is the name that other users will see.</span>
+                        <input type="text" name="signup_display_name" id="signup_display_name" placeholder="Name">
+                    </label>
+                    <label for="signup_username">
+                        Username
+                        <input type="text" name="signup_username" id="signup_username" placeholder="Username">
+                    </label>
+                    <label for="signup_email">
+                        E-mail
+                        <input type="text" name="signup_email" id="signup_email" placeholder="a@a.com">
+                    </label>
+                    <label for="signup_password">
+                        Password
+                        <input type="password" name="signup_password" id="signup_password" placeholder="*****">
+                    </label>
+                    <label for="signup_password_repeat">
+                        Repeat password
+                        <input type="password" name="signup_password_repeat" id="signup_password_repeat"
+                            placeholder="*****">
+                    </label>
+                    <input class="button color" type="submit" value="Sign up">
+                </form>
+            </main>
+            <footer class="link" onclick="window.location.href = '/login'">
+                Already have an account? Log in here!
+            </footer>
+        </section>
+    </main>
 </main>
 % include('footer')

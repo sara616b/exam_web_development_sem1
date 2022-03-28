@@ -75,3 +75,11 @@ Use proper status codes: 20x, 30x, 40x, 50x
 Use try-except
 
 Use regular expressions when needed
+
+
+
+TODO: 
+-- when signing up also log in 
+-- VALIDATION
+
+SASS: sass --watch style.scss style.css

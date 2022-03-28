@@ -5,14 +5,21 @@
     <section>
         <header>
             <section>
-                <p>NAME</p>
-                <p>USERNAME</p>
+                <p>{{tweets[tweet]['tweet_user_display_name']}}</p>
+                <p>@{{tweets[tweet]['tweet_user_username']}}</p>
                 <p>·</p>
-                <p>2h</p>
+                <p>{{tweets[tweet]['tweet_time_since_created']}}</p>
             </section>
         </header>
         <main>
-            TWEET TEXT HERE
+            % if tweets and tweet:
+            {{!tweets[tweet]['tweet_text']}}
+            % end
+            % if tweets[tweet]["tweet_image"]:
+            <img id='{{tweets[tweet]["tweet_image"]}}'
+                src="{{file_path}}/static/images/tweets/{{tweets[tweet]['tweet_image']}}"
+                alt='{{tweets[tweet]["tweet_text"]}}' />
+            % end
         </main>
         <footer>
             <section>
@@ -29,7 +36,7 @@
         <button class="button color">FOLLOW</button>
         <section>
             <button class="link">EDIT</button>
-            <button class="link">DELETE</button>
+            <button onclick="delete_tweet(event)" id="id{{tweet}}" class="link">DELETE</button>
         </section>
     </aside>
 </article>

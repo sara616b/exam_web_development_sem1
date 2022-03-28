@@ -38,6 +38,10 @@
   color: #dda900;
   border: #dda900 0.2rem solid;
 }
+.button.disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
 
 .link {
   color: #4d3220;
@@ -54,11 +58,14 @@
 
 #index {
   display: grid;
-  grid-template-columns: 5fr 3fr;
+  grid-template-areas: "header header header header main main main";
   height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 #index header {
-  grid-column: 1/2;
+  grid-area: header;
   background-color: #dda900;
   overflow: hidden;
   height: 100vh;
@@ -71,15 +78,32 @@
   height: 126%;
   transform: translateX(-22%);
 }
+@media screen and (max-width: 500px) {
+  #index {
+    grid-template-areas: "main" "header";
+  }
+  #index header svg {
+    width: 130%;
+    height: 110%;
+    transform: translate(-22%, -22%);
+  }
+}
 #index main {
-  grid-column: 2/3;
+  grid-area: main;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+  height: 60vh;
+}
+#index main svg {
+  height: 80px;
+  width: 80px;
+  fill: #dda900;
+  align-self: flex-start;
 }
 #index main section {
-  width: 80%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
@@ -87,17 +111,27 @@
 #index main section h1 {
   font-size: 3rem;
   color: #dda900;
-  text-align: center;
   margin-bottom: 1rem;
 }
 
 #login,
 #signup {
-  background-color: rgba(221, 169, 0, 0.658);
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+}
+#login #background,
+#signup #background {
+  background-color: rgba(221, 169, 0, 0.781);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 #login section:first-of-type,
 #signup section:first-of-type {
@@ -108,6 +142,9 @@
   color: white;
   width: 300px;
   margin: 0 auto;
+  padding-top: 2rem;
+  z-index: 10;
+  position: relative;
 }
 #login section:first-of-type svg,
 #signup section:first-of-type svg {
@@ -123,12 +160,22 @@
   width: 300px;
   height: auto;
   margin: 2rem auto;
+  top: 0;
+  left: 0;
+  position: relative;
+  z-index: 10;
   background-color: white;
   border-radius: 1.5rem;
   padding: 1.5rem 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+@media screen and (max-width: 500px) {
+  #login #modal,
+#signup #modal {
+    width: 100%;
+  }
 }
 #login #modal header,
 #signup #modal header {
@@ -157,6 +204,11 @@
 
 #signup #modal {
   width: 400px;
+}
+@media screen and (max-width: 500px) {
+  #signup #modal {
+    width: 100%;
+  }
 }
 #signup #modal span {
   font-size: 0.8rem;
@@ -240,7 +292,7 @@
 #home > main {
   grid-area: main;
   min-width: 400px;
-  margin: auto;
+  margin: 0 auto;
   max-width: 600px;
 }
 #home > main > header {
@@ -336,6 +388,7 @@
   flex-direction: row;
   padding-top: 0.2rem;
   gap: 0.4rem;
+  width: 100%;
 }
 #home > main > main article section + section header section:hover {
   opacity: 0.6;
@@ -343,6 +396,7 @@
 }
 #home > main > main article section + section header section p {
   font-weight: bold;
+  width: auto;
 }
 #home > main > main article section + section header section p + p {
   font-weight: 300;
@@ -350,6 +404,10 @@
 }
 #home > main > main article section + section main {
   padding: 0.2rem 0;
+}
+#home > main > main article section + section main img {
+  margin: 1rem 0;
+  border-radius: 0.5rem;
 }
 #home > main > main article section + section footer {
   display: flex;

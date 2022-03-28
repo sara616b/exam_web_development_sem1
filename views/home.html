@@ -6,17 +6,29 @@
                 % include('logo_icon')
             </header>
             <main>
-                <button class="button">PROFILE</button>
+                <button id="id{{user['user_id']}}" onclick="go_to_profile(event)" class="button">PROFILE</button>
                 <button class="button color">TWEET</button>
-                <button class="link">LOG OUT</button>
+                <button onclick="logout(event)" class="link">LOG OUT</button>
             </main>
             <footer>
                 <section>
                     % include('profile_icon')
                 </section>
                 <section>
-                    <p>NAME</p>
-                    <p>@USERNAME</p>
+                    <p>
+                        % if user:
+                        {{user["user_display_name"]}}
+                        % else:
+                        Name
+                        % end
+                    </p>
+                    <p>
+                        % if user:
+                        @{{user["user_username"]}}
+                        % else:
+                        @username
+                        % end
+                    </p>
                 </section>
             </footer>
         </div>
@@ -27,7 +39,7 @@
         </header>
         <main>
             <header>
-                <form>
+                <form method="post" action="/tweets/new" enctype="multipart/form-data">
                     <section>
                         <svg height="100%" viewBox="0 0 281.699 277.721" width="100%">
                             <path
@@ -46,7 +58,7 @@
                                 </label>
                                 <input type="file" name="tweet_image" id="tweet_image">
                                 <p id="image_name">No image</p>
-
+                                <button id="remove_image" class="hidden">X</button>
                             </section>
                             <button class="button color">
                                 TWEET
@@ -56,15 +68,9 @@
                 </form>
             </header>
             <main>
-                % include('tweet_display')
-                % include('tweet_display')
-                % include('tweet_display')
-                % include('tweet_display')
-                % include('tweet_display')
-                % include('tweet_display')
-                % include('tweet_display')
-                % include('tweet_display')
-                % include('tweet_display')
+                % for tweet in tweets:
+                % include('tweet_display', tweets=tweets, tweet=tweet)
+                % end
             </main>
         </main>
     </main>
