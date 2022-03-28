@@ -12,7 +12,7 @@ def _(tweet_id):
             return redirect("/login")
 
         # connect to database
-        db = sqlite3.connect("database/database.db")
+        db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
         # find image and delete it from the folder if it exists
         tweet_image = db.execute("""

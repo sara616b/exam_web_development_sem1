@@ -61,7 +61,7 @@ def _():
                 return
 
         # connect to database
-        db = sqlite3.connect("database/database.db")
+        db = sqlite3.connect(f"{get_file_path()}/database/database.db")
         
         # append new tweet with values
         new_tweet = {

@@ -15,7 +15,7 @@ def check_if_logged_in():
         # if the jwt cookie is in SESSIONS and is valid
         # set is_logged_in to value from user_information (True)
         # else print error
-        db = sqlite3.connect("database/database.db")
+        db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
         # TODO - Instead have the session unique for each user
         jwt_cookie = request.get_cookie("jwt", secret="secret")
