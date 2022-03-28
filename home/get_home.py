@@ -1,8 +1,8 @@
-from bottle import get, view, request, redirect
+from bottle import get, view, request, redirect, response
 import sqlite3
 import jwt
 
-from settings import *
+from settings import get_file_path, check_if_logged_in, time_since_from_epoch, date_text_from_epoch, REGEX_EMAIL, JWT_KEY
 
 @get("/home")
 @view("home.html")

@@ -1,8 +1,8 @@
-from bottle import delete, redirect, post, request
+from bottle import delete, redirect, post, request, response
 import sqlite3
 import os
 
-from settings import *
+from settings import get_file_path, check_if_logged_in, time_since_from_epoch, date_text_from_epoch, REGEX_EMAIL, JWT_KEY
 
 @delete("/tweets/delete/<tweet_id>")
 def _(tweet_id):
