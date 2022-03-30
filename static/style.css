@@ -307,58 +307,6 @@
   padding: 1rem 0.4rem;
   border: solid #f8f2ea thin;
 }
-#home > main main > header form {
-  display: flex;
-  flex-direction: row;
-  gap: 0.4rem;
-}
-#home > main main > header form section {
-  width: auto;
-}
-#home > main main > header form section svg {
-  width: 40px;
-  height: 40px;
-}
-#home > main main > header form section + section {
-  width: 100%;
-  display: grid;
-}
-#home > main main > header form section + section textarea {
-  outline: none;
-  border: none;
-  padding: 0.4rem;
-  resize: none;
-  overflow: auto;
-  height: 5rem;
-  border-bottom: thin #f8f2ea solid;
-}
-#home > main main > header form section + section textarea:focus {
-  outline: solid 2px #dda900;
-  border: none;
-}
-#home > main main > header form section + section footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0.4rem 0;
-}
-#home > main main > header form section + section footer section {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.4rem;
-}
-#home > main main > header form section + section footer section label,
-#home > main main > header form section + section footer section p {
-  width: auto;
-  height: auto;
-}
-#home > main main > header form section + section footer section input {
-  display: none;
-}
-#home > main main > header form section + section footer button {
-  width: auto;
-}
 #home > main > main article {
   padding: 1rem 0.5rem;
   border: solid #f8f2ea thin;
@@ -513,6 +461,135 @@
   height: 40px;
   fill: #4d3220;
   border-radius: 50%;
+}
+
+#profile-content > header {
+  display: flex;
+  flex-direction: row;
+}
+#profile-content > header button {
+  background-color: #0000;
+  border: none;
+  width: auto;
+  margin-right: 0.5rem;
+}
+#profile-content > main > header .background {
+  background-color: orange;
+  width: 100%;
+  height: 150px;
+}
+#profile-content > main > header > header {
+  height: 50px;
+}
+#profile-content > main > header svg {
+  width: 100px;
+  height: 100px;
+  transform: translateY(calc(-50% - 0.5rem - 0.25rem));
+  background-color: white;
+  padding: 0.5rem;
+  margin: 1rem;
+  border-radius: 100%;
+  position: absolute;
+}
+#profile-content > main > header .button {
+  max-width: 100px;
+  float: right;
+  margin: 0.5rem;
+}
+#profile-content > main {
+  height: auto;
+}
+
+#tweet_form {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+}
+#tweet_form section {
+  width: auto;
+}
+#tweet_form section svg {
+  width: 40px;
+  height: 40px;
+}
+#tweet_form section + section {
+  width: 100%;
+  display: grid;
+}
+#tweet_form section + section textarea {
+  outline: none;
+  border: none;
+  padding: 0.4rem;
+  resize: none;
+  overflow: auto;
+  height: 5rem;
+  border-bottom: thin #f8f2ea solid;
+}
+#tweet_form section + section textarea:focus {
+  outline: solid 2px #dda900;
+  border: none;
+}
+#tweet_form section + section footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+}
+#tweet_form section + section footer section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+}
+#tweet_form section + section footer section label,
+#tweet_form section + section footer section p {
+  width: auto;
+  height: auto;
+}
+#tweet_form section + section footer section input {
+  display: none;
+}
+#tweet_form section + section footer button {
+  width: auto;
+}
+
+#tweet_modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+}
+#tweet_modal #background {
+  background-color: rgba(221, 169, 0, 0.781);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+#tweet_modal #modal {
+  width: 600px;
+  min-width: 300px;
+  height: auto;
+  margin: 2rem auto;
+  top: 0;
+  left: 0;
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  border-radius: 1.5rem;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media screen and (max-width: 500px) {
+  #tweet_modal #modal {
+    width: 100%;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

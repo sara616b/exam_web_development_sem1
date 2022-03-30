@@ -1,0 +1,49 @@
+% if get('tweet_id'):
+<form method="post" action="/tweets/{{tweet_id}}" enctype="multipart/form-data" id="tweet_form">
+    % else:
+    <form method="post" action="/tweets/new" enctype="multipart/form-data" id="tweet_form">
+        % end
+        <section>
+            % include('profile_icon')
+        </section>
+        <section>
+            <textarea name="tweet_text" id="tweet_text" type="text" placeholder="What're you thinking about?">
+            % if get('tweet'):
+{{tweet['tweet_text']}}
+            % end
+</textarea>
+            <footer>
+                <section>
+                    % if get('tweet_id') and tweet_id != "new" and tweet['tweet_image']:
+                    <button id="remove_image" onclick="remove_selected_image(event)" class="button">Remove
+                        image</button>
+                    <label class="button hidden" for="tweet_image">
+                        Add image
+                    </label>
+                    <input onchange="tweet_image_changed(event)" type="file" name="tweet_image" id="tweet_image">
+                    <p id="image_name">
+                        % if get('tweet') and tweet['tweet_image']:
+                        {{tweet['tweet_image']}}
+                        % end
+                    </p>
+                    % else:
+                    <button id="remove_image" onclick="remove_selected_image(event)" class="hidden button">Remove
+                        image</button>
+                    <label class="button" for="tweet_image">
+                        Add image
+                    </label>
+                    <input onchange="tweet_image_changed(event)" type="file" name="tweet_image" id="tweet_image">
+                    <p id="image_name">No image</p>
+                    % end
+                </section>
+                <button type="submit" class="button color">
+                    % if get('tweet_id') and tweet_id != "new":
+                    SAVE EDITS
+                    % else:
+                    TWEET
+                    % end
+                </button>
+            </footer>
+        </section>
+
+    </form>

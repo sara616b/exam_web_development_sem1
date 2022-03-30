@@ -1,0 +1,15 @@
+% include('header')
+
+<main id="tweet_modal">
+    <section id="background" onclick="window.location.href = '/home'">
+    </section>
+    <main id="modal">
+        % if tweet_id == "new":
+        <h2>New tweet</h2>
+        % else:
+        <h2>Edit tweet</h2>
+        % end
+        % include('tweet_form', tweet_id=get('tweet_id', None), tweet=get('tweet', None))
+    </main>
+</main>
+% include('footer')

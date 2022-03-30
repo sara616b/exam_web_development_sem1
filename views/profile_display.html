@@ -1,11 +1,11 @@
-<article>
+<article onclick="open_profile(event)" id="id{{user['user_id']}}">
     <section>
         <section>
             % include('profile_icon')
         </section>
         <section>
-            <p>NAME</p>
-            <p>USERNAME</p>
+            <p>{{user['user_display_name']}}</p>
+            <p>@{{user['user_username']}}</p>
         </section>
     </section>
     <section>

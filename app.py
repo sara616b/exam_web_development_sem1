@@ -28,7 +28,8 @@ from index import get_index
 from signup import get_signup, post_signup
 from login import login_view, login, logout
 from home import get_home
-from tweets import post_tweet, edit_tweet, delete_tweet
+from tweets import post_tweet, edit_tweet, delete_tweet, form_for_tweet
+from user_profile import get_profile
 
 # SERVER #############################
 try:

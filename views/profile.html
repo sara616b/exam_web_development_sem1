@@ -1,0 +1,81 @@
+% include('header')
+<main id="home">
+    <nav>
+        <div>
+            <header>
+                % include('logo_icon')
+            </header>
+            <main>
+                <button id="id{{user['user_id']}}" onclick="go_to_profile(event)" class="button">PROFILE</button>
+                <button class="button color">TWEET</button>
+                <button onclick="logout(event)" class="link">LOG OUT</button>
+            </main>
+            <footer>
+                <section>
+                    % include('profile_icon')
+                </section>
+                <section>
+                    <p>
+                        % if user:
+                        {{user["user_display_name"]}}
+                        % else:
+                        Name
+                        % end
+                    </p>
+                    <p>
+                        % if user:
+                        @{{user["user_username"]}}
+                        % else:
+                        @username
+                        % end
+                    </p>
+                </section>
+            </footer>
+        </div>
+    </nav>
+    <main id="profile-content">
+        <header>
+            <button>🡠</button>
+            {{profile_user['user_username']}}
+        </header>
+        <main>
+            <header>
+                <section class="background"></section>
+                <header>
+                    % include('profile_icon')
+                    <button class="button color">FOLLOW</button>
+                </header>
+                <main>
+                    <h2>{{profile_user['user_display_name']}}</h2>
+                    <p>{{profile_user['user_username']}}</p>
+                </main>
+            </header>
+            <main>
+                % for tweet in tweets:
+                % include('tweet_display', tweets=tweets, tweet=tweet)
+                % end
+            </main>
+        </main>
+    </main>
+    <aside>
+        <div>
+            <header>
+                SEARCH
+            </header>
+            <main>
+                <header>
+                    Who to follow
+                </header>
+                <main>
+                    % for one_user in other_users[:5]:
+                    % include('profile_display', user=one_user)
+                    % end
+                </main>
+                <footer>
+                    Show more
+                </footer>
+            </main>
+        </div>
+    </aside>
+</main>
+% include('footer')

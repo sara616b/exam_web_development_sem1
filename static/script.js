@@ -1,38 +1,33 @@
 console.log("Hi");
 
-window.addEventListener("load", () => {
-  document.querySelector("#remove_image").addEventListener("click", (event) => {
-    event.preventDefault();
-    const image_input = document.querySelector("#tweet_image");
-    image_input.value = "";
-    console.log(document.querySelector("#tweet_image").value);
-    const image_name_display = document.querySelector("#image_name");
-    if (image_input.value === "") {
-      image_name_display.textContent = "No image";
-      document
-        .querySelector("label[for='tweet_image']")
-        .classList.remove("disabled");
-      document.querySelector("#remove_image").classList.add("hidden");
-    }
-  });
+const remove_selected_image = (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  const image_input = document.querySelector("#tweet_image");
+  image_input.value = "";
+  const image_name_display = document.querySelector("#image_name");
+  if (image_input.value === "") {
+    image_name_display.textContent = "No image";
+    document
+      .querySelector("label[for='tweet_image']")
+      .classList.remove("hidden");
+    document.querySelector("#remove_image").classList.add("hidden");
+  }
+};
 
-  document.querySelector("#tweet_image").addEventListener("change", (event) => {
-    console.log("something changed");
-    const image_filename = event.target.value.slice(
-      event.target.value.lastIndexOf("\\") + 1
-    );
-    const image_name_display = document.querySelector("#image_name");
-    if (image_filename !== "" && image_filename !== undefined) {
-      image_name_display.textContent = image_filename;
-      document
-        .querySelector("label[for='tweet_image']")
-        .classList.add("disabled");
-      document.querySelector("#remove_image").classList.remove("hidden");
-    } else {
-      image_name_display.textContent = "No image";
-    }
-  });
-});
+const tweet_image_changed = (event) => {
+  const image_filename = event.target.value.slice(
+    event.target.value.lastIndexOf("\\") + 1
+  );
+  const image_name_display = document.querySelector("#image_name");
+  if (image_filename !== "" && image_filename !== undefined) {
+    image_name_display.textContent = image_filename;
+    document.querySelector("label[for='tweet_image']").classList.add("hidden");
+    document.querySelector("#remove_image").classList.remove("hidden");
+  } else {
+    image_name_display.textContent = "No image";
+  }
+};
 
 const display_login_modal = async (event) => {
   console.log("log in now");
@@ -91,4 +86,8 @@ const delete_tweet = async (event) => {
     }
     window.location.href = "/home";
   });
+};
+
+const open_profile = (event) => {
+  console.log("click on profile");
 };

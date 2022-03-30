@@ -302,58 +302,6 @@ $primary-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     & main > header {
       padding: 1rem 0.4rem;
       border: solid $tertiar-color thin;
-      form {
-        display: flex;
-        flex-direction: row;
-        gap: 0.4rem;
-        section {
-          width: auto;
-          svg {
-            width: 40px;
-            height: 40px;
-          }
-        }
-        section + section {
-          width: 100%;
-          display: grid;
-          textarea {
-            outline: none;
-            border: none;
-            padding: 0.4rem;
-            resize: none;
-            overflow: auto;
-            height: 5rem;
-            border-bottom: thin $tertiar-color solid;
-            &:focus {
-              outline: solid 2px $primary-color;
-              border: none;
-            }
-          }
-          footer {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            padding: 0.4rem 0;
-            section {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              gap: 0.4rem;
-              label,
-              p {
-                width: auto;
-                height: auto;
-              }
-              input {
-                display: none;
-              }
-            }
-            button {
-              width: auto;
-            }
-          }
-        }
-      }
     }
     & > main {
       article {
@@ -449,7 +397,6 @@ $primary-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       }
     }
   }
-
   aside {
     grid-area: aside;
     justify-self: start;
@@ -516,6 +463,138 @@ $primary-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
           }
         }
       }
+    }
+  }
+}
+#profile-content {
+  & > header {
+    display: flex;
+    flex-direction: row;
+    button {
+      background-color: #0000;
+      border: none;
+      width: auto;
+      margin-right: 0.5rem;
+    }
+  }
+  & > main {
+    & > header {
+      .background {
+        background-color: orange;
+        width: 100%;
+        height: 150px;
+      }
+      & > header {
+        height: 50px;
+      }
+      svg {
+        width: 100px;
+        height: 100px;
+        transform: translateY(calc(-50% - 0.5rem - 0.25rem));
+        background-color: white;
+        padding: 0.5rem;
+        margin: 1rem;
+        border-radius: 100%;
+        position: absolute;
+      }
+      .button {
+        max-width: 100px;
+        float: right;
+        margin: 0.5rem;
+      }
+    }
+  }
+  & > main {
+    height: auto;
+  }
+}
+
+#tweet_form {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+  section {
+    width: auto;
+    svg {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  section + section {
+    width: 100%;
+    display: grid;
+    textarea {
+      outline: none;
+      border: none;
+      padding: 0.4rem;
+      resize: none;
+      overflow: auto;
+      height: 5rem;
+      border-bottom: thin $tertiar-color solid;
+      &:focus {
+        outline: solid 2px $primary-color;
+        border: none;
+      }
+    }
+    footer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 0.4rem 0;
+      section {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.4rem;
+        label,
+        p {
+          width: auto;
+          height: auto;
+        }
+        input {
+          display: none;
+        }
+      }
+      button {
+        width: auto;
+      }
+    }
+  }
+}
+
+#tweet_modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+  #background {
+    background-color: $primary-color-transparent;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+  #modal {
+    width: 600px;
+    min-width: 300px;
+    height: auto;
+    margin: 2rem auto;
+    top: 0;
+    left: 0;
+    position: relative;
+    z-index: 10;
+    background-color: $light-color;
+    border-radius: 1.5rem;
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @media screen and (max-width: 500px) {
+      width: 100%;
     }
   }
 }

@@ -5,8 +5,8 @@
     <section>
         <header>
             <section>
-                <p>{{tweets[tweet]['tweet_user_display_name']}}</p>
-                <p>@{{tweets[tweet]['tweet_user_username']}}</p>
+                <p>{{tweets[tweet]['user_display_name']}}</p>
+                <p>@{{tweets[tweet]['user_username']}}</p>
                 <p>·</p>
                 <p>{{tweets[tweet]['tweet_time_since_created']}}</p>
             </section>
@@ -16,8 +16,7 @@
             {{!tweets[tweet]['tweet_text']}}
             % end
             % if tweets[tweet]["tweet_image"]:
-            <img id='{{tweets[tweet]["tweet_image"]}}'
-                src="{{file_path}}/static/images/tweets/{{tweets[tweet]['tweet_image']}}"
+            <img id='{{tweets[tweet]["tweet_image"]}}' src="/static/images/tweets/{{tweets[tweet]['tweet_image']}}"
                 alt='{{tweets[tweet]["tweet_text"]}}' />
             % end
         </main>
@@ -35,7 +34,7 @@
     <aside>
         <button class="button color">FOLLOW</button>
         <section>
-            <button class="link">EDIT</button>
+            <button onclick="window.location.href = '/tweets/{{tweet}}'" class="link">EDIT</button>
             <button onclick="delete_tweet(event)" id="id{{tweet}}" class="link">DELETE</button>
         </section>
     </aside>
