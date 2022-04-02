@@ -56,16 +56,30 @@
   color: #dda900;
 }
 
+label input[type=text],
+label input[type=password] {
+  padding: 0.3rem 0.5rem;
+  border: #f8f2ea solid thin;
+  border-radius: 0.4rem;
+}
+label input[type=text].validate_error,
+label input[type=password].validate_error {
+  border-color: rgba(170, 15, 10, 0.822);
+}
+label span.error_message {
+  color: rgba(170, 15, 10, 0.822);
+}
+
 #index {
   display: grid;
-  grid-template-areas: "header header header header main main main";
+  grid-template-columns: 5fr 3fr;
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
 }
 #index header {
-  grid-area: header;
+  grid-column: 1/2;
   background-color: #dda900;
   overflow: hidden;
   height: 100vh;
@@ -78,18 +92,8 @@
   height: 126%;
   transform: translateX(-22%);
 }
-@media screen and (max-width: 500px) {
-  #index {
-    grid-template-areas: "main" "header";
-  }
-  #index header svg {
-    width: 130%;
-    height: 110%;
-    transform: translate(-22%, -22%);
-  }
-}
 #index main {
-  grid-area: main;
+  grid-column: 2/3;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -113,6 +117,25 @@
   color: #dda900;
   margin-bottom: 1rem;
 }
+@media screen and (max-width: 500px) {
+  #index {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  #index header {
+    grid-column: 1/2;
+    grid-row: 2/3;
+  }
+  #index header svg {
+    width: 130%;
+    height: 110%;
+    transform: translate(-22%, -22%);
+  }
+  #index main {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+}
 
 #login,
 #signup {
@@ -132,6 +155,10 @@
   top: 0;
   left: 0;
   z-index: 1;
+}
+#login #background:hover,
+#signup #background:hover {
+  cursor: pointer;
 }
 #login section:first-of-type,
 #signup section:first-of-type {
@@ -175,6 +202,7 @@
   #login #modal,
 #signup #modal {
     width: 100%;
+    padding: 1.5rem 0.4rem;
   }
 }
 #login #modal header,
@@ -187,14 +215,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-}
-#login #modal main form input[type=text],
-#login #modal main form input[type=password],
-#signup #modal main form input[type=text],
-#signup #modal main form input[type=password] {
-  padding: 0.3rem 0.5rem;
-  border: #f8f2ea solid thin;
-  border-radius: 0.4rem;
 }
 #login #modal footer,
 #signup #modal footer {
@@ -226,41 +246,41 @@
   grid-template-areas: "nav main main aside";
   height: 100vh;
 }
-#home nav,
-#home aside {
+#home #main_navigation,
+#home #main_aside {
   max-width: 300px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
-#home nav div,
-#home aside div {
+#home #main_navigation div,
+#home #main_aside div {
   padding: 1rem;
   position: sticky;
   top: 0;
   width: 100%;
   height: calc(100vh - 2rem);
 }
-#home nav {
+#home #main_navigation {
   grid-area: nav;
   justify-self: end;
 }
-#home nav header {
+#home #main_navigation #logo_container {
   display: flex;
   align-items: center;
   flex-direction: column;
   margin-bottom: 0.4rem;
 }
-#home nav header svg {
+#home #main_navigation #logo_container svg {
   fill: #dda900;
   width: 80px;
   height: 80px;
 }
-#home nav main button {
+#home #main_navigation #navigation button {
   margin-bottom: 0.4rem;
 }
-#home nav footer {
+#home #main_navigation #profile_container {
   position: absolute;
   bottom: 0;
   display: flex;
@@ -269,33 +289,33 @@
   border-radius: 1.5rem;
   padding: 0.5rem 1rem;
 }
-#home nav footer:hover {
+#home #main_navigation #profile_container:hover {
   background-color: #f8f2ea;
   cursor: pointer;
 }
-#home nav footer section {
+#home #main_navigation #profile_container section {
   width: auto;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-#home nav footer section p {
+#home #main_navigation #profile_container section p {
   padding: 0 0.4rem;
 }
-#home nav footer section svg {
+#home #main_navigation #profile_container section svg {
   width: 40px;
   height: 40px;
   fill: #4d3220;
   border-radius: 50%;
 }
-#home > main {
+#home #main_content {
   grid-area: main;
   min-width: 400px;
   margin: 0 auto;
   max-width: 600px;
 }
-#home > main > header {
+#home #main_content #page_title {
   padding: 1rem 0.4rem;
   position: sticky;
   background-color: white;
@@ -303,34 +323,29 @@
   font-weight: bold;
   top: 0;
 }
-#home > main main > header {
+#home #main_content #content_container #new_tweet_form_container {
   padding: 1rem 0.4rem;
   border: solid #f8f2ea thin;
 }
-#home > main > main article {
+#home #main_content #content_container #tweet_container {
   padding: 1rem 0.5rem;
   border: solid #f8f2ea thin;
   display: flex;
   flex-direction: row;
 }
-#home > main > main article section {
+#home #main_content #content_container #tweet_container #icon_container {
   width: 40px;
 }
-#home > main > main article section svg {
+#home #main_content #content_container #tweet_container #icon_container svg {
   width: 40px;
   height: 40px;
   fill: #4d3220;
 }
-#home > main > main article section + section {
+#home #main_content #content_container #tweet_container #content_container {
   width: 100%;
   padding-left: 0.4rem;
 }
-#home > main > main article section + section header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-#home > main > main article section + section header section {
+#home #main_content #content_container #tweet_container #content_container #user_information {
   width: auto;
   display: flex;
   flex-direction: row;
@@ -338,49 +353,59 @@
   gap: 0.4rem;
   width: 100%;
 }
-#home > main > main article section + section header section:hover {
+#home #main_content #content_container #tweet_container #content_container #user_information:hover {
   opacity: 0.6;
   cursor: pointer;
 }
-#home > main > main article section + section header section p {
+#home #main_content #content_container #tweet_container #content_container #user_information #user_display_name {
   font-weight: bold;
   width: auto;
 }
-#home > main > main article section + section header section p + p {
+#home #main_content #content_container #tweet_container #content_container #user_information p {
   font-weight: 300;
   color: #4d3220;
+  width: auto;
 }
-#home > main > main article section + section main {
+#home #main_content #content_container #tweet_container #content_container #tweet_content {
   padding: 0.2rem 0;
 }
-#home > main > main article section + section main img {
+#home #main_content #content_container #tweet_container #content_container #tweet_content img {
   margin: 1rem 0;
   border-radius: 0.5rem;
 }
-#home > main > main article section + section footer {
+#home #main_content #content_container #tweet_container #content_container #like_container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-#home > main > main article section + section footer section {
+#home #main_content #content_container #tweet_container #content_container #like_container section {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
   width: auto;
 }
-#home > main > main article section + section footer section svg {
+#home #main_content #content_container #tweet_container #content_container #like_container section svg {
   stroke: black;
   stroke-width: 3rem;
   width: 50px;
   height: 30px;
   fill: white;
 }
-#home > main > main article section + section footer section svg:hover {
+#home #main_content #content_container #tweet_container #content_container #like_container section svg:hover {
   stroke: #dda900;
   cursor: pointer;
 }
-#home > main > main article aside {
+#home #main_content #content_container #tweet_container #content_container #like_container section svg path {
+  pointer-events: none;
+}
+#home #main_content #content_container #tweet_container #content_container #like_container section svg.likedTrue {
+  fill: #dda900;
+}
+#home #main_content #content_container #tweet_container #content_container #like_container section svg.likedTrue + p {
+  font-weight: bold;
+}
+#home #main_content #content_container #tweet_container #actions_container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -388,57 +413,57 @@
   gap: 0.4rem;
   width: auto;
 }
-#home > main > main article aside .button {
+#home #main_content #content_container #tweet_container #actions_container .button {
   max-width: 100px;
   width: 100%;
 }
-#home > main > main article aside section {
+#home #main_content #content_container #tweet_container #actions_container #tweet_actions {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
   width: 100%;
 }
-#home aside {
+#home #main_aside {
   grid-area: aside;
   justify-self: start;
 }
-#home aside div main {
+#home #main_aside div main {
   background-color: #f8f2ea;
   border-radius: 1.5rem;
 }
-#home aside div main header {
+#home #main_aside div main header {
   padding: 1.2rem 1rem 0.6rem 1rem;
   font-weight: bold;
   border-radius: 1.5rem 1.5rem 0 0;
 }
-#home aside div main footer {
+#home #main_aside div main footer {
   padding: 0.6rem 1rem 1.2rem 1rem;
   border-radius: 0 0 1.5rem 1.5rem;
   border-style: inset;
   border: solid #f8f2ea thin;
 }
-#home aside div main footer:hover {
+#home #main_aside div main footer:hover {
   background-color: white;
   color: #dda900;
   cursor: pointer;
 }
-#home aside div main main {
+#home #main_aside div main main {
   border-top: solid #4d3220 thin;
   border-bottom: solid #4d3220 thin;
   border-radius: 0;
 }
-#home aside div main main article {
+#home #main_aside div main main article {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 0.2rem 0.8rem;
 }
-#home aside div main main article:hover {
+#home #main_aside div main main article:hover {
   background-color: white;
   cursor: pointer;
 }
-#home aside div main main article section {
+#home #main_aside div main main article section {
   height: 100%;
   width: auto;
   padding: 0.4rem 0;
@@ -446,17 +471,17 @@
   flex-direction: row;
   align-items: center;
 }
-#home aside div main main article section section {
+#home #main_aside div main main article section section {
   height: 100%;
   width: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#home aside div main main article section p {
+#home #main_aside div main main article section p {
   padding: 0 0.4rem;
 }
-#home aside div main main article section svg {
+#home #main_aside div main main article section svg {
   width: 40px;
   height: 40px;
   fill: #4d3220;
@@ -505,18 +530,18 @@
   flex-direction: row;
   gap: 0.4rem;
 }
-#tweet_form section {
+#tweet_form #profile_icon_container {
   width: auto;
 }
-#tweet_form section svg {
+#tweet_form #profile_icon_container svg {
   width: 40px;
   height: 40px;
 }
-#tweet_form section + section {
+#tweet_form #form_content {
   width: 100%;
   display: grid;
 }
-#tweet_form section + section textarea {
+#tweet_form #form_content #tweet_text {
   outline: none;
   border: none;
   padding: 0.4rem;
@@ -525,32 +550,30 @@
   height: 5rem;
   border-bottom: thin #f8f2ea solid;
 }
-#tweet_form section + section textarea:focus {
+#tweet_form #form_content #tweet_text:focus {
   outline: solid 2px #dda900;
   border: none;
 }
-#tweet_form section + section footer {
+#tweet_form #form_content #new_tweet_actions {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 0.4rem 0;
 }
-#tweet_form section + section footer section {
+#tweet_form #form_content #new_tweet_actions #image_actions {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.4rem;
 }
-#tweet_form section + section footer section label,
-#tweet_form section + section footer section p {
-  width: auto;
-  height: auto;
-}
-#tweet_form section + section footer section input {
+#tweet_form #form_content #new_tweet_actions #image_actions #tweet_image {
   display: none;
 }
-#tweet_form section + section footer button {
+#tweet_form #form_content #new_tweet_actions label,
+#tweet_form #form_content #new_tweet_actions p,
+#tweet_form #form_content #new_tweet_actions button {
   width: auto;
+  height: auto;
 }
 
 #tweet_modal {
@@ -558,17 +581,22 @@
   flex-direction: column;
   justify-content: center;
   min-height: 100vh;
-  height: 100%;
+  height: 100vh;
   width: 100%;
+  position: fixed;
+  top: 0;
 }
 #tweet_modal #background {
   background-color: rgba(221, 169, 0, 0.781);
-  height: 100%;
+  height: 100vh;
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1;
+}
+#tweet_modal #background:hover {
+  cursor: pointer;
 }
 #tweet_modal #modal {
   width: 600px;

@@ -3,18 +3,18 @@
     % else:
     <form method="post" action="/tweets/new" enctype="multipart/form-data" id="tweet_form">
         % end
-        <section>
+        <section id="profile_icon_container">
             % include('profile_icon')
         </section>
-        <section>
+        <section id="form_content">
             <textarea name="tweet_text" id="tweet_text" type="text" placeholder="What're you thinking about?">
-            % if get('tweet'):
+            % if get('tweet') and type == 'edit':
 {{tweet['tweet_text']}}
             % end
 </textarea>
-            <footer>
-                <section>
-                    % if get('tweet_id') and tweet_id != "new" and tweet['tweet_image']:
+            <footer id="new_tweet_actions">
+                <section id="image_actions">
+                    % if get('tweet_id') and tweet_id != "new" and tweet['tweet_image'] and type == 'edit':
                     <button id="remove_image" onclick="remove_selected_image(event)" class="button">Remove
                         image</button>
                     <label class="button hidden" for="tweet_image">
@@ -22,7 +22,7 @@
                     </label>
                     <input onchange="tweet_image_changed(event)" type="file" name="tweet_image" id="tweet_image">
                     <p id="image_name">
-                        % if get('tweet') and tweet['tweet_image']:
+                        % if get('tweet') and tweet['tweet_image'] and type == 'edit':
                         {{tweet['tweet_image']}}
                         % end
                     </p>
@@ -36,10 +36,12 @@
                     <p id="image_name">No image</p>
                     % end
                 </section>
-                <button type="submit" class="button color">
-                    % if get('tweet_id') and tweet_id != "new":
+                % if get('tweet_id') and tweet_id != "new":
+                <button type="submit" class="button color" onclick="put_edited_tweet(event);" id="id{{tweet_id}}">
                     SAVE EDITS
-                    % else:
+                </button>
+                % else:
+                <button type="submit" class="button color" onclick="post_new_tweet(event);">
                     TWEET
                     % end
                 </button>

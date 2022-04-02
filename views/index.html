@@ -1,3 +1,25 @@
+% if not is_xhr:
 % include('header')
-% include('index_view')
+% end
+<main id="index" class="content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
+    <header>
+        % include('logo_icon')
+    </header>
+    <main>
+        % include('logo_icon')
+        <section>
+            <h1>buzzer</h1>
+            <button onclick="spa('/login', true, event);" class="button color">Log in</button>
+            <button onclick="spa('/signup', true, event);" class="button">Sign up</button>
+        </section>
+    </main>
+</main>
+% if modal and modal == 'login':
+% include('login_modal')
+% end
+% if modal and modal == 'signup':
+% include('signup_modal')
+% end
+% if not is_xhr:
 % include('footer')
+% end

@@ -1,4 +1,4 @@
-from bottle import request, response
+from bottle import request, response, redirect
 import jwt
 from jwt.exceptions import InvalidSignatureError
 import sqlite3
@@ -10,44 +10,25 @@ JWT_KEY = f"{str(uuid.uuid4())}-{str(uuid.uuid4())}-{str(uuid.uuid4())}"
 REGEX_EMAIL = '^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
 
 def check_if_logged_in():
-    try:
-        is_logged_in = False
-        # if the jwt cookie is in SESSIONS and is valid
-        # set is_logged_in to value from user_information (True)
-        # else print error
-        db = sqlite3.connect(f"{get_file_path()}/database/database.db")
+    # is_logged_in = False
+    db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
-        # TODO - Instead have the session unique for each user
-        jwt_cookie = request.get_cookie("jwt", secret="secret")
-        session_matches_user = str(db.execute("""
-                SELECT user_current_session, user_id
-                FROM users
-                WHERE user_current_session = :user_current_session
-                """, (str(jwt_cookie),)).fetchone())
-        if session_matches_user[0]:
-            session_matches_user = True
+    # TODO - Instead have the session unique for each user
+    jwt_cookie = request.get_cookie("jwt", secret="secret")
+    session_matches_user = str(db.execute("""
+            SELECT user_current_session, user_id
+            FROM users
+            WHERE user_current_session = :user_current_session
+            """, (str(jwt_cookie),)).fetchone())
+    if session_matches_user[0]:
+        session_matches_user = True
 
-        if jwt_cookie and session_matches_user:
-            try:
-                session_id = jwt.decode(
-                        jwt_cookie,
-                        JWT_KEY, algorithms=["HS256"]
-                    ) or None
-                if session_id is not None:
-                    is_logged_in = True
+    jwt.decode(
+            jwt_cookie,
+            JWT_KEY, algorithms=["HS256"]
+        ) or None
 
-            except InvalidSignatureError as error:
-                print(f"Invalid signature error: {error}")
-
-        return is_logged_in
-
-    except Exception as ex:
-        print(ex)
-        response.status = 500
-        return {"info": f"Error when checking login: {ex}"}
-
-    finally:
-        db.close()
+    db.close()
 
 def time_since_from_epoch(epoch):
     time_since_seconds = int(time.time()) - int(epoch.split('.')[0])

@@ -7,10 +7,16 @@ from settings import get_file_path, check_if_logged_in, time_since_from_epoch, d
 def style():
     return static_file("/static/style.css", root=".")
 
-# SCRIPT #############################
-@get("/static/script.js")
+# SCRIPTS ############################
+@get("/static/js/script.js")
 def script():
-    return static_file("/static/script.js", root=".")
+    return static_file("/static/js/script.js", root=".")
+@get("/static/js/spa.js")
+def spa():
+    return static_file("/static/js/spa.js", root=".")
+@get("/static/js/validator.js")
+def validate():
+    return static_file("/static/js/validator.js", root=".")
 
 # IMAGES #############################
 @get("/static/images/icon.svg")
@@ -28,7 +34,7 @@ from index import get_index
 from signup import get_signup, post_signup
 from login import login_view, login, logout
 from home import get_home
-from tweets import post_tweet, edit_tweet, delete_tweet, form_for_tweet
+from tweets import post_tweet, edit_tweet, delete_tweet, form_for_tweet, like_tweet, dislike_tweet
 from user_profile import get_profile
 
 # SERVER #############################

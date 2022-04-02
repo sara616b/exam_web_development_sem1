@@ -1,7 +1,5 @@
-% include('header')
-
-<main id="tweet_modal">
-    <section id="background" onclick="window.location.href = '/home'">
+<main id="tweet_modal" class="content">
+    <section id="background" onclick="spa('/home', true, event)">
     </section>
     <main id="modal">
         % if tweet_id == "new":
@@ -9,7 +7,6 @@
         % else:
         <h2>Edit tweet</h2>
         % end
-        % include('tweet_form', tweet_id=get('tweet_id', None), tweet=get('tweet', None))
+        % include('tweet_form', tweet_id=get('tweet_id', None), tweet=get('tweet', None), type=type)
     </main>
 </main>
-% include('footer')

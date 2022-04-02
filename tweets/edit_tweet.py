@@ -7,7 +7,7 @@ import uuid
 
 from settings import get_file_path, check_if_logged_in, time_since_from_epoch, date_text_from_epoch, REGEX_EMAIL, JWT_KEY
 
-@post("/tweets/<tweet_id>")
+@put("/tweets/<tweet_id>")
 def _(tweet_id):
     db = None
     redirectPath = "/"
@@ -15,6 +15,8 @@ def _(tweet_id):
     print("#"*50)
     try:
         updated_tweet_data = {"tweet_id":tweet_id}
+
+        # TODO - check that the tweet belongs to the user logged in
 
         # tweet text - get + if found, validate and add to update values
         tweet_text = request.forms.get("tweet_text")

@@ -1,0 +1,54 @@
+<main id="signup">
+    <section id="background" onclick="spa('/', true, event);">
+    </section>
+    <main>
+        <section>
+            % include('logo_icon')
+            <h1>buzzer</h1>
+        </section>
+        <section id="modal">
+            <header>
+                Sign up
+            </header>
+            <main>
+                <form>
+                    <label for="signup_display_name">
+                        Display name
+                        <span class="error_message hidden">Name <span></span></span>
+                        <span class="extra"><br>This is the name that other users will see.</span>
+                        <input type="text" name="signup_display_name" id="signup_display_name" placeholder="Name"
+                            data-min="1" data-max="100" data-required="true">
+                    </label>
+                    <label for="signup_username">
+                        Username
+                        <span class="error_message hidden">Username <span></span></span>
+                        <input type="text" name="signup_username" id="signup_username" placeholder="Username"
+                            data-min="1" data-max="100" data-required="true">
+                    </label>
+                    <label for="signup_email">
+                        E-mail
+                        <span class="error_message hidden">Email <span></span></span>
+                        <input type="text" name="signup_email" id="signup_email" placeholder="a@a.com" data-email="true"
+                            data-required="true">
+                    </label>
+                    <label for="signup_password">
+                        Password
+                        <span class="error_message hidden">Password <span></span></span>
+                        <input type="password" name="signup_password" id="signup_password" placeholder="***"
+                            data-required="true">
+                    </label>
+                    <label for="signup_password_repeat">
+                        Repeat password
+                        <span class="error_message hidden">Repeated password <span></span></span>
+                        <input type="password" name="signup_password_repeat" id="signup_password_repeat"
+                            placeholder="***" data-required="true">
+                    </label>
+                    <input class="button color" type="submit" value="Sign up" onclick="sign_up(event)">
+                </form>
+            </main>
+            <footer class="link" onclick="spa('/login', true, event);">
+                Already have an account? Log in here!
+            </footer>
+        </section>
+    </main>
+</main>

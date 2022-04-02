@@ -1,16 +1,18 @@
+% if not is_xhr:
 % include('header')
-<main id="home">
-    <nav>
+% end
+<main id="home" class="content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
+    <nav id="main_navigation">
         <div>
-            <header>
+            <header id="logo_container">
                 % include('logo_icon')
             </header>
-            <main>
+            <main id="navigation">
                 <button id="id{{user_id}}" onclick="go_to_profile(event)" class="button">PROFILE</button>
-                <button onclick="window.location.href = '/tweets/new'" class="button color">TWEET</button>
-                <button onclick="logout(event)" class="link">LOG OUT</button>
+                <button onclick="spa('/tweets/new', true, event);" class="button color">TWEET</button>
+                <button onclick="log_out(event)" class="link">LOG OUT</button>
             </main>
-            <footer>
+            <footer id="profile_container">
                 <section>
                     % include('profile_icon')
                 </section>
@@ -25,22 +27,22 @@
             </footer>
         </div>
     </nav>
-    <main>
-        <header>
+    <main id="main_content">
+        <header id="page_title">
             Home
         </header>
-        <main>
-            <header>
-                % include('tweet_form')
+        <main id="content_container">
+            <header id="new_tweet_form_container">
+                % include('tweet_form', type='new')
             </header>
             <main>
-                % for tweet in tweets:
-                % include('tweet_display', tweets=tweets, tweet=tweet)
+                % for one_tweet in tweets:
+                % include('tweet_display', tweets=tweets, tweet=one_tweet, user_id=user_id)
                 % end
             </main>
         </main>
     </main>
-    <aside>
+    <aside id="main_aside">
         <div>
             <header>
                 SEARCH
@@ -63,4 +65,9 @@
         </div>
     </aside>
 </main>
+% if modal and modal == 'tweet':
+% include('tweet_modal', tweet_id=tweet_id, tweet=tweet, type='edit')
+% end
+% if not is_xhr:
 % include('footer')
+% end
