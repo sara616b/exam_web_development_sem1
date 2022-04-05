@@ -18,156 +18,115 @@ def _(profile_username):
     else:
         db = None
         try:
-            # if logged in, get user_id from jwt cookie
+            ##### logged in user
             user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
 
-            
-            # connect to database
+            ###### connect to database
             db = sqlite3.connect(f"{get_file_path()}/database/database.db")
+            print("after check login")
+            
+            ###### select all tweets with user information
+            tweet_values = ["tweet_id", "tweet_text", "tweet_created_at", "tweet_updated_at", "tweet_image", "tweet_user_id", "user_username", "user_display_name"]
 
-            # get all tweets TODO use join
-            tweets_from_user = db.execute("""
-                SELECT *
+            all_tweets_data = db.execute(f"""
+                SELECT {','.join(tweet_values)}
                 FROM tweets
                 JOIN users
-                WHERE tweets.tweet_user_id = users.user_id AND users.user_username = :username
+                WHERE tweets.tweet_user_id = users.user_id
                 ORDER BY tweet_created_at DESC
-                """, (profile_username,)).fetchall()
+                """).fetchall()
             
+            ##### select all likes data            
+            all_likes_data = db.execute(f"""
+                SELECT fk_user_id AS user_id, fk_tweet_id AS tweet_id
+                FROM likes
+                """).fetchall()
+
             
-            profile_user_data = db.execute("""
-                SELECT user_display_name, user_username, user_created_at
-                FROM users
-                WHERE user_username = :username
-                """, (profile_username,)).fetchone()
+            ##### select all follow data            
+            all_followers_data = db.execute(f"""
+                SELECT fk_user_id_follower AS user_id_follower, fk_user_id_to_follow AS user_id_to_follow
+                FROM followers
+                """).fetchall()
 
-            profile_user = {
-                "user_display_name": profile_user_data[0],
-                "user_username": profile_user_data[1],
-                "user_created_at": profile_user_data[2],
-            }
-
-            # convert tweets data to dictionaries in tweets list with tweet and user informaiton
+            ##### organize tweet data into tweets dictionary
             tweets = {}
-            for tweet in tweets_from_user:
-                # get user info about the tweet's creator
-                (user_username, user_display_name) = db.execute("""
-                    SELECT user_username, user_display_name
-                    FROM users
-                    WHERE user_id = :user_id
-                    """, (tweet[5],)).fetchone()
+            for tweet in all_tweets_data:
+                ##### tweet data to dictionary 
+                tweet_object = {}
+                for index, value in enumerate(tweet_values):
+                    tweet_object[value] = tweet[index]
+                
+                ##### has the user liked the tweet and list of likes
+                tweet_likes = []
+                tweet_object["has_liked_tweet"] = False
+                for index, like in enumerate(all_likes_data):
+                    if like[1] == tweet_object["tweet_id"]:
+                        tweet_likes.append(like)
+                        if like[0] == user_id:
+                            tweet_object["has_liked_tweet"] = True
+                
+                ##### number of likes
+                tweet_object["tweet_likes"] = len(tweet_likes)
 
-                tweets[tweet[0]] = {
-                    "tweet_text": tweet[1],
-                    "tweet_created_at": tweet[2],
-                    "tweet_time_since_created": time_since_from_epoch(tweet[2]),
-                    "tweet_updated_at": tweet[3],
-                    "tweet_updated_at_datetime": date_text_from_epoch(tweet[3]) if tweet[3] else None,
-                    "tweet_image": tweet[4],
-                    "tweet_user_id": tweet[5],
-                    "tweet_user_username": user_username,
-                    "tweet_user_display_name": user_display_name,
-                }
+                ##### time since created and updated time
+                tweet_object["tweet_time_since_created"] = time_since_from_epoch(tweet_object["tweet_created_at"])
+                tweet_object["tweet_updated_at_datetime"] = date_text_from_epoch(tweet_object["tweet_updated_at"]) if tweet_object["tweet_updated_at"] else None
+                tweets[tweet_object["tweet_id"]] = tweet_object
+                print(tweet_object)
 
-            # get all users
-            all_users = db.execute("""
-                SELECT *
+            ###### select all users and add to list
+            users_values = ["user_id", "user_display_name", "user_username"]
+            all_users = db.execute(f"""
+                SELECT {','.join(users_values)}
                 FROM users
-                WHERE user_id != :user_id
                 ORDER BY user_created_at DESC
-                """, (user_id,)).fetchall()
+                """).fetchall()
             users = []
             for user in all_users:
-                users.append({
-                    "user_id": user[0],
-                    "user_display_name": user[1],
-                    "user_username": user[2],
-                })
+                user_dict = {}
+                for index, value in enumerate(users_values):
+                    user_dict[value] = user[index]
+                users.append(user_dict)
+                
+                ##### has the user liked the tweet and list of likes
+                user_followed_by = []
+                user_dict["is_following"] = False
+                for index, follow in enumerate(all_followers_data):
+                    if follow[1] == user_dict["user_id"]:
+                        user_followed_by.append(follow)
+                    if follow[1] == user_dict["user_id"] and follow[0] == user_id:
+                        user_dict["is_following"] = True
+                
+                ##### number of likes
+                user_dict["followers"] = len(user_followed_by)
+            
+            ###### specify user profile to display
+            user_profile_to_display = None
+            for user in users:
+                if user["user_username"] == profile_username:
+                    user_profile_to_display = user
 
-            if user_id:
-                (user_id, user_display_name, user_username) = db.execute("""
-                    SELECT user_id, user_display_name, user_username
-                    FROM users
-                    WHERE  user_id = :user_id 
-                    """, (user_id,)).fetchone()
-                db.commit()
+            ##### check whether there's a need for loading header and footer
+            is_xhr = True if request.headers.get('spa') else False
 
-                user = {
-                    "user_id": user_id,
-                    "user_display_name": user_display_name,
-                    "user_username": user_username,
-                }
-
-                is_xhr = True if request.headers.get('spa') else False
-                return dict(
-                    user=user,
-                    tweets=tweets,
-                    other_users=users,
-                    profile_user=profile_user,
-                    is_xhr=is_xhr,
-                    )
-            return redirect("/")
-            # return dict(tweets=tweets, user_id=user_id, is_logged_in=check_if_logged_in())
+            ##### return view
+            return dict(
+                user_id=user_id,    # user who's logged in
+                users=users,        # all users to display 'who to follow'
+                tweets=tweets,      # all tweets for feed
+                url=f"/profile/{profile_username}",        # url
+                title=profile_username,       # title
+                modal=None,         # what modal is opened
+                is_xhr=is_xhr,      # load header and footer?
+                user_profile_to_display=user_profile_to_display,
+                )
 
         except Exception as ex:
             print(ex)
             response.status = 500
-            return redirect("/")
+            return
 
         finally:
             if db != None:
                 db.close()
-
-    # db = None
-#     try:
-#         if not check_if_logged_in():
-#             return redirect("/login")
-
-#         user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
-
-#         db = sqlite3.connect("database/database.sqlite")
-#         (user_first_name, user_last_name, user_username, user_email, user_created_at) = db.execute("""
-#             SELECT user_first_name, user_last_name, user_username, user_email, user_created_at
-#             FROM users
-#             WHERE user_id = :user_id
-#         """, (user_id,)).fetchone()
-
-#         user = {
-#             "user_first_name": user_first_name,
-#             "user_last_name": user_last_name,
-#             "user_username": user_username,
-#             "user_email": user_email,
-#             "user_created_at": datetime.datetime.fromtimestamp(int(user_created_at.split('.')[0])).strftime('%d/%m/%Y %H:%M'),
-#         }
-
-#         tweetsData = db.execute("""
-#             SELECT tweet_id, tweet_text, tweet_created_at, tweet_updated_at, tweet_image, tweet_user_id, user_first_name, user_last_name, user_username
-#             FROM tweets
-#             JOIN users
-#             WHERE tweets.tweet_user_id = users.user_id AND users.user_id = :user_id
-#             ORDER BY tweet_created_at DESC
-#             """, (user_id,)).fetchall()
-
-#         tweets = {}
-#         for tweet in tweetsData:
-#             tweets[tweet[0]] = {
-#                 "tweet_text": tweet[1],
-#                 "tweet_created_at": tweet[2],
-#                 "tweet_created_at_datetime": date_text_from_epoch(tweet[2]),
-#                 "tweet_updated_at": tweet[3],
-#                 "tweet_updated_at_datetime": date_text_from_epoch(tweet[3]) if tweet[3] else None,
-#                 "tweet_image": tweet[4],
-#                 "tweet_user_id": tweet[5],
-#                 "tweet_user_first_name": tweet[6],
-#                 "tweet_user_last_name": tweet[7],
-#                 "tweet_user_username": tweet[8],
-#             }
-#         return dict(is_logged_in=check_if_logged_in(), user=user, user_id=user_id, tweets=tweets)
-
-#     except Exception as ex:
-#         print(ex)
-#         response.status = 500
-#         return redirect("/")
-#     finally:
-#         if db != None:
-#             db.close()

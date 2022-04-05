@@ -81,6 +81,9 @@ Use regular expressions when needed
 TODO: 
 -- when signing up also log in 
 -- VALIDATION
--- 
+-- tweet display uses ids, but should use classes
+-- show more profiles
+-- figure out navigation betweet profile and home
+-- ERROR in getting user_id when following
 
 SASS: sass --watch style.scss style.css

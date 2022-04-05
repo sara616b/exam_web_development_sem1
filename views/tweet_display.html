@@ -1,15 +1,19 @@
-<article id="tweet_container">
-    <section id="icon_container">
+<article class="tweet_container">
+    <section class="icon_container" onclick="open_profile(event)" id="id{{tweets[tweet]['user_username']}}">
         % include('profile_icon')
     </section>
-    <main id="content_container">
-        <header id="user_information">
-            <p id="user_display_name">{{tweets[tweet]['user_display_name']}}</p>
-            <p>@{{tweets[tweet]['user_username']}}</p>
-            <p>·</p>
-            <p>{{tweets[tweet]['tweet_time_since_created']}}</p>
+    <main class="content_container">
+        <header class="user_information" onclick="open_profile(event)" id="id{{tweets[tweet]['user_username']}}"
+            data-id="id{{tweets[tweet]['user_username']}}">
+            <p class="user_display_name" onclick="open_profile(event)" id="id{{tweets[tweet]['user_username']}}">
+                {{tweets[tweet]['user_display_name']}}</p>
+            <p onclick="open_profile(event)" id="id{{tweets[tweet]['user_username']}}">
+                @{{tweets[tweet]['user_username']}}</p>
+            <p onclick="open_profile(event)" id="id{{tweets[tweet]['user_username']}}">·</p>
+            <p onclick="open_profile(event)" id="id{{tweets[tweet]['user_username']}}">
+                {{tweets[tweet]['tweet_time_since_created']}}</p>
         </header>
-        <main id="tweet_content">
+        <main class="tweet_content">
             % if tweets and tweet:
             {{!tweets[tweet]['tweet_text']}}
             % end
@@ -18,7 +22,7 @@
                 alt='{{tweets[tweet]["tweet_text"]}}' />
             % end
         </main>
-        <footer id="like_container">
+        <footer class="like_container">
 
             <section>
                 <svg onclick="like_tweet(event)" id="like{{tweet}}" class="liked{{tweets[tweet]['has_liked_tweet']}}"
@@ -29,15 +33,28 @@
                 </svg>
                 <p>{{tweets[tweet]['tweet_likes']}}</p>
             </section>
+
+            <aside class="actions_container">
+                % for user in users:
+                % if user['user_id'] != user_id:
+                % if tweets[tweet]['tweet_user_id'] == user['user_id']:
+                % if user['is_following']:
+                <button onclick="follow_user(event)" id="id{{tweets[tweet]['tweet_user_id']}}"
+                    class="button followedTrue">FOLLOWING</button>
+                % else:
+                <button onclick="follow_user(event)" id="id{{tweets[tweet]['tweet_user_id']}}"
+                    class="button color">FOLLOW</button>
+                % end
+                % end
+                % end
+                % end
+                % if tweets[tweet]['tweet_user_id'] == user_id:
+                <section class="tweet_actions">
+                    <button onclick="spa('/tweets/{{tweet}}', true, event)" class="link">EDIT</button>
+                    <button onclick="delete_tweet(event)" id="id{{tweet}}" class="link">DELETE</button>
+                </section>
+                % end
+            </aside>
         </footer>
     </main>
-    <aside id="actions_container">
-        <button class="button color">FOLLOW</button>
-        % if tweets[tweet]['tweet_user_id'] == user_id:
-        <section id="tweet_actions">
-            <button onclick="spa('/tweets/{{tweet}}', true, event)" class="link">EDIT</button>
-            <button onclick="delete_tweet(event)" id="id{{tweet}}" class="link">DELETE</button>
-        </section>
-        % end
-    </aside>
 </article>

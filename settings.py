@@ -47,7 +47,7 @@ def time_since_from_epoch(epoch):
     if time_since_days < 7:
         return f"{str(time_since_days).split('.')[0]}d"
     
-    time_since = f"{str(datetime.datetime.fromtimestamp(time_since_seconds.strftime('%B %d'))).split('.')[0]}"
+    time_since = f"{str(datetime.datetime.fromtimestamp(int(epoch.split('.')[0])).strftime('%B %d'))}"
     return time_since
 
 def date_text_from_epoch(epoch):

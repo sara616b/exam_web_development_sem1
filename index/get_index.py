@@ -9,15 +9,19 @@ def _():
         check_if_logged_in()
     except:
         # if check_if_logged_in raises an exception
-        # the user isn't logged in
+        # the user isn't logged in and the index can be displayed
+
+        ##### check whether there's a need for loading header and footer
         is_xhr = True if request.headers.get('spa') else False
+
+        ##### return view
         return dict(
-            url="/",
-            title="Buzzer",
-            modal=None,
-            is_xhr=is_xhr,
+            url="/",            # url
+            title="Buzzer",     # title
+            modal=None,         # modal open
+            is_xhr=is_xhr,      # load header and footer?
             )
     else:
-        # if the user is logged in redirect to home feed
+        ##### if the user is logged in redirect to home feed
         return redirect("/home")
     

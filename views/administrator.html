@@ -1,0 +1,38 @@
+% include('header')
+<main id="home" class="admin content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
+    <h1>Administator panel</h1>
+    <main id="administator">
+        % for tweet in tweets:
+        <article class="tweet_container">
+            <section class="icon_container" id="id{{tweets[tweet]['user_username']}}">
+                % include('profile_icon')
+            </section>
+            <main class="content_container">
+                <header class="user_information" id="id{{tweets[tweet]['user_username']}}">
+                    <p class="user_display_name" id="id{{tweets[tweet]['user_username']}}">
+                        {{tweets[tweet]['user_display_name']}}</p>
+                    <p id="id{{tweets[tweet]['user_username']}}">
+                        @{{tweets[tweet]['user_username']}}</p>
+                    <p id="id{{tweets[tweet]['user_username']}}">·</p>
+                    <p id="id{{tweets[tweet]['user_username']}}">
+                        {{tweets[tweet]['tweet_time_since_created']}}</p>
+                </header>
+                <main class="tweet_content">
+                    % if tweets and tweet:
+                    {{!tweets[tweet]['tweet_text']}}
+                    % end
+                    % if tweets[tweet]["tweet_image"]:
+                    <img id='{{tweets[tweet]["tweet_image"]}}'
+                        src="/static/images/tweets/{{tweets[tweet]['tweet_image']}}"
+                        alt='{{tweets[tweet]["tweet_text"]}}' />
+                    % end
+                </main>
+                <footer class="actions_container">
+                    <button onclick="admin_delete_tweet(event)" id="id{{tweet}}" class="button color">DELETE</button>
+                </footer>
+            </main>
+        </article>
+        % end
+    </main>
+</main>
+% include('footer')

@@ -13,10 +13,14 @@
   display: none !important;
 }
 
+.no_click {
+  pointer-events: none;
+}
+
 .button {
   border-radius: 2rem;
   padding: 0.3rem 1rem;
-  font-weight: bold;
+  font-weight: 500;
   text-transform: lowercase;
   background-color: #f8f2ea;
   color: black;
@@ -241,15 +245,31 @@ label span.error_message {
   color: red;
 }
 
+#page_title {
+  padding: 1rem 0.4rem;
+  position: sticky;
+  background-color: white;
+  opacity: 0.97;
+  font-weight: bold;
+  top: 0;
+}
+#page_title button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+#logo_container:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 #home {
   display: grid;
-  grid-template-areas: "nav main main aside";
+  grid-template-areas: "nav main aside";
   height: 100vh;
 }
 #home #main_navigation,
 #home #main_aside {
-  max-width: 300px;
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -265,6 +285,7 @@ label span.error_message {
 #home #main_navigation {
   grid-area: nav;
   justify-self: end;
+  width: 175px;
 }
 #home #main_navigation #logo_container {
   display: flex;
@@ -280,7 +301,7 @@ label span.error_message {
 #home #main_navigation #navigation button {
   margin-bottom: 0.4rem;
 }
-#home #main_navigation #profile_container {
+#home #main_navigation .profile_container {
   position: absolute;
   bottom: 0;
   display: flex;
@@ -289,63 +310,56 @@ label span.error_message {
   border-radius: 1.5rem;
   padding: 0.5rem 1rem;
 }
-#home #main_navigation #profile_container:hover {
+#home #main_navigation .profile_container:hover {
   background-color: #f8f2ea;
   cursor: pointer;
 }
-#home #main_navigation #profile_container section {
+#home #main_navigation .profile_container section {
   width: auto;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-#home #main_navigation #profile_container section p {
+#home #main_navigation .profile_container section p {
   padding: 0 0.4rem;
 }
-#home #main_navigation #profile_container section svg {
+#home #main_navigation .profile_container section svg {
   width: 40px;
   height: 40px;
   fill: #4d3220;
   border-radius: 50%;
 }
-#home #main_content {
+#home #main_content,
+#home #profile-content {
   grid-area: main;
-  min-width: 400px;
   margin: 0 auto;
   max-width: 600px;
 }
-#home #main_content #page_title {
-  padding: 1rem 0.4rem;
-  position: sticky;
-  background-color: white;
-  opacity: 0.97;
-  font-weight: bold;
-  top: 0;
-}
-#home #main_content #content_container #new_tweet_form_container {
+#home #main_content #content_container #new_tweet_form_container,
+#home #profile-content #content_container #new_tweet_form_container {
   padding: 1rem 0.4rem;
   border: solid #f8f2ea thin;
 }
-#home #main_content #content_container #tweet_container {
-  padding: 1rem 0.5rem;
+#home .tweet_container {
+  padding: 1.5rem 0.5rem;
   border: solid #f8f2ea thin;
   display: flex;
   flex-direction: row;
 }
-#home #main_content #content_container #tweet_container #icon_container {
+#home .tweet_container .icon_container {
   width: 40px;
 }
-#home #main_content #content_container #tweet_container #icon_container svg {
+#home .tweet_container .icon_container svg {
   width: 40px;
   height: 40px;
   fill: #4d3220;
 }
-#home #main_content #content_container #tweet_container #content_container {
+#home .tweet_container .content_container {
   width: 100%;
   padding-left: 0.4rem;
 }
-#home #main_content #content_container #tweet_container #content_container #user_information {
+#home .tweet_container .content_container .user_information {
   width: auto;
   display: flex;
   flex-direction: row;
@@ -353,59 +367,60 @@ label span.error_message {
   gap: 0.4rem;
   width: 100%;
 }
-#home #main_content #content_container #tweet_container #content_container #user_information:hover {
+#home .tweet_container .content_container .user_information:hover {
   opacity: 0.6;
   cursor: pointer;
 }
-#home #main_content #content_container #tweet_container #content_container #user_information #user_display_name {
+#home .tweet_container .content_container .user_information .user_display_name {
   font-weight: bold;
   width: auto;
 }
-#home #main_content #content_container #tweet_container #content_container #user_information p {
+#home .tweet_container .content_container .user_information p {
   font-weight: 300;
+  font-size: 0.85rem;
   color: #4d3220;
   width: auto;
 }
-#home #main_content #content_container #tweet_container #content_container #tweet_content {
+#home .tweet_container .content_container .tweet_content {
   padding: 0.2rem 0;
 }
-#home #main_content #content_container #tweet_container #content_container #tweet_content img {
+#home .tweet_container .content_container .tweet_content img {
   margin: 1rem 0;
   border-radius: 0.5rem;
 }
-#home #main_content #content_container #tweet_container #content_container #like_container {
+#home .tweet_container .content_container .like_container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-#home #main_content #content_container #tweet_container #content_container #like_container section {
+#home .tweet_container .content_container .like_container section {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
   width: auto;
 }
-#home #main_content #content_container #tweet_container #content_container #like_container section svg {
+#home .tweet_container .content_container .like_container section svg {
   stroke: black;
   stroke-width: 3rem;
   width: 50px;
   height: 30px;
   fill: white;
 }
-#home #main_content #content_container #tweet_container #content_container #like_container section svg:hover {
+#home .tweet_container .content_container .like_container section svg:hover {
   stroke: #dda900;
   cursor: pointer;
 }
-#home #main_content #content_container #tweet_container #content_container #like_container section svg path {
+#home .tweet_container .content_container .like_container section svg path {
   pointer-events: none;
 }
-#home #main_content #content_container #tweet_container #content_container #like_container section svg.likedTrue {
+#home .tweet_container .content_container .like_container section svg.likedTrue {
   fill: #dda900;
 }
-#home #main_content #content_container #tweet_container #content_container #like_container section svg.likedTrue + p {
+#home .tweet_container .content_container .like_container section svg.likedTrue + p {
   font-weight: bold;
 }
-#home #main_content #content_container #tweet_container #actions_container {
+#home .tweet_container .actions_container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -413,19 +428,18 @@ label span.error_message {
   gap: 0.4rem;
   width: auto;
 }
-#home #main_content #content_container #tweet_container #actions_container .button {
+#home .tweet_container .actions_container .button {
   max-width: 100px;
   width: 100%;
 }
-#home #main_content #content_container #tweet_container #actions_container #tweet_actions {
+#home .tweet_container .actions_container .tweet_actions {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
   width: 100%;
 }
 #home #main_aside {
-  grid-area: aside;
-  justify-self: start;
+  width: 300px;
 }
 #home #main_aside div main {
   background-color: #f8f2ea;
@@ -463,6 +477,14 @@ label span.error_message {
   background-color: white;
   cursor: pointer;
 }
+#home #main_aside div main main article button {
+  height: 100%;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 0.8rem;
+}
 #home #main_aside div main main article section {
   height: 100%;
   width: auto;
@@ -480,12 +502,19 @@ label span.error_message {
 }
 #home #main_aside div main main article section p {
   padding: 0 0.4rem;
+  font-size: 0.8rem;
 }
 #home #main_aside div main main article section svg {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   fill: #4d3220;
   border-radius: 50%;
+}
+
+.profile_display section,
+.profile_display section section,
+.profile_display section section p {
+  pointer-events: none;
 }
 
 #profile-content > header {
@@ -499,7 +528,7 @@ label span.error_message {
   margin-right: 0.5rem;
 }
 #profile-content > main > header .background {
-  background-color: orange;
+  background-color: #f0a109;
   width: 100%;
   height: 150px;
 }
@@ -569,11 +598,19 @@ label span.error_message {
 #tweet_form #form_content #new_tweet_actions #image_actions #tweet_image {
   display: none;
 }
+#tweet_form #form_content #new_tweet_actions p {
+  width: auto;
+  height: auto;
+}
 #tweet_form #form_content #new_tweet_actions label,
-#tweet_form #form_content #new_tweet_actions p,
 #tweet_form #form_content #new_tweet_actions button {
   width: auto;
   height: auto;
+  text-align: center;
+}
+#tweet_form #form_content #new_tweet_actions label.color,
+#tweet_form #form_content #new_tweet_actions button.color {
+  width: 150px;
 }
 
 #tweet_modal {
@@ -617,6 +654,96 @@ label span.error_message {
 @media screen and (max-width: 500px) {
   #tweet_modal #modal {
     width: 100%;
+  }
+}
+
+#home.admin {
+  display: inline-block;
+}
+#home.admin h1 {
+  font-size: 2rem;
+  padding: 1rem;
+  text-align: center;
+}
+#home.admin #administator {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 900px) {
+  #home {
+    grid-template-areas: "nav main main";
+  }
+  #home #main_aside {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  #tweet_modal #modal {
+    width: 100%;
+  }
+
+  #home {
+    height: 100%;
+    display: block;
+  }
+  #home #main_content {
+    min-width: unset;
+    max-width: none;
+  }
+  #home #page_title {
+    position: relative;
+  }
+  #home #main_navigation {
+    height: 50px;
+    width: auto;
+    max-width: none;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 110;
+    border-bottom: solid #f8f2ea thin;
+  }
+  #home #main_navigation div {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  #home #main_navigation div header {
+    height: 30px;
+    width: 30px;
+  }
+  #home #main_navigation div footer {
+    display: none !important;
+  }
+  #home #main_navigation div main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: auto;
+  }
+  #home #main_navigation div main button {
+    height: 100%;
+    width: auto;
+    background-color: #0000;
+    border: none;
+    text-decoration: none;
+    color: black;
+    padding: 0 20px;
+    order: 1;
+  }
+  #home #main_navigation div main button:hover {
+    color: #dda900;
+  }
+  #home #main_navigation div main button:last-of-type {
+    order: 0;
+  }
+  #home #main_aside {
+    display: none !important;
   }
 }
 

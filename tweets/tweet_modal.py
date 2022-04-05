@@ -16,12 +16,25 @@ def _(tweet_id):
         return redirect("/login")
     else:
         db = None
+        redirectPath = None
         try:
             ###### connect to database
             db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
             ##### get user id
             user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
+
+            if tweet_id != 'new':
+                ##### check that the tweet belongs to the user logged in
+                tweet_and_user_id_match = len(db.execute(f"""
+                    SELECT *
+                    FROM tweets
+                    WHERE tweet_id == :tweet_id AND tweet_user_id == :user_id
+                    """, (tweet_id, user_id)).fetchall())
+                if tweet_and_user_id_match != 1:
+                    # redirectPath = "/home?error=notyourtweet"
+                    redirectPath = "/home"
+                    return
 
             ###### select all tweets with user information
             tweet_values = ["tweet_id", "tweet_text", "tweet_created_at", "tweet_updated_at", "tweet_image", "tweet_user_id", "user_username", "user_display_name"]
@@ -60,6 +73,13 @@ def _(tweet_id):
                 tweet_object["tweet_updated_at_datetime"] = date_text_from_epoch(tweet_object["tweet_updated_at"]) if tweet_object["tweet_updated_at"] else None
                 tweets[tweet_object["tweet_id"]] = tweet_object
 
+
+            ##### select all follow data            
+            all_followers_data = db.execute(f"""
+                SELECT fk_user_id_follower AS user_id_follower, fk_user_id_to_follow AS user_id_to_follow
+                FROM followers
+                """).fetchall()
+
             ###### select all users
             users_values = ["user_id", "user_display_name", "user_username"]
             all_users = db.execute(f"""
@@ -73,6 +93,18 @@ def _(tweet_id):
                 for index, value in enumerate(users_values):
                     user_dict[value] = user[index]
                 users.append(user_dict)
+                
+                ##### has the user liked the tweet and list of likes
+                user_followed_by = []
+                user_dict["is_following"] = False
+                for index, follow in enumerate(all_followers_data):
+                    if follow[1] == user_dict["user_id"]:
+                        user_followed_by.append(follow)
+                    if follow[1] == user_dict["user_id"] and follow[0] == user_id:
+                        user_dict["is_following"] = True
+                
+                ##### number of likes
+                user_dict["followers"] = len(user_followed_by)
 
             is_xhr = True if request.headers.get('spa') else False
             if tweet_id == "new":
@@ -130,3 +162,5 @@ def _(tweet_id):
         finally:
             if db != None:
                 db.close()
+            if redirectPath:
+                return redirect(redirectPath)

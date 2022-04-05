@@ -1,0 +1,22 @@
+<aside id="main_aside">
+    <div>
+        <header>
+            SEARCH
+        </header>
+        <main>
+            <header>
+                Who to follow
+            </header>
+            <main>
+                % for user in users[:5]:
+                % if user['user_id'] != user_id:
+                % include('profile_display', user=user)
+                % end
+                % end
+            </main>
+            <footer>
+                Show more
+            </footer>
+        </main>
+    </div>
+</aside>

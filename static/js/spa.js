@@ -22,8 +22,6 @@ const spa = async (url, replace_state = true, event) => {
   // Fetch the html content
   let conn = await fetch(url, { headers: { spa: "yes" } });
   let html = await conn.text();
-  console.log(conn);
-  console.log(conn.url, window.location.href);
 
   // set the html to the content
   document.querySelector("body").innerHTML = html;
@@ -34,10 +32,7 @@ const spa = async (url, replace_state = true, event) => {
   document.title = title;
 
   // set state
-  if (replace_state) {
-    history.pushState({ url: url }, "", url);
-  }
-  if (conn.url !== window.location.href) {
+  if (replace_state || conn.url !== url) {
     history.pushState({ url: conn.url }, "", conn.url);
   }
 };

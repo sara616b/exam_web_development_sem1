@@ -15,10 +15,10 @@
     </main>
 </main>
 % if modal and modal == 'login':
-% include('login_modal')
+% include('login_modal', error=error, email=email)
 % end
 % if modal and modal == 'signup':
-% include('signup_modal')
+% include('signup_modal', errors=errors, form_values=form_values)
 % end
 % if not is_xhr:
 % include('footer')

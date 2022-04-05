@@ -6,14 +6,17 @@ function _one(q, e = document) {
 }
 
 function validate(form) {
-  console.log(form);
-  console.log("validate");
+  //    hide all error messages
+  const errors = form.querySelectorAll(".error_message");
+  errors.forEach((error) => {
+    error.classList.add("hidden");
+  });
+
+  //    validate labels
   const labels = form.querySelectorAll("label");
-  console.log(labels);
   labels.forEach((label) => {
     const input = label.querySelector("input");
-    const error = label.querySelector("span.error_message");
-    console.log(input.type);
+    const error = label.querySelector("span.error_to_validate");
     input.classList.remove("validate_error");
     if (error) {
       console.log(error);
@@ -24,7 +27,7 @@ function validate(form) {
       input.classList.add("validate_error");
       error.classList.remove("hidden");
       error.querySelector("span").textContent = "is required";
-    } else if (input.type == "text") {
+    } else if (input.type == "text" || input.type == "password") {
       if (input.dataset.min && input.dataset.min > input.value.length) {
         //      min length
         input.classList.add("validate_error");
@@ -32,9 +35,9 @@ function validate(form) {
         error.querySelector("span").textContent = "is too short";
       } else if (input.dataset.max && input.dataset.max < input.value.length) {
         //      max length
-        input.classList.add("validate_error");
-        error.classList.remove("hidden");
-        error.querySelector("span").textContent = "is too long";
+        // input.classList.add("validate_error");
+        // error.classList.remove("hidden");
+        // error.querySelector("span").textContent = "is too long";
       } else if (
         input.dataset.email &&
         !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(

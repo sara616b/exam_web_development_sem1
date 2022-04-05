@@ -1,81 +1,48 @@
+% if not is_xhr:
 % include('header')
-<main id="home">
-    <nav>
-        <div>
-            <header>
-                % include('logo_icon')
-            </header>
-            <main>
-                <button id="id{{user['user_id']}}" onclick="go_to_profile(event)" class="button">PROFILE</button>
-                <button class="button color">TWEET</button>
-                <button onclick="logout(event)" class="link">LOG OUT</button>
-            </main>
-            <footer>
-                <section>
-                    % include('profile_icon')
-                </section>
-                <section>
-                    <p>
-                        % if user:
-                        {{user["user_display_name"]}}
-                        % else:
-                        Name
-                        % end
-                    </p>
-                    <p>
-                        % if user:
-                        @{{user["user_username"]}}
-                        % else:
-                        @username
-                        % end
-                    </p>
-                </section>
-            </footer>
-        </div>
-    </nav>
+% end
+<main id="home" class="content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
+    % include('navigation', users=users)
     <main id="profile-content">
-        <header>
-            <button>🡠</button>
-            {{profile_user['user_username']}}
+        <header id="page_title">
+            <button onclick="spa('/home', true, event);">🡠</button>
+            @{{user_profile_to_display['user_username']}}
         </header>
         <main>
             <header>
                 <section class="background"></section>
                 <header>
                     % include('profile_icon')
-                    <button class="button color">FOLLOW</button>
+                    % if user_id != user_profile_to_display["user_id"]:
+                    % if user_profile_to_display['is_following']:
+                    <button onclick="follow_user(event)" id="id{{user_profile_to_display['user_id']}}"
+                        class="button followedTrue">FOLLOWING</button>
+                    % else:
+                    <button onclick="follow_user(event)" id="id{{user_profile_to_display['user_id']}}"
+                        class="button color">FOLLOW</button>
+                    % end
+                    % end
                 </header>
                 <main>
-                    <h2>{{profile_user['user_display_name']}}</h2>
-                    <p>{{profile_user['user_username']}}</p>
+                    <h2>{{user_profile_to_display['user_display_name']}}</h2>
+                    <p>@{{user_profile_to_display['user_username']}}</p>
+                    <p>{{user_profile_to_display['followers']}} followers</p>
                 </main>
             </header>
             <main>
-                % for tweet in tweets:
-                % include('tweet_display', tweets=tweets, tweet=tweet)
+                % for one_tweet in tweets:
+                % if tweets[one_tweet]['user_username'] == user_profile_to_display['user_username']:
+                % include('tweet_display', tweets=tweets, tweet=one_tweet, user_id=user_id)
+                % end
                 % end
             </main>
         </main>
     </main>
-    <aside>
-        <div>
-            <header>
-                SEARCH
-            </header>
-            <main>
-                <header>
-                    Who to follow
-                </header>
-                <main>
-                    % for one_user in other_users[:5]:
-                    % include('profile_display', user=one_user)
-                    % end
-                </main>
-                <footer>
-                    Show more
-                </footer>
-            </main>
-        </div>
-    </aside>
+    % include('aside', users=users)
 </main>
+% if modal and modal == 'tweet':
+% include('tweet_modal', tweet_id=tweet_id, tweet=tweet, type='edit')
+% end
+% if not is_xhr:
 % include('footer')
+% end

@@ -1,11 +1,15 @@
 const remove_selected_image = (event) => {
+  console.log("remove_selected_image");
   event.preventDefault();
   event.stopPropagation();
   const image_input = document.querySelector("#tweet_image");
   image_input.value = "";
+  console.log(image_input.value);
   const image_name_display = document.querySelector("#image_name");
-  if (image_input.value === "") {
+  if (image_input.value == "") {
+    console.log("in if statement");
     image_name_display.textContent = "No image";
+    console.log(image_name_display);
     document
       .querySelector("label[for='tweet_image']")
       .classList.remove("hidden");
@@ -14,6 +18,7 @@ const remove_selected_image = (event) => {
 };
 
 const tweet_image_changed = (event) => {
+  console.log("tweet_image_changed");
   const image_filename = event.target.value.slice(
     event.target.value.lastIndexOf("\\") + 1
   );
@@ -54,7 +59,7 @@ const delete_tweet = async (event) => {
 };
 
 const like_tweet = async (event) => {
-  tweet_id = event.target.id.slice(4);
+  const tweet_id = event.target.id.slice(4);
   if (!event.target.classList.contains("likedTrue")) {
     await fetch("/tweets/like/" + tweet_id, {
       method: "POST",
@@ -76,8 +81,42 @@ const like_tweet = async (event) => {
   spa("/home", true, event);
 };
 
-const open_profile = (event) => {
-  console.log("click on profile");
+const follow_user = async (event) => {
+  const user_id_to_follow = event.target.id.slice(2);
+  if (!event.target.classList.contains("followedTrue")) {
+    await fetch("/users/follow/" + user_id_to_follow, {
+      method: "POST",
+    }).then((response) => {
+      if (!response.ok) {
+        return;
+      }
+    });
+  } else {
+    await fetch("/users/follow/" + user_id_to_follow, {
+      method: "DELETE",
+    }).then((response) => {
+      if (!response.ok) {
+        return;
+      }
+    });
+  }
+  // get home feed
+  spa(window.location.pathname, true, event);
+};
+
+const open_profile = async (event, click = false) => {
+  if (event.target.tagName == "BUTTON" && click == false) {
+    return;
+  }
+  const username = event.target.id.slice(2);
+  await fetch("/profile/" + username, {
+    method: "GET",
+  }).then((response) => {
+    if (!response.ok) {
+      return;
+    }
+    spa("/profile/" + username, true, event);
+  });
 };
 
 const post_new_tweet = async (event) => {
@@ -128,8 +167,13 @@ const sign_up = async (event) => {
       if (!response.ok) {
         return;
       }
-      // get to login
-      spa("/login", true, event);
+      if (response.redirected) {
+        // if it's been redirected there're errors send with query string
+        spa(response.url, true, event);
+      } else {
+        // get to login
+        spa("/login", true, event);
+      }
     });
   }
 };
@@ -139,7 +183,6 @@ const log_in = async (event) => {
   event.stopPropagation();
   const form = event.target.form;
   const is_valid = validate(form);
-  console.log("is_valid", is_valid);
   if (is_valid) {
     await fetch("/login", {
       method: "POST",
@@ -148,8 +191,25 @@ const log_in = async (event) => {
       if (!response.ok) {
         return;
       }
-      // get to home feed
-      spa("/home", true, event);
+      if (response.redirected) {
+        // if it's been redirected there're errors send with query string
+        spa(response.url, true, event);
+      } else {
+        // get to home feed
+        spa("/home", true, event);
+      }
     });
   }
+};
+
+const admin_delete_tweet = async (event) => {
+  const tweet_id = event.target.id.slice(2);
+  await fetch("/admin/delete/" + tweet_id, {
+    method: "DELETE",
+  }).then((response) => {
+    if (!response.ok) {
+      return;
+    }
+    spa("/administrator", true, event);
+  });
 };

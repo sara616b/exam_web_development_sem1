@@ -39,7 +39,6 @@ def _():
             # image 
             image = request.files.get("tweet_image")
             image_name = None
-            print(image)
             if image:
                 # get extention and validate
                 file_name, file_extension = os.path.splitext(image.filename)

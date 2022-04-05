@@ -1,4 +1,4 @@
-<article onclick="open_profile(event)" id="id{{user['user_id']}}">
+<article onclick="open_profile(event)" id="id{{user['user_username']}}" class="profile_display">
     <section>
         <section>
             % include('profile_icon')
@@ -8,7 +8,9 @@
             <p>@{{user['user_username']}}</p>
         </section>
     </section>
-    <section>
-        <button class="button color">FOLLOW</button>
-    </section>
+    % if user['is_following']:
+    <button onclick="follow_user(event)" id="id{{user['user_id']}}" class="button followedTrue">FOLLOWING</button>
+    % else:
+    <button onclick="follow_user(event)" id="id{{user['user_id']}}" class="button color">FOLLOW</button>
+    % end
 </article>
