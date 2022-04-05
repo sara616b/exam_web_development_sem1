@@ -18,6 +18,12 @@ def _(tweet_id):
         db = None
         redirectPath = None
         try:
+            ##### get errors from query string
+            error = request.params.get("error")
+
+            ##### get tweet text from params to set as value in input 
+            tweet_text = request.params.get("text")
+
             ###### connect to database
             db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
@@ -118,10 +124,11 @@ def _(tweet_id):
                     modal='tweet',
                     tweet=None,
                     is_xhr=is_xhr,
+                    error=error,
+                    tweet_text=tweet_text,
                     )
             
             tweet_to_edit = {}
-            error = request.params.get("error")
             
             # get tweet info from database
             tweet = db.execute("""
@@ -140,7 +147,8 @@ def _(tweet_id):
             
             # TODO redirect if tweet doesn't exist
             if not tweet:
-                return redirect("/home")
+                redirectPath = "/home"
+                return
 
             return dict(
                 user_id=user_id,
@@ -151,14 +159,17 @@ def _(tweet_id):
                 url="/tweets/" + tweet_id,
                 title="Edit tweet",
                 modal='tweet',
-                is_xhr=is_xhr
+                is_xhr=is_xhr,
+                error=error,
+                tweet_text=tweet_text,
                 )
                 
 
         except Exception as ex:
             print(ex)
             response.status = 500
-            # return redirect("/")
+            return redirect("/home")
+
         finally:
             if db != None:
                 db.close()

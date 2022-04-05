@@ -54,7 +54,7 @@ def _():
                 WHERE user_email IS :user_email AND user_password IS :user_password
                 """, (email, request.forms.get("login_password"))).fetchone()
             if not user_id or len(user_id) != 1:
-                redirectPath = ("/login?error=error")
+                redirectPath = (f"/login?error=no-match&email={email}")
                 return
             user_id = user_id[0]
 

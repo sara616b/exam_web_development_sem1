@@ -23,7 +23,6 @@ def _(profile_username):
 
             ###### connect to database
             db = sqlite3.connect(f"{get_file_path()}/database/database.db")
-            print("after check login")
             
             ###### select all tweets with user information
             tweet_values = ["tweet_id", "tweet_text", "tweet_created_at", "tweet_updated_at", "tweet_image", "tweet_user_id", "user_username", "user_display_name"]
@@ -73,7 +72,6 @@ def _(profile_username):
                 tweet_object["tweet_time_since_created"] = time_since_from_epoch(tweet_object["tweet_created_at"])
                 tweet_object["tweet_updated_at_datetime"] = date_text_from_epoch(tweet_object["tweet_updated_at"]) if tweet_object["tweet_updated_at"] else None
                 tweets[tweet_object["tweet_id"]] = tweet_object
-                print(tweet_object)
 
             ###### select all users and add to list
             users_values = ["user_id", "user_display_name", "user_username"]

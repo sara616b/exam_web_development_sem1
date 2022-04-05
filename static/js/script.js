@@ -1,15 +1,11 @@
 const remove_selected_image = (event) => {
-  console.log("remove_selected_image");
   event.preventDefault();
   event.stopPropagation();
   const image_input = document.querySelector("#tweet_image");
   image_input.value = "";
-  console.log(image_input.value);
   const image_name_display = document.querySelector("#image_name");
   if (image_input.value == "") {
-    console.log("in if statement");
     image_name_display.textContent = "No image";
-    console.log(image_name_display);
     document
       .querySelector("label[for='tweet_image']")
       .classList.remove("hidden");
@@ -18,7 +14,6 @@ const remove_selected_image = (event) => {
 };
 
 const tweet_image_changed = (event) => {
-  console.log("tweet_image_changed");
   const image_filename = event.target.value.slice(
     event.target.value.lastIndexOf("\\") + 1
   );
@@ -108,7 +103,10 @@ const open_profile = async (event, click = false) => {
   if (event.target.tagName == "BUTTON" && click == false) {
     return;
   }
-  const username = event.target.id.slice(2);
+  let username = undefined;
+  if (event.target.dataset.username)
+    username = event.target.dataset.username.slice(2);
+  if (username == undefined) username = event.target.id.slice(2);
   await fetch("/profile/" + username, {
     method: "GET",
   }).then((response) => {
@@ -123,34 +121,49 @@ const post_new_tweet = async (event) => {
   event.preventDefault();
   event.stopPropagation();
   const form = event.target.form;
-  await fetch("/tweets/new", {
-    method: "POST",
-    body: new FormData(form),
-  }).then((response) => {
-    if (!response.ok) {
-      return;
-    }
-    // get home feed
-    spa("/home", true, event);
-  });
+  const is_valid = validate(form);
+  if (is_valid) {
+    await fetch("/tweets/new", {
+      method: "POST",
+      body: new FormData(form),
+    }).then((response) => {
+      if (!response.ok) {
+        return;
+      }
+      if (response.redirected) {
+        // if it's been redirected there're errors send with query string
+        spa(response.url, true, event);
+      } else {
+        // get home feed
+        spa("/home", true, event);
+      }
+    });
+  }
 };
 
 const put_edited_tweet = async (event) => {
   event.preventDefault();
   event.stopPropagation();
-  console.log(event);
   const form = event.target.form;
   const tweet_id = event.target.id.slice(2);
-  await fetch("/tweets/" + tweet_id, {
-    method: "PUT",
-    body: new FormData(form),
-  }).then((response) => {
-    if (!response.ok) {
-      return;
-    }
-    // get home feed
-    spa("/home", true, event);
-  });
+  const is_valid = validate(form);
+  if (is_valid) {
+    await fetch("/tweets/" + tweet_id, {
+      method: "PUT",
+      body: new FormData(form),
+    }).then((response) => {
+      if (!response.ok) {
+        return;
+      }
+      if (response.redirected) {
+        // if it's been redirected there're errors send with query string
+        spa(response.url, true, event);
+      } else {
+        // get home feed
+        spa("/home", true, event);
+      }
+    });
+  }
 };
 
 const sign_up = async (event) => {
@@ -158,7 +171,6 @@ const sign_up = async (event) => {
   event.stopPropagation();
   const form = event.target.form;
   const is_valid = validate(form);
-  console.log("is_valid", is_valid);
   if (is_valid) {
     await fetch("/signup", {
       method: "POST",

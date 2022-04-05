@@ -14,53 +14,68 @@ function validate(form) {
 
   //    validate labels
   const labels = form.querySelectorAll("label");
-  labels.forEach((label) => {
-    const input = label.querySelector("input");
-    const error = label.querySelector("span.error_to_validate");
-    input.classList.remove("validate_error");
-    if (error) {
-      console.log(error);
-      error.classList.add("hidden");
-    }
-    if (input.dataset.required && !input.value) {
-      //      required
-      input.classList.add("validate_error");
-      error.classList.remove("hidden");
-      error.querySelector("span").textContent = "is required";
-    } else if (input.type == "text" || input.type == "password") {
-      if (input.dataset.min && input.dataset.min > input.value.length) {
-        //      min length
-        input.classList.add("validate_error");
-        error.classList.remove("hidden");
-        error.querySelector("span").textContent = "is too short";
-      } else if (input.dataset.max && input.dataset.max < input.value.length) {
-        //      max length
-        // input.classList.add("validate_error");
-        // error.classList.remove("hidden");
-        // error.querySelector("span").textContent = "is too long";
-      } else if (
-        input.dataset.email &&
-        !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-          input.value.toLowerCase()
-        )
-      ) {
-        input.classList.add("validate_error");
-        error.classList.remove("hidden");
-        error.querySelector("span").textContent = "is not valid";
+  if (labels) {
+    labels.forEach((label) => {
+      if (label.control.type !== "file") {
+        let input = label.querySelector("input");
+        if (input == null) {
+          input = label.querySelector("textarea");
+        }
+        const error = label.querySelector("span.error_to_validate");
+        input.classList.remove("validate_error");
+        if (error) {
+          error.classList.add("hidden");
+        } else {
+          return true;
+        }
+        if (input.dataset.required && !input.value) {
+          //      required
+          input.classList.add("validate_error");
+          error.classList.remove("hidden");
+          error.querySelector("span").textContent = "is required";
+        } else if (
+          input.type == "text" ||
+          input.type == "password" ||
+          input.type == "textarea"
+        ) {
+          if (input.dataset.min && input.dataset.min > input.value.length) {
+            //      min length
+            input.classList.add("validate_error");
+            error.classList.remove("hidden");
+            error.querySelector("span").textContent = "is too short";
+          } else if (
+            input.dataset.max &&
+            input.dataset.max < input.value.length
+          ) {
+            //      max length
+            input.classList.add("validate_error");
+            error.classList.remove("hidden");
+            error.querySelector("span").textContent = "is too long";
+          } else if (
+            input.dataset.email &&
+            !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+              input.value.toLowerCase()
+            )
+          ) {
+            input.classList.add("validate_error");
+            error.classList.remove("hidden");
+            error.querySelector("span").textContent = "is not valid";
+          }
+        } else if (input.type == "number") {
+          if (
+            input.dataset.number &&
+            (!/^\d+$/.test(input.value) ||
+              parseInt(input.value) < parseInt(input.dataset.min) ||
+              parseInt(input.value) > parseInt(input.dataset.min))
+          ) {
+            input.classList.add("validate_error");
+            error.classList.remove("hidden");
+            error.querySelector("span").textContent = "is not valid";
+          }
+        }
       }
-    } else if (input.type == "number") {
-      if (
-        input.dataset.number &&
-        (!/^\d+$/.test(input.value) ||
-          parseInt(input.value) < parseInt(input.dataset.min) ||
-          parseInt(input.value) > parseInt(input.dataset.min))
-      ) {
-        input.classList.add("validate_error");
-        error.classList.remove("hidden");
-        error.querySelector("span").textContent = "is not valid";
-      }
-    }
-  });
+    });
+  }
 
   if (!form.querySelector(".validate_error")) {
     return true;

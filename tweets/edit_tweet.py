@@ -18,7 +18,7 @@ def _(tweet_id):
         return redirect("/login")
     else:
         db = None
-        redirectPath = "/"
+        redirectPath = "/home"
 
         try:
             user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
@@ -41,10 +41,16 @@ def _(tweet_id):
             tweet_text = request.forms.get("tweet_text")
             if not tweet_text:
                 # text is required in tweets
-                redirectPath = f"/tweets/edit/{tweet_id}?error=empty"
+                response.status = 204
+                redirectPath = f"/tweets/{tweet_id}?error=empty"
                 return
-            if len(request.forms.get("tweet_text")) > 250:
-                redirectPath = f"/tweets/edit/{tweet_id}?error=long"
+            if len(tweet_text) < 2:
+                response.status = 400
+                redirectPath = f"/tweets/{tweet_id}?error=short&text={tweet_text}"
+                return
+            if len(tweet_text) > 250:
+                response.status = 400
+                redirectPath = f"/tweets/{tweet_id}?error=long&text={tweet_text}"
                 return
             if tweet_text:
                 updated_tweet_data["tweet_text"] = tweet_text
@@ -109,7 +115,7 @@ def _(tweet_id):
                 """, updated_tweet_data)
             db.commit()
 
-            return 
+            return redirect("/home")
 
         except Exception as ex:
             print(ex)
@@ -119,4 +125,4 @@ def _(tweet_id):
         finally:
             if db != None:
                 db.close()
-            return redirect("/home")
+            return redirect(redirectPath)

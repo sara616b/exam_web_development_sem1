@@ -7,11 +7,33 @@
             % include('profile_icon')
         </section>
         <section id="form_content">
-            <textarea name="tweet_text" id="tweet_text" type="text" placeholder="What're you thinking about?">
+
+            <label for="tweet_text">
+
+                % if get('error'):
+                % if error == "empty":
+                <span class="error_message">Tweet must contain text</span>
+                % end
+                % if error == "short":
+                <span class="error_message">Tweet must be 2 or more characters long</span>
+                % end
+                % if error == "long":
+                <span class="error_message">Tweet can only be 250 characters long</span>
+                % end
+                % end
+                <span class="error_message error_to_validate hidden">Tweet text <span></span></span>
+
+
+
+
+                <textarea name="tweet_text" id="tweet_text" type="text" data-required="true" data-min="2" data-max="250" placeholder="What're you thinking about?">
             % if get('tweet') and type == 'edit':
 {{tweet['tweet_text']}}
+            % elif get('tweet_text'):
+{{tweet_text}}
             % end
 </textarea>
+            </label>
             <footer id="new_tweet_actions">
                 <section id="image_actions">
                     % if get('tweet_id') and tweet_id != "new" and tweet['tweet_image'] and type == 'edit':

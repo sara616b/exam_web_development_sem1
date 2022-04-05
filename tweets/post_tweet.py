@@ -18,7 +18,7 @@ def _():
         return redirect("/login")
     else:
         db = None
-        redirectPath = "/"
+        redirectPath = "/home"
         try:
             user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
             
@@ -26,12 +26,15 @@ def _():
             new_tweet_text = request.forms.get("tweet_text")
             if not new_tweet_text:
                 # cant post empty tweets
+                response.status = 204
                 redirectPath = "/tweets/new?error=empty"
                 return
             if len(new_tweet_text) < 2:
+                response.status = 400
                 redirectPath = f"/tweets/new?error=short&text={new_tweet_text}"
                 return
             if len(new_tweet_text) > 250:
+                response.status = 400
                 redirectPath = f"/tweets/new?error=long&text={new_tweet_text}"
                 return
             new_tweet_text = new_tweet_text.replace("\n", "<br />")
@@ -97,4 +100,4 @@ def _():
         finally:
             if db != None:
                 db.close()
-            # return redirect(redirectPath)
+            return redirect(redirectPath)

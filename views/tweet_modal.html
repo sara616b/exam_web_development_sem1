@@ -7,6 +7,6 @@
         % else:
         <h2>Edit tweet</h2>
         % end
-        % include('tweet_form', tweet_id=get('tweet_id', None), tweet=get('tweet', None), type=type)
+        % include('tweet_form', tweet_id=get('tweet_id', None), tweet=get('tweet', None), type=type, error=get('error', None), tweet_text=get('tweet_text', None))
     </main>
 </main>
