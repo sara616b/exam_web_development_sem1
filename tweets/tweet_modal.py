@@ -4,7 +4,6 @@ import jwt
 
 from settings import get_file_path, check_if_logged_in, time_since_from_epoch, date_text_from_epoch, REGEX_EMAIL, JWT_KEY
 
-# @get("/tweets")
 @get("/tweets/<tweet_id>")
 @view("home.html")
 def _(tweet_id):
@@ -20,6 +19,20 @@ def _(tweet_id):
         try:
             ##### get errors from query string
             error = request.params.get("error")
+            possible_errors = [
+                {
+                    "error": "empty",
+                    "message": "Tweet must contain text",
+                },
+                {
+                    "error": "short",
+                    "message": "Tweet must be 2 or more characters long",
+                },
+                {
+                    "error": "long",
+                    "message": "Tweet can only be 250 characters long",
+                },
+            ]
 
             ##### get tweet text from params to set as value in input 
             tweet_text = request.params.get("text")
@@ -126,6 +139,7 @@ def _(tweet_id):
                     is_xhr=is_xhr,
                     error=error,
                     tweet_text=tweet_text,
+                    possible_errors=possible_errors,
                     )
             
             tweet_to_edit = {}
@@ -162,6 +176,7 @@ def _(tweet_id):
                 is_xhr=is_xhr,
                 error=error,
                 tweet_text=tweet_text,
+                possible_errors=possible_errors,
                 )
                 
 

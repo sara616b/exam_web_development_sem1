@@ -99,22 +99,27 @@ const follow_user = async (event) => {
   spa(window.location.pathname, true, event);
 };
 
-const open_profile = async (event, click = false) => {
-  if (event.target.tagName == "BUTTON" && click == false) {
-    return;
-  }
-  let username = undefined;
-  if (event.target.dataset.username)
-    username = event.target.dataset.username.slice(2);
-  if (username == undefined) username = event.target.id.slice(2);
-  await fetch("/profile/" + username, {
+const open_profile = async (event) => {
+  console.log(event);
+  const username = event.target.dataset.username.slice(2);
+  console.log(username);
+  // if (username == undefined) username = event.target.id.slice(2);
+  await fetch("/profiles/" + username, {
     method: "GET",
   }).then((response) => {
     if (!response.ok) {
       return;
     }
-    spa("/profile/" + username, true, event);
+    spa("/profiles/" + username, true, event);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   });
+};
+
+const open_home = (event) => {
+  spa("/home", true, event);
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
 };
 
 const post_new_tweet = async (event) => {
@@ -137,6 +142,8 @@ const post_new_tweet = async (event) => {
         // get home feed
         spa("/home", true, event);
       }
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
     });
   }
 };
@@ -210,6 +217,8 @@ const log_in = async (event) => {
         // get to home feed
         spa("/home", true, event);
       }
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
     });
   }
 };

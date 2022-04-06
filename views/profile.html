@@ -5,7 +5,7 @@
     % include('navigation', users=users)
     <main id="profile-content">
         <header id="page_title">
-            <button onclick="spa('/home', true, event);">🡠</button>
+            <button onclick="open_home(event);">🡠</button>
             @{{user_profile_to_display['user_username']}}
         </header>
         <main>
@@ -15,15 +15,13 @@
                     % include('profile_icon')
                     % if user_id != user_profile_to_display["user_id"]:
                     % if user_profile_to_display['is_following']:
-                    <button onclick="follow_user(event)" id="id{{user_profile_to_display['user_id']}}"
-                        class="button followedTrue">FOLLOWING</button>
+                    <button onclick="follow_user(event)" id="id{{user_profile_to_display['user_id']}}" class="button followedTrue">FOLLOWING</button>
                     % else:
-                    <button onclick="follow_user(event)" id="id{{user_profile_to_display['user_id']}}"
-                        class="button color">FOLLOW</button>
+                    <button onclick="follow_user(event)" id="id{{user_profile_to_display['user_id']}}" class="button color">FOLLOW</button>
                     % end
                     % end
                 </header>
-                <main>
+                <main class="user_info">
                     <h2>{{user_profile_to_display['user_display_name']}}</h2>
                     <p>@{{user_profile_to_display['user_username']}}</p>
                     <p>{{user_profile_to_display['followers']}} followers</p>
@@ -40,9 +38,6 @@
     </main>
     % include('aside', users=users)
 </main>
-% if modal and modal == 'tweet':
-% include('tweet_modal', tweet_id=tweet_id, tweet=tweet, type='edit')
-% end
 % if not is_xhr:
 % include('footer')
 % end

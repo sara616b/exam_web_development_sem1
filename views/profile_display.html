@@ -1,13 +1,13 @@
-<article onclick="open_profile(event)" id="id{{user['user_username']}}" class="profile_display">
-    <section>
-        <section>
+<article class="profile_display">
+    <section onclick="open_profile(event)" data-username="id{{user['user_username']}}">
+        <section class="no_click">
             % include('profile_icon')
         </section>
-        <section>
-            <p>{{user['user_display_name']}}</p>
-            <p>@{{user['user_username']}}</p>
+        <section class="no_click">
+            <p class="no_click">{{user['user_display_name']}}</p>
+            <p class="no_click">@{{user['user_username']}}</p>
         </section>
-    </section>
+    </section class="no_click">
     % if user['is_following']:
     <button onclick="follow_user(event)" id="id{{user['user_id']}}" class="button followedTrue">FOLLOWING</button>
     % else:

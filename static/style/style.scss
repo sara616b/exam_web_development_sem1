@@ -238,6 +238,7 @@ label {
     }
   }
 }
+
 #page_title {
   padding: 1rem 0.4rem;
   position: sticky;
@@ -245,14 +246,19 @@ label {
   opacity: 0.97;
   font-weight: bold;
   top: 0;
+  display: flex;
+  flex-direction: row;
   button {
+    background-color: #0000;
+    border: none;
+    width: auto;
+    margin-right: 0.5rem;
     &:hover {
       cursor: pointer;
       opacity: 0.6;
     }
   }
 }
-
 #logo_container {
   &:hover {
     cursor: pointer;
@@ -261,8 +267,10 @@ label {
 }
 #home {
   display: grid;
+  grid-template-columns: 1fr minmax(50%, 600px) 1fr;
   grid-template-areas: "nav main aside";
-  height: 100vh;
+  max-width: 1100px;
+  margin: 0 auto;
 
   //   sides are sticky
   #main_navigation,
@@ -341,6 +349,9 @@ label {
         border: solid $tertiar-color thin;
       }
     }
+    .user_info {
+      margin: 1rem;
+    }
   }
   .tweet_container {
     padding: 1.5rem 0.5rem;
@@ -349,6 +360,10 @@ label {
     flex-direction: row;
     .icon_container {
       width: 40px;
+      &:hover {
+        cursor: pointer;
+        opacity: 0.6;
+      }
       svg {
         width: 40px;
         height: 40px;
@@ -465,52 +480,6 @@ label {
           border-top: solid $secondary-color thin;
           border-bottom: solid $secondary-color thin;
           border-radius: 0;
-          article {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.2rem 0.8rem;
-            &:hover {
-              background-color: $light-color;
-              cursor: pointer;
-            }
-            button {
-              height: 100%;
-              width: auto;
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              font-size: 0.8rem;
-            }
-            section {
-              height: 100%;
-              width: auto;
-              padding: 0.4rem 0;
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              section {
-                height: 100%;
-                width: auto;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-              }
-              &:last-child {
-              }
-              p {
-                padding: 0 0.4rem;
-                font-size: 0.8rem;
-              }
-              svg {
-                width: 30px;
-                height: 30px;
-                fill: $secondary-color;
-                border-radius: 50%;
-              }
-            }
-          }
         }
       }
     }
@@ -518,24 +487,59 @@ label {
 }
 
 .profile_display {
-  section,
-  section section,
-  section section p {
-    pointer-events: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2rem 0.8rem;
+  &:hover {
+    background-color: $light-color;
+    cursor: pointer;
   }
-}
-
-#profile-content {
-  & > header {
+  button {
+    height: 100%;
+    width: auto;
     display: flex;
     flex-direction: row;
-    button {
-      background-color: #0000;
-      border: none;
+    align-items: center;
+    font-size: 0.8rem;
+  }
+  section {
+    height: 100%;
+    padding: 0.4rem 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    section {
+      height: 100%;
       width: auto;
-      margin-right: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    p {
+      padding: 0 0.4rem;
+      font-size: 0.8rem;
+    }
+    svg {
+      width: 30px;
+      height: 30px;
+      fill: $secondary-color;
+      border-radius: 50%;
     }
   }
+}
+#profile-content {
+  // & > header {
+  //   display: flex;
+  //   flex-direction: row;
+  //   button {
+  //     background-color: #0000;
+  //     border: none;
+  //     width: auto;
+  //     margin-right: 0.5rem;
+  //   }
+  // }
   & > main {
     & > header {
       .background {
@@ -754,8 +758,6 @@ label {
     }
     #main_aside {
       display: none !important;
-    }
-    #main_content {
     }
   }
 }

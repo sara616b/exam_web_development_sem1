@@ -252,6 +252,14 @@ label span.error_message {
   opacity: 0.97;
   font-weight: bold;
   top: 0;
+  display: flex;
+  flex-direction: row;
+}
+#page_title button {
+  background-color: #0000;
+  border: none;
+  width: auto;
+  margin-right: 0.5rem;
 }
 #page_title button:hover {
   cursor: pointer;
@@ -265,8 +273,10 @@ label span.error_message {
 
 #home {
   display: grid;
+  grid-template-columns: 1fr minmax(50%, 600px) 1fr;
   grid-template-areas: "nav main aside";
-  height: 100vh;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 #home #main_navigation,
 #home #main_aside {
@@ -341,6 +351,10 @@ label span.error_message {
   padding: 1rem 0.4rem;
   border: solid #f8f2ea thin;
 }
+#home #main_content .user_info,
+#home #profile-content .user_info {
+  margin: 1rem;
+}
 #home .tweet_container {
   padding: 1.5rem 0.5rem;
   border: solid #f8f2ea thin;
@@ -349,6 +363,10 @@ label span.error_message {
 }
 #home .tweet_container .icon_container {
   width: 40px;
+}
+#home .tweet_container .icon_container:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }
 #home .tweet_container .icon_container svg {
   width: 40px;
@@ -466,18 +484,19 @@ label span.error_message {
   border-bottom: solid #4d3220 thin;
   border-radius: 0;
 }
-#home #main_aside div main main article {
+
+.profile_display {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 0.2rem 0.8rem;
 }
-#home #main_aside div main main article:hover {
+.profile_display:hover {
   background-color: white;
   cursor: pointer;
 }
-#home #main_aside div main main article button {
+.profile_display button {
   height: 100%;
   width: auto;
   display: flex;
@@ -485,48 +504,31 @@ label span.error_message {
   align-items: center;
   font-size: 0.8rem;
 }
-#home #main_aside div main main article section {
+.profile_display section {
   height: 100%;
-  width: auto;
   padding: 0.4rem 0;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-#home #main_aside div main main article section section {
+.profile_display section section {
   height: 100%;
   width: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-#home #main_aside div main main article section p {
+.profile_display section p {
   padding: 0 0.4rem;
   font-size: 0.8rem;
 }
-#home #main_aside div main main article section svg {
+.profile_display section svg {
   width: 30px;
   height: 30px;
   fill: #4d3220;
   border-radius: 50%;
 }
 
-.profile_display section,
-.profile_display section section,
-.profile_display section section p {
-  pointer-events: none;
-}
-
-#profile-content > header {
-  display: flex;
-  flex-direction: row;
-}
-#profile-content > header button {
-  background-color: #0000;
-  border: none;
-  width: auto;
-  margin-right: 0.5rem;
-}
 #profile-content > main > header .background {
   background-color: #f0a109;
   width: 100%;

@@ -1,0 +1,23 @@
+% if not is_xhr:
+% include('header')
+% end
+<main id="home" class="content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
+    % include('navigation', users=users)
+    <main id="profiles-content">
+        <header id="page_title">
+            <button onclick="open_home(event);">🡠</button>
+            All users
+        </header>
+        <main>
+            % for user in users:
+            % if user["user_id"] != user_id:
+            % include('profile_display', user=user)
+            % end
+            % end
+        </main>
+    </main>
+    % include('aside', users=users)
+</main>
+% if not is_xhr:
+% include('footer')
+% end

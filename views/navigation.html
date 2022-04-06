@@ -1,16 +1,16 @@
 <nav id="main_navigation">
     <div>
-        <header id="logo_container" onclick="spa('/home', true, event);">
+        <header id="logo_container" onclick="open_home(event)">
             % include('logo_icon')
         </header>
         % for user in users:
         % if user['user_id'] == user_id:
         <main id="navigation">
-            <button id="id{{user['user_username']}}" onclick="open_profile(event, true)" class="button">PROFILE</button>
+            <button data-username="id{{user['user_username']}}" onclick="open_profile(event)" class="button">PROFILE</button>
             <button onclick="spa('/tweets/new', true, event);" class="button color">TWEET</button>
             <button onclick="log_out(event)" class="link">LOG OUT</button>
         </main>
-        <footer class="profile_container" onclick="open_profile(event)" id="id{{user['user_username']}}">
+        <footer class="profile_container" onclick="open_profile(event)" data-username="id{{user['user_username']}}">
             <section class="no_click">
                 % include('profile_icon')
             </section>

@@ -35,7 +35,7 @@ from signup import get_signup, post_signup
 from login import login_view, login, logout
 from home import get_home
 from tweets import post_tweet, edit_tweet, delete_tweet, tweet_modal, like_tweet, dislike_tweet
-from user_profile import get_profile, follow_user, unfollow_user
+from user_profile import get_profile, follow_user, unfollow_user, get_all_user
 from administrator import administrator_view, admin_delete_tweet
 
 # SERVER #############################
