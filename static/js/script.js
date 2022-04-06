@@ -49,7 +49,8 @@ const delete_tweet = async (event) => {
     if (!response.ok) {
       return;
     }
-    spa("/home", true, event);
+    // updated the page you're on
+    spa(window.location.pathname, true, event);
   });
 };
 

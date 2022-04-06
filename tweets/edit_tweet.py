@@ -26,7 +26,7 @@ def _(tweet_id):
             updated_tweet_data = {"tweet_id":tweet_id}
 
             # connect database
-            db = sqlite3.connect("database/database.db")
+            db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
             ##### check that the tweet belongs to the user logged in
             tweet_and_user_id_match = len(db.execute(f"""
@@ -115,7 +115,8 @@ def _(tweet_id):
                 """, updated_tweet_data)
             db.commit()
 
-            return redirect("/home")
+            response.status = 200
+            return
 
         except Exception as ex:
             print(ex)
