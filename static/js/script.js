@@ -72,8 +72,8 @@ const like_tweet = async (event) => {
       }
     });
   }
-  // get home feed
-  spa("/home", true, event);
+  // updated the page you're on
+  spa(window.location.pathname, true, event);
 };
 
 const follow_user = async (event) => {

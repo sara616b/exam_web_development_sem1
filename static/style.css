@@ -710,6 +710,7 @@ label span.error_message {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    height: 100%;
   }
   #home #main_navigation div header {
     height: 30px;
