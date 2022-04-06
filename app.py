@@ -3,9 +3,9 @@ import sqlite3
 from settings import get_file_path, check_if_logged_in, time_since_from_epoch, date_text_from_epoch, REGEX_EMAIL, JWT_KEY
 
 # STYLESHEET #########################
-@get("/static/style.css")
+@get("/static/style/style.css")
 def style():
-    return static_file("/static/style.css", root=".")
+    return static_file("/static/style/style.css", root=".")
 
 # SCRIPTS ############################
 @get("/static/js/script.js")
