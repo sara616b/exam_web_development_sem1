@@ -4,7 +4,9 @@
     </section>
     <section id="form_content">
 
-        <label for="tweet_text">
+        <label for="tweet_text" data-to-be-validated="true">
+
+
 
             % if get('error'):
             % for possible_error in possible_errors:
@@ -13,15 +15,17 @@
             % end
             % end
             % end
-            <span class="error_message error_to_validate hidden">Tweet text <span></span></span>
+            <span class="error_message error_span hidden">Tweet text <span></span></span>
 
-            <textarea name="tweet_text" id="tweet_text" type="text" data-required="true" data-min="2" data-max="250" placeholder="What're you thinking about?">
+
+
             % if get('tweet') and type == 'edit':
-{{tweet['tweet_text']}}
+            <textarea name="tweet_text" id="tweet_text" data-required="true" data-min="2" data-max="250" placeholder="What're you thinking about?">{{tweet['tweet_text']}}</textarea>
             % elif get('tweet_text'):
-{{tweet_text}}
+            <textarea name="tweet_text" id="tweet_text" data-required="true" data-min="2" data-max="250" placeholder="What're you thinking about?">{{tweet_text}}</textarea>
+            % else:
+            <textarea name="tweet_text" id="tweet_text" data-required="true" data-min="2" data-max="250" placeholder="What're you thinking about?"></textarea>
             % end
-</textarea>
         </label>
         <footer id="new_tweet_actions">
             <section id="image_actions">

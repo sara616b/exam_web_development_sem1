@@ -486,7 +486,7 @@ label {
   }
 }
 
-.profile_display {
+.user_display {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -685,7 +685,7 @@ label {
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 980px) {
   #home {
     grid-template-areas: "nav main main";
     #main_aside {

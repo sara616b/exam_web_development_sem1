@@ -35,6 +35,7 @@ def _():
         
             ##### username
             username = request.forms.get("signup_username")
+            username.replace(" ", "")
             if not username:
                 errors.append("username-missing")
             elif len(display_name) < 1 or len(display_name) > 100:

@@ -18,16 +18,13 @@ def _(user_id_to_follow):
         return redirect("/login")
     else:
         db = None
-        redirectPath = "/"
         try:
-            user_id = None
             user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
             
-
-            # connect to database
+            ##### connect to database
             db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
-            # insert new tweet to database
+            ##### insert new tweet to database
             db.execute("""
                 INSERT INTO followers
                 VALUES(
@@ -46,4 +43,3 @@ def _(user_id_to_follow):
         finally:
             if db != None:
                 db.close()
-            # return redirect(redirectPath)

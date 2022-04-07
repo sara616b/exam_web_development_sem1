@@ -18,7 +18,6 @@ def _(tweet_id):
         return redirect("/login")
     else:
         db = None
-        redirectPath = "/"
         try:
             user_id = None
             user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
@@ -46,4 +45,3 @@ def _(tweet_id):
         finally:
             if db != None:
                 db.close()
-            # return redirect(redirectPath)

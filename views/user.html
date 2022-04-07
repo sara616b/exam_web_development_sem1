@@ -15,9 +15,9 @@
                     % include('profile_icon')
                     % if user_id != user_profile_to_display["user_id"]:
                     % if user_profile_to_display['is_following']:
-                    <button onclick="follow_user(event)" id="id{{user_profile_to_display['user_id']}}" class="button followedTrue">FOLLOWING</button>
+                    <button onclick="follow_user(event)" data-userid="id{{user_profile_to_display['user_id']}}" class="button followedTrue">FOLLOWING</button>
                     % else:
-                    <button onclick="follow_user(event)" id="id{{user_profile_to_display['user_id']}}" class="button color">FOLLOW</button>
+                    <button onclick="follow_user(event)" data-userid="id{{user_profile_to_display['user_id']}}" class="button color">FOLLOW</button>
                     % end
                     % end
                 </header>

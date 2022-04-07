@@ -6,8 +6,8 @@ import json
 from settings import get_file_path, check_if_logged_in, time_since_from_epoch, date_text_from_epoch, REGEX_EMAIL, JWT_KEY
 
 
-@get("/administrator")
-@view("administrator.html")
+@get("/admin")
+@view("admin.html")
 def _():
     db = None
     try:
@@ -57,7 +57,7 @@ def _():
         return dict(
             users=users,        # all users to display 'who to follow'
             tweets=tweets,      # all tweets for feed
-            url="/administrator",        # url
+            url="/admin",        # url
             title="Administrator",       # title
             )
 

@@ -30,13 +30,13 @@ def image(filename):
     return static_file(f"/static/images/tweets/{filename}", root=".")
 
 # IMPORT MODULES #####################
-from index import get_index
-from signup import get_signup, post_signup
+from index import index_view
+from signup import signup_view, signup
 from login import login_view, login, logout
-from home import get_home
+from home import home_view
 from tweets import post_tweet, edit_tweet, delete_tweet, tweet_modal, like_tweet, dislike_tweet
-from user_profile import get_profile, follow_user, unfollow_user, get_all_user
-from administrator import administrator_view, admin_delete_tweet
+from users import user_view, follow_user, unfollow_user, all_users_view
+from admin import admin_view, admin_delete_tweet
 
 # SERVER #############################
 try:

@@ -485,18 +485,18 @@ label span.error_message {
   border-radius: 0;
 }
 
-.profile_display {
+.user_display {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 0.2rem 0.8rem;
 }
-.profile_display:hover {
+.user_display:hover {
   background-color: white;
   cursor: pointer;
 }
-.profile_display button {
+.user_display button {
   height: 100%;
   width: auto;
   display: flex;
@@ -504,25 +504,25 @@ label span.error_message {
   align-items: center;
   font-size: 0.8rem;
 }
-.profile_display section {
+.user_display section {
   height: 100%;
   padding: 0.4rem 0;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.profile_display section section {
+.user_display section section {
   height: 100%;
   width: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.profile_display section p {
+.user_display section p {
   padding: 0 0.4rem;
   font-size: 0.8rem;
 }
-.profile_display section svg {
+.user_display section svg {
   width: 30px;
   height: 30px;
   fill: #4d3220;
@@ -672,7 +672,7 @@ label span.error_message {
   margin: 0 auto;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 980px) {
   #home {
     grid-template-areas: "nav main main";
   }

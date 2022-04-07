@@ -20,13 +20,11 @@ def _(tweet_id):
         db = None
         try:
             user_id = None
-                # decode jwt cookie to get user id for new tweet
+            # decode jwt cookie to get user id for new tweet
             user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
             
-
             # connect to database
             db = sqlite3.connect(f"{get_file_path()}/database/database.db")
-
 
             # delete tweet from database
             db.execute("""
@@ -45,4 +43,3 @@ def _(tweet_id):
         finally:
             if db != None:
                 db.close()
-            # return redirect(redirectPath)

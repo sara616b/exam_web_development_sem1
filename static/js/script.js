@@ -78,7 +78,7 @@ const like_tweet = async (event) => {
 };
 
 const follow_user = async (event) => {
-  const user_id_to_follow = event.target.id.slice(2);
+  const user_id_to_follow = event.target.dataset.userid.slice(2);
   if (!event.target.classList.contains("followedTrue")) {
     await fetch("/users/follow/" + user_id_to_follow, {
       method: "POST",
@@ -96,22 +96,19 @@ const follow_user = async (event) => {
       }
     });
   }
-  // get home feed
+  // stay on the page you're on, but reload the content
   spa(window.location.pathname, true, event);
 };
 
-const open_profile = async (event) => {
-  console.log(event);
+const view_user = async (event) => {
   const username = event.target.dataset.username.slice(2);
-  console.log(username);
-  // if (username == undefined) username = event.target.id.slice(2);
-  await fetch("/profiles/" + username, {
+  await fetch("/users/" + username, {
     method: "GET",
   }).then((response) => {
     if (!response.ok) {
       return;
     }
-    spa("/profiles/" + username, true, event);
+    spa("/users/" + username, true, event);
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   });
@@ -232,6 +229,6 @@ const admin_delete_tweet = async (event) => {
     if (!response.ok) {
       return;
     }
-    spa("/administrator", true, event);
+    spa("/admin", true, event);
   });
 };

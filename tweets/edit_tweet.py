@@ -13,8 +13,8 @@ def _(tweet_id):
     try:
         check_if_logged_in()
     except:
-        # if check_if_logged_in raises an exception
-        # the user isn't logged in
+        ##### if check_if_logged_in raises an exception
+        ##### the user isn't logged in
         return redirect("/login")
     else:
         db = None
@@ -25,7 +25,7 @@ def _(tweet_id):
             
             updated_tweet_data = {"tweet_id":tweet_id}
 
-            # connect database
+            ##### connect database
             db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
             ##### check that the tweet belongs to the user logged in
@@ -75,7 +75,7 @@ def _(tweet_id):
                     file_name, file_extension = os.path.splitext(new_image.filename)
                     if file_extension.lower() == ".jpg": file_extension = ".jpeg"
                     if file_extension.lower() not in (".png", ".jpg", ".jpeg"):
-                        # redirectPath = f"/tweets/edit/{tweet_id}?error=image-not-allowed"
+                        redirectPath = f"/tweets/{tweet_id}?error=image-not-allowed&text={tweet_text}"
                         return
 
                     # image name
@@ -90,7 +90,7 @@ def _(tweet_id):
                         # delete the invalid image 
                         os.remove(f"{get_file_path()}/static/images/tweets/{new_image_name}")
                         new_image_name = None
-                        # redirectPath = f"/tweets/new?error=image-not-allowed"
+                        redirectPath = f"/tweets/{tweet_id}?error=image-not-allowed&text={tweet_text}"
                         return
 
                 if new_image_name:
@@ -121,7 +121,7 @@ def _(tweet_id):
         except Exception as ex:
             print(ex)
             response.status = 500
-            return redirect("/")
+            return redirect("/home")
 
         finally:
             if db != None:

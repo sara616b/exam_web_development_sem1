@@ -47,7 +47,7 @@ def _():
                 file_name, file_extension = os.path.splitext(image.filename)
                 if file_extension.lower() == ".jpg": file_extension = ".jpeg"
                 if file_extension.lower() not in (".png", ".jpg", ".jpeg"):
-                    # redirectPath = f"/tweets/new?error=image-not-allowed&text={new_tweet_text}"
+                    redirectPath = f"/tweets/new?error=image-not-allowed&text={new_tweet_text}"
                     return
 
                 # image name
@@ -61,7 +61,7 @@ def _():
                 if file_extension != f".{imghdr_extension}":
                     # delete the invalid image 
                     os.remove(f"{get_file_path()}/static/images/tweets/{image_name}")
-                    # redirectPath = f"/tweets/new?error=image-not-allowed&text={new_tweet_text}"
+                    redirectPath = f"/tweets/new?error=image-not-allowed&text={new_tweet_text}"
                     return
 
             # connect to database

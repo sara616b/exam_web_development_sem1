@@ -87,5 +87,6 @@ TODO:
 -- ERROR in getting user_id when following
 -- it's adding new lines to tweets and counting them in length
 -- for some reason push back button twice
+-- STATUS CODES
 
 SASS: sass --watch style.scss style.css

@@ -37,7 +37,7 @@ def _(tweet_id):
     except Exception as ex:
         print(ex)
         response.status = 500
-        return redirect("/administration")
+        return redirect("/admin")
     finally:
         if db != None:
             db.close()

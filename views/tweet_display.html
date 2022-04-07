@@ -1,9 +1,9 @@
 <article class="tweet_container">
-    <section class="icon_container" onclick="open_profile(event)" data-username="id{{tweets[tweet]['user_username']}}">
+    <section class="icon_container" onclick="view_user(event)" data-username="id{{tweets[tweet]['user_username']}}">
         % include('profile_icon')
     </section>
     <main class="content_container">
-        <header class="user_information" onclick="open_profile(event)" data-username="id{{tweets[tweet]['user_username']}}">
+        <header class="user_information" onclick="view_user(event)" data-username="id{{tweets[tweet]['user_username']}}">
             <p class="user_display_name no_click">
                 {{tweets[tweet]['user_display_name']}}</p>
             <p class="no_click">
@@ -35,9 +35,9 @@
                 % if user['user_id'] != user_id:
                 % if tweets[tweet]['tweet_user_id'] == user['user_id']:
                 % if user['is_following']:
-                <button onclick="follow_user(event)" id="id{{tweets[tweet]['tweet_user_id']}}" class="button followedTrue">FOLLOWING</button>
+                <button onclick="follow_user(event)" data-userid="id{{tweets[tweet]['tweet_user_id']}}" class="button followedTrue">FOLLOWING</button>
                 % else:
-                <button onclick="follow_user(event)" id="id{{tweets[tweet]['tweet_user_id']}}" class="button color">FOLLOW</button>
+                <button onclick="follow_user(event)" data-userid="id{{tweets[tweet]['tweet_user_id']}}" class="button color">FOLLOW</button>
                 % end
                 % end
                 % end

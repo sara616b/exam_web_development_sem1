@@ -17,6 +17,7 @@ def _(tweet_id):
         db = None
         redirectPath = None
         try:
+            print("tweet modal")
             ##### get errors from query string
             error = request.params.get("error")
             possible_errors = [
@@ -32,6 +33,10 @@ def _(tweet_id):
                     "error": "long",
                     "message": "Tweet can only be 250 characters long",
                 },
+                {
+                    "error": "image-not-allowed",
+                    "message": "Image must be a .png or .jpeg (.jpg)"
+                }
             ]
 
             ##### get tweet text from params to set as value in input 
@@ -163,6 +168,7 @@ def _(tweet_id):
             if not tweet:
                 redirectPath = "/home"
                 return
+            print("before return")
 
             return dict(
                 user_id=user_id,
@@ -178,7 +184,6 @@ def _(tweet_id):
                 tweet_text=tweet_text,
                 possible_errors=possible_errors,
                 )
-                
 
         except Exception as ex:
             print(ex)

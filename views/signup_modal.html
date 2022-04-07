@@ -12,7 +12,7 @@
             </header>
             <main>
                 <form>
-                    <label for="signup_display_name">
+                    <label for="signup_display_name" data-to-be-validated="true">
                         Display name
 
 
@@ -23,15 +23,14 @@
                         % if get("errors")['display_name_length'] != 'none':
                         <span class="error_message error_back">Display name must be less than 100 characters</span>
                         % end
-                        <span class="error_message error_to_validate hidden">Display name <span></span></span>
+                        <span class="error_message error_span hidden">Display name <span></span></span>
 
 
 
                         <span class="extra"><br>This is the name that other users will see.</span>
-                        <input type="text" name="signup_display_name" id="signup_display_name" placeholder="Name"
-                            data-min="1" data-max="100" data-required="true" value="{{form_values['display_name']}}">
+                        <input type="text" name="signup_display_name" id="signup_display_name" placeholder="Name" data-min="1" data-max="100" data-required="true" value="{{form_values['display_name']}}">
                     </label>
-                    <label for="signup_username">
+                    <label for="signup_username" data-to-be-validated="true">
                         Username
 
 
@@ -45,14 +44,13 @@
                         % if get("errors")['user_exists_username'] != 'none':
                         <span class="error_message error_back">A user with this username already exists</span>
                         % end
-                        <span class="error_message error_to_validate hidden">Username <span></span></span>
+                        <span class="error_message error_span hidden">Username <span></span></span>
 
 
 
-                        <input type="text" name="signup_username" id="signup_username" placeholder="Username"
-                            data-min="1" data-max="100" data-required="true" value="{{form_values['username']}}">
+                        <input type="text" name="signup_username" id="signup_username" placeholder="Username" data-min="1" data-max="100" data-required="true" data-no-spaces="true" value="{{form_values['username']}}">
                     </label>
-                    <label for="signup_email">
+                    <label for="signup_email" data-to-be-validated="true">
                         E-mail
 
 
@@ -66,14 +64,13 @@
                         % if get("errors")['user_exists_email'] != 'none':
                         <span class="error_message error_back">A user with this email already exists</span>
                         % end
-                        <span class="error_message error_to_validate hidden">Email <span></span></span>
+                        <span class="error_message error_span hidden">Email <span></span></span>
 
 
 
-                        <input type="text" name="signup_email" id="signup_email" placeholder="a@a.com" data-email="true"
-                            data-required="true" value="{{form_values['email']}}">
+                        <input type="text" name="signup_email" id="signup_email" placeholder="a@a.com" data-email="true" data-required="true" value="{{form_values['email']}}">
                     </label>
-                    <label for="signup_password">
+                    <label for="signup_password" data-to-be-validated="true">
                         Password
 
 
@@ -87,14 +84,13 @@
                         % if get("errors")['passwords_different'] != 'none':
                         <span class="error_message error_back">Passwords don't match</span>
                         % end
-                        <span class="error_message error_to_validate hidden">Password <span></span></span>
+                        <span class="error_message error_span hidden">Password <span></span></span>
 
 
 
-                        <input type="password" name="signup_password" id="signup_password" placeholder="***"
-                            data-required="true">
+                        <input type="password" name="signup_password" id="signup_password" placeholder="***" data-required="true" data-min="3">
                     </label>
-                    <label for="signup_password_repeat">
+                    <label for="signup_password_repeat" data-to-be-validated="true">
                         Repeat password
 
 
@@ -102,12 +98,11 @@
                         % if get("errors")['passwords_different'] != 'none':
                         <span class="error_message error_back">Passwords don't match</span>
                         % end
-                        <span class="error_message error_to_validate hidden">Repeated password <span></span></span>
+                        <span class="error_message error_span hidden">Repeated password <span></span></span>
 
 
 
-                        <input type="password" name="signup_password_repeat" id="signup_password_repeat"
-                            placeholder="***" data-required="true">
+                        <input type="password" name="signup_password_repeat" id="signup_password_repeat" placeholder="***" data-required="true" data-min="3">
                     </label>
                     <input class="button color" type="submit" value="Sign up" onclick="sign_up(event)">
                 </form>

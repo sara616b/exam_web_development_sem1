@@ -10,11 +10,11 @@
             <main>
                 % for user in users[:5]:
                 % if user['user_id'] != user_id:
-                % include('profile_display', user=user)
+                % include('user_display', user=user)
                 % end
                 % end
             </main>
-            <footer onclick="spa('/profiles', true, event)">
+            <footer onclick="spa('/users', true, event)">
                 Show more
             </footer>
         </main>

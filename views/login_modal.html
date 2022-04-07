@@ -12,7 +12,7 @@
             </header>
             <main>
                 <form>
-                    <label for="login_email" class="{{error or ''}}">
+                    <label for="login_email" class="{{error or ''}}" data-to-be-validated="true">
                         E-mail
 
 
@@ -26,13 +26,13 @@
                         % if (get("error") and get("error") == "no-match"):
                         <span class="error_message">Email and password don't match</span>
                         % end
-                        <span class="error_message error_to_validate hidden">Email <span></span></span>
+                        <span class="error_message error_span hidden">Email <span></span></span>
 
 
 
                         <input type="text" name="login_email" id="login_email" placeholder="a@a.com" value="{{email or ''}}" data-email="true" data-required="true">
                     </label>
-                    <label for="login_password">
+                    <label for="login_password" data-to-be-validated="true">
                         Password
 
 
@@ -46,7 +46,7 @@
                         % if (get("error") and get("error") == "no-match"):
                         <span class="error_message">Email and password don't match</span>
                         % end
-                        <span class="error_message error_to_validate hidden">Password <span></span></span>
+                        <span class="error_message error_span hidden">Password <span></span></span>
 
 
 
