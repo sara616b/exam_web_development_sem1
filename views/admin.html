@@ -3,7 +3,7 @@
     <h1>Administator panel</h1>
     <main id="administator">
         % for tweet in tweets:
-        <article class="tweet_container">
+        <article class="tweet_container" data-id="id{{tweet}}">
             <section class="icon_container" id="id{{tweets[tweet]['user_username']}}">
                 % include('profile_icon')
             </section>
@@ -22,9 +22,7 @@
                     {{!tweets[tweet]['tweet_text']}}
                     % end
                     % if tweets[tweet]["tweet_image"]:
-                    <img id='{{tweets[tweet]["tweet_image"]}}'
-                        src="/static/images/tweets/{{tweets[tweet]['tweet_image']}}"
-                        alt='{{tweets[tweet]["tweet_text"]}}' />
+                    <img id='{{tweets[tweet]["tweet_image"]}}' src="/static/images/tweets/{{tweets[tweet]['tweet_image']}}" alt='{{tweets[tweet]["tweet_text"]}}' />
                     % end
                 </main>
                 <footer class="actions_container">

@@ -49,20 +49,26 @@ const delete_tweet = async (event) => {
     if (!response.ok) {
       return;
     }
-    // updated the page you're on
-    spa(window.location.pathname, true, event);
+    // delete tweet from ui (could be done with spa, but this saves a get request)
+    const tweet = document.querySelector(
+      ".tweet_container[data-id='id" + tweet_id + "']"
+    );
+    tweet.remove();
+    // spa(window.location.pathname, false, event);
   });
 };
 
 const like_tweet = async (event) => {
   const tweet_id = event.target.id.slice(4);
-  if (!event.target.classList.contains("likedTrue")) {
+  if (event.target.dataset.liked == "False") {
     await fetch("/tweets/like/" + tweet_id, {
       method: "POST",
     }).then((response) => {
       if (!response.ok) {
         return;
       }
+      event.target.nextElementSibling.textContent =
+        parseInt(event.target.nextElementSibling.textContent) + 1;
     });
   } else {
     await fetch("/tweets/like/" + tweet_id, {
@@ -71,15 +77,19 @@ const like_tweet = async (event) => {
       if (!response.ok) {
         return;
       }
+      event.target.nextElementSibling.textContent =
+        parseInt(event.target.nextElementSibling.textContent) - 1;
     });
   }
-  // updated the page you're on
-  spa(window.location.pathname, true, event);
+  // update ui (could be done with spa, but save the request)
+  event.target.dataset.liked =
+    event.target.dataset.liked == "True" ? "False" : "True";
+  // spa(window.location.pathname, false, event);
 };
 
 const follow_user = async (event) => {
   const user_id_to_follow = event.target.dataset.userid.slice(2);
-  if (!event.target.classList.contains("followedTrue")) {
+  if (event.target.dataset.follows == "False") {
     await fetch("/users/follow/" + user_id_to_follow, {
       method: "POST",
     }).then((response) => {
@@ -96,8 +106,18 @@ const follow_user = async (event) => {
       }
     });
   }
-  // stay on the page you're on, but reload the content
-  spa(window.location.pathname, true, event);
+
+  // update the ui (could be done with spa, but save the request)
+  const follow_buttons = document.querySelectorAll(
+    "button[data-userid='id" + user_id_to_follow + "']"
+  );
+  follow_buttons.forEach((button) => {
+    button.dataset.follows =
+      button.dataset.follows == "True" ? "False" : "True";
+    button.textContent =
+      button.dataset.follows == "True" ? "FOLLOWING" : "FOLLOW";
+  });
+  // spa(window.location.pathname, false, event);
 };
 
 const view_user = async (event) => {
@@ -109,15 +129,11 @@ const view_user = async (event) => {
       return;
     }
     spa("/users/" + username, true, event);
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
   });
 };
 
 const open_home = (event) => {
   spa("/home", true, event);
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
 };
 
 const post_new_tweet = async (event) => {
@@ -133,15 +149,13 @@ const post_new_tweet = async (event) => {
       if (!response.ok) {
         return;
       }
-      if (response.redirected) {
+      if (response.redirected && response.url != window.location.href) {
         // if it's been redirected there're errors send with query string
         spa(response.url, true, event);
       } else {
         // get home feed
-        spa("/home", true, event);
+        spa("/home", false, event);
       }
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
     });
   }
 };
@@ -165,7 +179,7 @@ const put_edited_tweet = async (event) => {
         spa(response.url, true, event);
       } else {
         // get home feed
-        spa("/home", true, event);
+        spa("/home", false, event);
       }
     });
   }
@@ -215,8 +229,6 @@ const log_in = async (event) => {
         // get to home feed
         spa("/home", true, event);
       }
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
     });
   }
 };
@@ -229,6 +241,11 @@ const admin_delete_tweet = async (event) => {
     if (!response.ok) {
       return;
     }
-    spa("/admin", true, event);
+    // delete tweet from ui (could be done with spa, but this saves a get request)
+    const tweet = document.querySelector(
+      ".tweet_container[data-id='id" + tweet_id + "']"
+    );
+    tweet.remove();
+    // spa("/admin", false, event);
   });
 };

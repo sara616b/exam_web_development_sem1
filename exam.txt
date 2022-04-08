@@ -88,5 +88,6 @@ TODO:
 -- it's adding new lines to tweets and counting them in length
 -- for some reason push back button twice
 -- STATUS CODES
+-- username only have letters allowed
 
 SASS: sass --watch style.scss style.css

@@ -8,9 +8,11 @@
             <p class="no_click">@{{user['user_username']}}</p>
         </section>
     </section>
-    % if user['is_following']:
-    <button onclick="follow_user(event)" data-userid="id{{user['user_id']}}" class="button followedTrue">FOLLOWING</button>
-    % else:
-    <button onclick="follow_user(event)" data-userid="id{{user['user_id']}}" class="button color">FOLLOW</button>
-    % end
+    <button onclick="follow_user(event)" data-userid="id{{user['user_id']}}" data-follows="{{user['is_following']}}" class="button">
+        % if user['is_following']:
+        FOLLOWING
+        % else:
+        FOLLOW
+        % end
+    </button>
 </article>

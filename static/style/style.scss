@@ -1,7 +1,7 @@
 $primary-color: rgb(221, 169, 0);
 $primary-color-transparent: rgba(221, 169, 0, 0.781);
 $secondary-color: rgb(77, 50, 32);
-$tertiar-color: rgb(248, 242, 234);
+$tertiar-color: #f0f0f0;
 $dark-color: black;
 $light-color: white;
 $error-color: rgba(170, 15, 10, 0.822);
@@ -35,7 +35,8 @@ $primary-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: $tertiar-color;
   color: $dark-color;
   border: $tertiar-color 0.2rem solid;
-  &.color {
+  &.color,
+  &[data-follows="False"] {
     background-color: $primary-color;
     color: $light-color;
     border: $primary-color 0.2rem solid;
@@ -69,8 +70,8 @@ $primary-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
 }
 label {
-  input[type="text"],
-  input[type="password"] {
+  input:not([type="button"]),
+  input:not([type="submit"]) {
     padding: 0.3rem 0.5rem;
     border: $tertiar-color solid thin;
     border-radius: 0.4rem;
@@ -349,6 +350,11 @@ label {
         border: solid $tertiar-color thin;
       }
     }
+    .user_header {
+      svg {
+        fill: $secondary-color;
+      }
+    }
     .user_info {
       margin: 1rem;
     }
@@ -425,7 +431,7 @@ label {
             path {
               pointer-events: none;
             }
-            &.likedTrue {
+            &[data-liked="True"] {
               fill: $primary-color;
               & + p {
                 font-weight: bold;
@@ -581,6 +587,7 @@ label {
     svg {
       width: 40px;
       height: 40px;
+      fill: $secondary-color;
     }
   }
   #form_content {

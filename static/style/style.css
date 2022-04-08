@@ -22,11 +22,11 @@
   padding: 0.3rem 1rem;
   font-weight: 500;
   text-transform: lowercase;
-  background-color: #f8f2ea;
+  background-color: #f0f0f0;
   color: black;
-  border: #f8f2ea 0.2rem solid;
+  border: #f0f0f0 0.2rem solid;
 }
-.button.color {
+.button.color, .button[data-follows=False] {
   background-color: #dda900;
   color: white;
   border: #dda900 0.2rem solid;
@@ -35,7 +35,7 @@
   cursor: pointer;
   background-color: white;
   color: black;
-  border: #f8f2ea 0.2rem solid;
+  border: #f0f0f0 0.2rem solid;
 }
 .button:hover.color {
   background-color: white;
@@ -60,14 +60,14 @@
   color: #dda900;
 }
 
-label input[type=text],
-label input[type=password] {
+label input:not([type=button]),
+label input:not([type=submit]) {
   padding: 0.3rem 0.5rem;
-  border: #f8f2ea solid thin;
+  border: #f0f0f0 solid thin;
   border-radius: 0.4rem;
 }
-label input[type=text].validate_error,
-label input[type=password].validate_error {
+label input:not([type=button]).validate_error,
+label input:not([type=submit]).validate_error {
   border-color: rgba(170, 15, 10, 0.822);
 }
 label span.error_message {
@@ -321,7 +321,7 @@ label span.error_message {
   padding: 0.5rem 1rem;
 }
 #home #main_navigation .profile_container:hover {
-  background-color: #f8f2ea;
+  background-color: #f0f0f0;
   cursor: pointer;
 }
 #home #main_navigation .profile_container section {
@@ -349,7 +349,11 @@ label span.error_message {
 #home #main_content #content_container #new_tweet_form_container,
 #home #profile-content #content_container #new_tweet_form_container {
   padding: 1rem 0.4rem;
-  border: solid #f8f2ea thin;
+  border: solid #f0f0f0 thin;
+}
+#home #main_content .user_header svg,
+#home #profile-content .user_header svg {
+  fill: #4d3220;
 }
 #home #main_content .user_info,
 #home #profile-content .user_info {
@@ -357,7 +361,7 @@ label span.error_message {
 }
 #home .tweet_container {
   padding: 1.5rem 0.5rem;
-  border: solid #f8f2ea thin;
+  border: solid #f0f0f0 thin;
   display: flex;
   flex-direction: row;
 }
@@ -432,10 +436,10 @@ label span.error_message {
 #home .tweet_container .content_container .like_container section svg path {
   pointer-events: none;
 }
-#home .tweet_container .content_container .like_container section svg.likedTrue {
+#home .tweet_container .content_container .like_container section svg[data-liked=True] {
   fill: #dda900;
 }
-#home .tweet_container .content_container .like_container section svg.likedTrue + p {
+#home .tweet_container .content_container .like_container section svg[data-liked=True] + p {
   font-weight: bold;
 }
 #home .tweet_container .actions_container {
@@ -460,7 +464,7 @@ label span.error_message {
   width: 300px;
 }
 #home #main_aside div main {
-  background-color: #f8f2ea;
+  background-color: #f0f0f0;
   border-radius: 1.5rem;
 }
 #home #main_aside div main header {
@@ -472,7 +476,7 @@ label span.error_message {
   padding: 0.6rem 1rem 1.2rem 1rem;
   border-radius: 0 0 1.5rem 1.5rem;
   border-style: inset;
-  border: solid #f8f2ea thin;
+  border: solid #f0f0f0 thin;
 }
 #home #main_aside div main footer:hover {
   background-color: white;
@@ -567,6 +571,7 @@ label span.error_message {
 #tweet_form #profile_icon_container svg {
   width: 40px;
   height: 40px;
+  fill: #4d3220;
 }
 #tweet_form #form_content {
   width: 100%;
@@ -579,7 +584,7 @@ label span.error_message {
   resize: none;
   overflow: auto;
   height: 5rem;
-  border-bottom: thin #f8f2ea solid;
+  border-bottom: thin #f0f0f0 solid;
 }
 #tweet_form #form_content #tweet_text:focus {
   outline: solid 2px #dda900;

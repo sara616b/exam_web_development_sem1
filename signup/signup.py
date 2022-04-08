@@ -98,7 +98,7 @@ def _():
                 "user_display_name": display_name,
                 "user_username": username,
                 "user_email": email,
-                "user_password": password,
+                "user_password": request.forms.get("signup_password"),
                 "user_created_at": time.time(),
                 "user_current_session": None,
             }

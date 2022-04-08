@@ -32,8 +32,11 @@ const spa = async (url, replace_state = true, event) => {
   document.title = title;
 
   // set state
-  if (replace_state || conn.url !== url) {
+  if (replace_state) {
     history.pushState({ url: conn.url }, "", conn.url);
+    // scroll to top of page
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
 };
 
