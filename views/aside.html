@@ -1,20 +1,17 @@
 <aside id="main_aside">
-    <div>
-        <header>
-            SEARCH
-        </header>
-        <main>
-            <header>
+    <div class="content">
+        <main id="who_to_follow">
+            <h2>
                 Who to follow
-            </header>
-            <main>
+            </h2>
+            <main id="users_list">
                 % for user in users[:5]:
                 % if user['user_id'] != user_id:
                 % include('user_display', user=user)
                 % end
                 % end
             </main>
-            <footer onclick="spa('/users', true, event)">
+            <footer id="show_more" onclick="spa('/users', true, event)">
                 Show more
             </footer>
         </main>

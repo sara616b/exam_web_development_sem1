@@ -8,7 +8,7 @@ import imghdr
 
 from settings import get_file_path, confirm_user_is_logged_in, time_since_from_epoch, date_text_from_epoch, REGEX_EMAIL, JWT_KEY
 
-@post("/tweets/like/<tweet_id>")
+@post("/tweets/retweet/<tweet_id>")
 def _(tweet_id):
     ##### the user needs to be logged in to access this page
     if not confirm_user_is_logged_in():
@@ -21,14 +21,18 @@ def _(tweet_id):
         # connect to database
         db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
-        # insert new tweet to database
+        # insert retweet tweet to database
         db.execute("""
-            INSERT INTO likes
+            INSERT INTO retweets
             VALUES(
+                :retweet_id,
                 :user_id,
-                :tweet_id)
-            """, (str(user_id), str(tweet_id)))
+                :tweet_id,
+                :retweeted_at)
+            """, (str(uuid.uuid4()), str(user_id), str(tweet_id), time.time()))
         db.commit()
+
+        print('retweet tweet!')
 
         return
 

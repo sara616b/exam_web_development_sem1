@@ -1,10 +1,18 @@
 $primary-color: rgb(221, 169, 0);
 $primary-color-transparent: rgba(221, 169, 0, 0.781);
-$secondary-color: rgb(77, 50, 32);
+$secondary-color: rgb(99, 66, 44);
 $tertiar-color: #f0f0f0;
 $dark-color: black;
 $light-color: white;
 $error-color: rgba(170, 15, 10, 0.822);
+$like-color: rgb(204, 44, 44);
+$retweet-color: #3e8c3e;
+$index-background: linear-gradient(
+  170deg,
+  #ffde70 0%,
+  #dda900 20%,
+  #d89800 90%
+);
 
 $primary-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
@@ -69,6 +77,10 @@ $primary-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     color: $primary-color;
   }
 }
+.hover:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
 label {
   input:not([type="button"]),
   input:not([type="submit"]) {
@@ -83,6 +95,7 @@ label {
     color: $error-color;
   }
 }
+
 #index {
   display: grid;
   grid-template-columns: 5fr 3fr;
@@ -90,11 +103,12 @@ label {
   position: fixed;
   top: 0;
   left: 0;
-  header {
+  #index_logo_art {
     grid-column: 1/2;
     background-color: $primary-color;
     overflow: hidden;
     height: 100vh;
+    background: $index-background;
     svg {
       position: relative;
       right: 0;
@@ -104,7 +118,7 @@ label {
       transform: translateX(-22%);
     }
   }
-  main {
+  #index_content {
     grid-column: 2/3;
     display: flex;
     flex-direction: column;
@@ -117,7 +131,7 @@ label {
       fill: $primary-color;
       align-self: flex-start;
     }
-    section {
+    #actions {
       width: 70%;
       display: flex;
       flex-direction: column;
@@ -132,7 +146,7 @@ label {
   @media screen and (max-width: 500px) {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
-    header {
+    #index_logo_art {
       grid-column: 1/2;
       grid-row: 2/3;
       svg {
@@ -141,12 +155,13 @@ label {
         transform: translate(-22%, -22%);
       }
     }
-    main {
+    #index_content {
       grid-column: 1/2;
       grid-row: 1/2;
     }
   }
 }
+
 #login,
 #signup {
   display: flex;
@@ -155,7 +170,7 @@ label {
   min-height: 100vh;
   height: 100%;
   width: 100%;
-  #background {
+  .background {
     background-color: $primary-color-transparent;
     height: 100%;
     width: 100%;
@@ -167,7 +182,7 @@ label {
       cursor: pointer;
     }
   }
-  section:first-of-type {
+  #header_logo {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -187,7 +202,7 @@ label {
     }
   }
   #modal {
-    width: 300px;
+    width: 350px;
     height: auto;
     margin: 2rem auto;
     top: 0;
@@ -200,41 +215,24 @@ label {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    @media screen and (max-width: 500px) {
-      width: 100%;
-      padding: 1.5rem 0.4rem;
-    }
-    header {
+    h2 {
       padding-bottom: 0.5rem;
       font-size: 1.5rem;
     }
-    main {
-      form {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
-    footer {
+    button {
       padding-top: 0.5rem;
       text-align: center;
-    }
-  }
-}
-#signup {
-  #modal {
-    width: 400px;
-    @media screen and (max-width: 500px) {
-      width: 100%;
     }
     span {
       font-size: 0.8rem;
       font-weight: 500;
       &.extra {
         color: $secondary-color;
-      }
-      &.error {
-        color: red;
       }
     }
   }
@@ -249,24 +247,16 @@ label {
   top: 0;
   display: flex;
   flex-direction: row;
-  button {
+  z-index: 0;
+  .back_button {
     background-color: #0000;
     border: none;
     width: auto;
     margin-right: 0.5rem;
-    &:hover {
-      cursor: pointer;
-      opacity: 0.6;
-    }
   }
 }
-#logo_container {
-  &:hover {
-    cursor: pointer;
-    opacity: 0.6;
-  }
-}
-#home {
+
+#buzzer {
   display: grid;
   grid-template-columns: 1fr minmax(50%, 600px) 1fr;
   grid-template-areas: "nav main aside";
@@ -279,7 +269,7 @@ label {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    div {
+    .content {
       padding: 1rem;
       position: sticky;
       top: 0;
@@ -308,48 +298,52 @@ label {
         margin-bottom: 0.4rem;
       }
     }
-    .profile_container {
+    #profile_container {
       position: absolute;
       bottom: 0;
       display: flex;
       flex-direction: row;
       width: calc(100% - 2rem);
       border-radius: 1.5rem;
-      padding: 0.5rem 1rem;
+      padding: 0rem 0.5rem;
       &:hover {
         background-color: $tertiar-color;
         cursor: pointer;
       }
-      section {
-        width: auto;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        p {
-          padding: 0 0.4rem;
+      .user_display {
+        padding: 0;
+        &:hover {
+          background-color: $tertiar-color;
+          cursor: pointer;
         }
-        svg {
-          width: 40px;
-          height: 40px;
-          fill: $secondary-color;
-          border-radius: 50%;
+        section {
+          width: auto;
+          height: auto;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          section {
+            display: flex;
+            flex-direction: column;
+          }
+          p {
+            padding: 0 0.4rem;
+          }
+          svg {
+            width: 40px;
+            height: 40px;
+            fill: $secondary-color;
+            border-radius: 50%;
+          }
         }
       }
     }
   }
 
-  #main_content,
-  #profile-content {
+  #main_content {
     grid-area: main;
     margin: 0 auto;
     max-width: 600px;
-    #content_container {
-      #new_tweet_form_container {
-        padding: 1rem 0.4rem;
-        border: solid $tertiar-color thin;
-      }
-    }
     .user_header {
       svg {
         fill: $secondary-color;
@@ -366,10 +360,6 @@ label {
     flex-direction: row;
     .icon_container {
       width: 40px;
-      &:hover {
-        cursor: pointer;
-        opacity: 0.6;
-      }
       svg {
         width: 40px;
         height: 40px;
@@ -386,10 +376,6 @@ label {
         padding-top: 0.2rem;
         gap: 0.4rem;
         width: 100%;
-        &:hover {
-          opacity: 0.6;
-          cursor: pointer;
-        }
         .user_display_name {
           font-weight: bold;
           width: auto;
@@ -397,7 +383,6 @@ label {
         p {
           font-weight: 300;
           font-size: 0.85rem;
-          color: $secondary-color;
           width: auto;
         }
       }
@@ -419,11 +404,12 @@ label {
           gap: 0.5rem;
           width: auto;
           svg {
-            stroke: $dark-color;
-            stroke-width: 3rem;
-            width: 50px;
+            stroke: $secondary-color;
+            stroke-width: 2rem;
+            width: 80px;
             height: 30px;
             fill: $light-color;
+            opacity: 0.7;
             &:hover {
               stroke: $primary-color;
               cursor: pointer;
@@ -431,11 +417,22 @@ label {
             path {
               pointer-events: none;
             }
-            &[data-liked="True"] {
+            &[data-liked="True"],
+            &[data-retweeted="True"] {
               fill: $primary-color;
+              stroke-width: 2rem;
+              opacity: 1;
               & + p {
                 font-weight: bold;
               }
+            }
+            &[data-liked="True"] {
+              fill: $like-color;
+              stroke: $like-color;
+            }
+            &[data-retweeted="True"] {
+              fill: $retweet-color;
+              stroke: $retweet-color;
             }
           }
         }
@@ -462,16 +459,16 @@ label {
   }
   #main_aside {
     width: 300px;
-    div {
-      main {
+    .content {
+      #who_to_follow {
         background-color: $tertiar-color;
         border-radius: 1.5rem;
-        header {
+        h2 {
           padding: 1.2rem 1rem 0.6rem 1rem;
           font-weight: bold;
           border-radius: 1.5rem 1.5rem 0 0;
         }
-        footer {
+        #show_more {
           padding: 0.6rem 1rem 1.2rem 1rem;
           border-radius: 0 0 1.5rem 1.5rem;
           border-style: inset;
@@ -482,7 +479,7 @@ label {
             cursor: pointer;
           }
         }
-        main {
+        #users_list {
           border-top: solid $secondary-color thin;
           border-bottom: solid $secondary-color thin;
           border-radius: 0;
@@ -491,7 +488,6 @@ label {
     }
   }
 }
-
 .user_display {
   display: flex;
   flex-direction: row;
@@ -502,7 +498,7 @@ label {
     background-color: $light-color;
     cursor: pointer;
   }
-  button {
+  .follow_button {
     height: 100%;
     width: auto;
     display: flex;
@@ -535,46 +531,64 @@ label {
     }
   }
 }
-#profile-content {
-  // & > header {
-  //   display: flex;
-  //   flex-direction: row;
-  //   button {
-  //     background-color: #0000;
-  //     border: none;
-  //     width: auto;
-  //     margin-right: 0.5rem;
-  //   }
-  // }
-  & > main {
-    & > header {
-      .background {
-        background-color: #f0a109;
-        width: 100%;
-        height: 150px;
-      }
-      & > header {
-        height: 50px;
-      }
-      svg {
-        width: 100px;
-        height: 100px;
-        transform: translateY(calc(-50% - 0.5rem - 0.25rem));
-        background-color: white;
-        padding: 0.5rem;
-        margin: 1rem;
-        border-radius: 100%;
-        position: absolute;
-      }
-      .button {
-        max-width: 100px;
-        float: right;
-        margin: 0.5rem;
-      }
+#page_content {
+  .background {
+    background-color: #f0a109;
+    width: 100%;
+    height: 150px;
+    z-index: -2;
+    position: relative;
+  }
+  #new_tweet_form_container {
+    padding: 1rem 0.4rem;
+    border: solid $tertiar-color thin;
+  }
+  .user_header {
+    height: 50px;
+    svg {
+      width: 100px;
+      height: 100px;
+      transform: translateY(calc(-50% - 0.5rem - 0.25rem));
+      background-color: white;
+      padding: 0.5rem;
+      margin: 1rem;
+      border-radius: 100%;
+      position: absolute;
+      z-index: -1;
     }
   }
-  & > main {
-    height: auto;
+  .button {
+    max-width: 100px;
+    float: right;
+    margin: 0.5rem;
+  }
+  height: auto;
+}
+
+.retweet_container {
+  padding-top: 1.5rem;
+  border: solid $tertiar-color thin;
+  .retweet_header {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: $secondary-color;
+    .retweet_icon {
+      margin-left: 1rem;
+      width: 20px;
+      height: 20px;
+      fill: $secondary-color;
+    }
+    .delete_retweet {
+      width: auto;
+    }
+  }
+  .tweet_container {
+    padding-top: 0.2rem !important;
+    border: none !important;
   }
 }
 
@@ -629,6 +643,7 @@ label {
         width: auto;
         height: auto;
         text-align: center;
+        max-width: unset;
         &.color {
           width: 150px;
         }
@@ -662,7 +677,7 @@ label {
     width: 600px;
     min-width: 300px;
     height: auto;
-    margin: 2rem auto;
+    margin: 0 auto 2rem auto;
     top: 0;
     left: 0;
     position: relative;
@@ -673,13 +688,20 @@ label {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    h2 {
+      font-size: 1rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      padding-bottom: 1rem;
+      color: $secondary-color;
+    }
     @media screen and (max-width: 500px) {
       width: 100%;
     }
   }
 }
 
-#home.admin {
+#buzzer.admin {
   display: inline-block;
   h1 {
     font-size: 2rem;
@@ -692,11 +714,12 @@ label {
   }
 }
 
-@media screen and (max-width: 980px) {
-  #home {
-    grid-template-areas: "nav main main";
-    #main_aside {
-      display: none !important;
+@media screen and (max-width: 500px) {
+  #login,
+  #signup {
+    #modal {
+      width: 100%;
+      padding: 1.5rem 0.4rem;
     }
   }
 }
@@ -704,7 +727,7 @@ label {
   #tweet_modal #modal {
     width: 100%;
   }
-  #home {
+  #buzzer {
     height: 100%;
     display: block;
     #main_content {
@@ -723,7 +746,7 @@ label {
       background-color: $light-color;
       z-index: 110;
       border-bottom: solid #f8f2ea thin;
-      div {
+      .content {
         padding: 0;
         display: flex;
         flex-direction: row;
@@ -763,6 +786,14 @@ label {
         }
       }
     }
+    #main_aside {
+      display: none !important;
+    }
+  }
+}
+@media screen and (max-width: 980px) {
+  #buzzer {
+    grid-template-areas: "nav main main";
     #main_aside {
       display: none !important;
     }

@@ -1,23 +1,18 @@
-% if not is_xhr:
-% include('header')
+% for user in users:
+% if user["user_id"] != user_id:
+% include('user_display', user=user)
 % end
-<main id="home" class="content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
-    % include('navigation', users=users)
-    <main id="profiles-content">
-        <header id="page_title">
-            <button onclick="open_home(event);">🡠</button>
-            All users
-        </header>
-        <main>
-            % for user in users:
-            % if user["user_id"] != user_id:
-            % include('user_display', user=user)
-            % end
-            % end
-        </main>
-    </main>
-    % include('aside', users=users)
-</main>
-% if not is_xhr:
-% include('footer')
 % end
+
+% # REBASE INTO BASE TEMPLATE
+% rebase(
+% 'base',
+% users=get('users', None),
+% tweet_id=get('tweet_id', None),
+% posts=get('posts', None),
+% tweet=get('tweet', None),
+% user_profile_to_display=get('user_profile_to_display', None),
+% user_id=get('user_id', None),
+% tweets=get('tweets', None),
+% modal=get('modal', None)
+% )

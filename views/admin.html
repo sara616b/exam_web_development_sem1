@@ -1,14 +1,14 @@
 % include('header')
-<main id="home" class="admin content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
+<main id="buzzer" class="admin content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
     <h1>Administator panel</h1>
     <main id="administator">
         % for tweet in tweets:
         <article class="tweet_container" data-id="id{{tweet}}">
-            <section class="icon_container" id="id{{tweets[tweet]['user_username']}}">
+            <section class="icon_container hover" id="id{{tweets[tweet]['user_username']}}">
                 % include('profile_icon')
             </section>
             <main class="content_container">
-                <header class="user_information" id="id{{tweets[tweet]['user_username']}}">
+                <header class="user_information hover" id="id{{tweets[tweet]['user_username']}}">
                     <p class="user_display_name" id="id{{tweets[tweet]['user_username']}}">
                         {{tweets[tweet]['user_display_name']}}</p>
                     <p id="id{{tweets[tweet]['user_username']}}">

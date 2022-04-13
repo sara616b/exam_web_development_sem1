@@ -1,63 +1,54 @@
 <main id="login" class="content">
-    <section id="background" onclick="spa('/', true, event);">
+    <section class="background" onclick="spa('/', true, event);">
     </section>
     <main>
-        <section>
+        <header id="header_logo">
             % include('logo_icon')
             <h1>buzzer</h1>
-        </section>
-        <section id="modal">
-            <header>
+        </header>
+        <main id="modal">
+            <h2>
                 Log in
-            </header>
-            <main>
-                <form>
-                    <label for="login_email" class="{{error or ''}}" data-to-be-validated="true">
-                        E-mail
+            </h2>
+            <form>
+                <label for="login_email" class="{{error or ''}}" data-to-be-validated="true">
+                    E-mail
+
+                    % for error_obj in possible_errors["email"]:
+                    % if (get("error") and get("error") == error_obj["error"]):
+                    <span class="error_message">{{error_obj["message"]}}</span>
+                    % end
+                    % end
+
+                    <span class="error_message error_span hidden">Email <span></span></span>
 
 
 
-                        % if (get("error") and get("error") == "email-missing"):
-                        <span class="error_message">Email missing</span>
-                        % end
-                        % if (get("error") and get("error") == "email-invalid"):
-                        <span class="error_message">Email is invald</span>
-                        % end
-                        % if (get("error") and get("error") == "no-match"):
-                        <span class="error_message">Email and password don't match</span>
-                        % end
-                        <span class="error_message error_span hidden">Email <span></span></span>
+                    <input type="text" name="login_email" id="login_email" placeholder="a@a.com" value="{{email or ''}}" data-email="true" data-required="true">
+                </label>
+                <label for="login_password" data-to-be-validated="true">
+                    Password
+
+                    % for error_obj in possible_errors["password"]:
+                    % if (get("error") and get("error") == error_obj["error"]):
+                    <span class="error_message">{{error_obj["message"]}}</span>
+                    % end
+                    % end
+
+                    <span class="error_message error_span hidden">Password <span></span></span>
 
 
 
-                        <input type="text" name="login_email" id="login_email" placeholder="a@a.com" value="{{email or ''}}" data-email="true" data-required="true">
-                    </label>
-                    <label for="login_password" data-to-be-validated="true">
-                        Password
-
-
-
-                        % if (get("error") and get("error") == "password-missing"):
-                        <span class="error_message">Password missing</span>
-                        % end
-                        % if (get("error") and get("error") == "password-short"):
-                        <span class="error_message">Password too short</span>
-                        % end
-                        % if (get("error") and get("error") == "no-match"):
-                        <span class="error_message">Email and password don't match</span>
-                        % end
-                        <span class="error_message error_span hidden">Password <span></span></span>
-
-
-
-                        <input type="password" name="login_password" id="login_password" placeholder="***" data-required="true" data-min="3">
-                    </label>
-                    <input class="button color" type="submit" value="Log in" onclick="log_in(event)">
-                </form>
-            </main>
-            <footer class="link" onclick="spa('/signup', true, event);">
+                    <input type="password" name="login_password" id="login_password" placeholder="***" data-required="true" data-min="3">
+                </label>
+                <input class="button color" type="submit" value="Log in" onclick="log_in(event)">
+            </form>
+            <button class="link" onclick="spa('/signup', true, event);">
                 No account? Sign up here!
-            </footer>
-        </section>
+            </button>
+        </main>
     </main>
 </main>
+
+% # REBASE THE MODAL ON TOP OF THE INDEX PAGE
+% rebase('index', error=error, email=email)

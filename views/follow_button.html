@@ -1,0 +1,7 @@
+<button onclick="follow_user(event)" data-userid="id{{user['user_id']}}" data-follows="{{user['is_following']}}" class="button follow_button">
+    % if user['is_following']:
+    FOLLOWING
+    % else:
+    FOLLOW
+    % end
+</button>

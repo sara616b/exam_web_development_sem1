@@ -2,11 +2,22 @@
     <section id="background" onclick="open_home(event)">
     </section>
     <main id="modal">
+
         % if tweet_id == "new":
         <h2>New tweet</h2>
         % else:
         <h2>Edit tweet</h2>
         % end
-        % include('tweet_form', tweet_id=get('tweet_id', None), tweet=get('tweet', None), type=type, error=get('error', None), tweet_text=get('tweet_text', None))
+
+        % # TWEET FORM
+        % include(
+        % 'tweet_form',
+        % tweet_id=get('tweet_id', None),
+        % tweet=get('tweet', None),
+        % type=type,
+        % error=get('error', None),
+        % tweet_text=get('tweet_text', None)
+        % )
+
     </main>
 </main>

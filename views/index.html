@@ -1,25 +1,26 @@
-% if not is_xhr:
+% if not only_update_body:
 % include('header')
 % end
+
 <main id="index" class="content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
-    <header>
+    <header id="index_logo_art">
         % include('logo_icon')
     </header>
-    <main>
+    <main id="index_content">
         % include('logo_icon')
-        <section>
+        <section id="actions">
             <h1>buzzer</h1>
             <button onclick="spa('/login', true, event);" class="button color">Log in</button>
             <button onclick="spa('/signup', true, event);" class="button">Sign up</button>
         </section>
     </main>
 </main>
-% if modal and modal == 'login':
-% include('login_modal', error=error, email=email)
+
+% # CONTENT FROM REBASE IS LOGIN OR SIGNUP MODAL
+% if get('base'):
+% include
 % end
-% if modal and modal == 'signup':
-% include('signup_modal', errors=errors, form_values=form_values)
-% end
-% if not is_xhr:
+
+% if not only_update_body:
 % include('footer')
 % end

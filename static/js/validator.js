@@ -65,6 +65,13 @@ function validate(form) {
       else if (input.dataset.noSpaces && input.value.includes(" ")) {
         show_error("can't contain spaces");
       }
+      //      no special characters -- data-no-special-characters="true"
+      else if (
+        input.dataset.noSpecialCharacters &&
+        !/^[A-Za-z0-9 ]+$/.test(input.value)
+      ) {
+        show_error("can't contain special characters");
+      }
       //      email -- data-email="true"
       else if (
         input.dataset.email &&

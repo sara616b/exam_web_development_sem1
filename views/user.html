@@ -1,45 +1,30 @@
-% if not is_xhr:
-% include('header')
-% end
-<main id="home" class="content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
-    % include('navigation', users=users)
-    <main id="profile-content">
-        <header id="page_title">
-            <button onclick="open_home(event);">🡠</button>
-            @{{user_profile_to_display['user_username']}}
-        </header>
-        <main>
-            <header>
-                <section class="background"></section>
-                <header class="user_header">
-                    % include('profile_icon')
-                    % if user_id != user_profile_to_display["user_id"]:
-                    <button onclick="follow_user(event)" data-userid="id{{user_profile_to_display['user_id']}}" data-follows="{{user_profile_to_display['is_following']}}" class="button">
-                        % if user_profile_to_display['is_following']:
-                        FOLLOWING
-                        % else:
-                        FOLLOW
-                        % end
-                    </button>
-                    % end
-                </header>
-                <main class="user_info">
-                    <h2>{{user_profile_to_display['user_display_name']}}</h2>
-                    <p>@{{user_profile_to_display['user_username']}}</p>
-                    <p>{{user_profile_to_display['followers']}} followers</p>
-                </main>
-            </header>
-            <main>
-                % for one_tweet in tweets:
-                % if tweets[one_tweet]['user_username'] == user_profile_to_display['user_username']:
-                % include('tweet_display', tweets=tweets, tweet=one_tweet, user_id=user_id)
-                % end
-                % end
-            </main>
-        </main>
+<header>
+    <section class="background"></section>
+    <header class="user_header">
+        % include('profile_icon')
+        % if user_id != user_profile_to_display["user_id"]:
+        % include('follow_button', user=user_profile_to_display)
+        % end
+    </header>
+    <main class="user_info">
+        <h2>{{user_profile_to_display['user_display_name']}}</h2>
+        <p>@{{user_profile_to_display['user_username']}}</p>
+        <p>{{user_profile_to_display['followers']}} followers</p>
     </main>
-    % include('aside', users=users)
+</header>
+<main>
+    % include('feed_display', posts=posts, tweets=tweets, user_id=user_id, users=users)
 </main>
-% if not is_xhr:
-% include('footer')
-% end
+
+% # REBASE INTO BASE TEMPLATE
+% rebase(
+% 'base',
+% users=get('users', None),
+% tweet_id=get('tweet_id', None),
+% posts=get('posts', None),
+% tweet=get('tweet', None),
+% user_profile_to_display=get('user_profile_to_display', None),
+% user_id=get('user_id', None),
+% tweets=get('tweets', None),
+% modal=get('modal', None)
+% )

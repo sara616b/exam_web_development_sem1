@@ -1,115 +1,107 @@
 <main id="signup">
-    <section id="background" onclick="spa('/', true, event);">
+    <section class="background" onclick="spa('/', true, event);">
     </section>
     <main>
-        <section>
+        <header id="header_logo">
             % include('logo_icon')
             <h1>buzzer</h1>
-        </section>
-        <section id="modal">
-            <header>
+        </header>
+        <main id="modal">
+            <h2>
                 Sign up
-            </header>
-            <main>
-                <form>
-                    <label for="signup_display_name" data-to-be-validated="true">
-                        Display name
+            </h2>
+            <form>
+                <label for="signup_display_name" data-to-be-validated="true">
+                    Display name
 
 
 
-                        % if get("errors")['display_name_missing'] != 'none':
-                        <span class="error_message error_back">Display name missing</span>
-                        % end
-                        % if get("errors")['display_name_length'] != 'none':
-                        <span class="error_message error_back">Display name must be less than 100 characters</span>
-                        % end
-                        <span class="error_message error_span hidden">Display name <span></span></span>
+                    % for error_obj in possible_errors["display_name"]:
+                    % if get("errors")[error_obj["error"]] != 'none':
+                    <span class="error_message error_back">{{error_obj["message"]}}</span>
+                    % end
+                    % end
+
+                    <span class="error_message error_span hidden">Display name <span></span></span>
 
 
 
-                        <span class="extra"><br>This is the name that other users will see.</span>
-                        <input type="text" name="signup_display_name" id="signup_display_name" placeholder="Name" data-min="1" data-max="100" data-required="true" value="{{form_values['display_name']}}">
-                    </label>
-                    <label for="signup_username" data-to-be-validated="true">
-                        Username
+                    <span class="extra"><br>This is the name that other users will see.</span>
+                    <input type="text" name="signup_display_name" id="signup_display_name" placeholder="Name" data-min="1" data-max="100" data-required="true" data-no-special-characters="true" value="{{form_values['display_name']}}">
+                </label>
+                <label for="signup_username" data-to-be-validated="true">
+                    Username
 
 
 
-                        % if get("errors")['username_missing'] != 'none':
-                        <span class="error_message error_back">Username missing</span>
-                        % end
-                        % if get("errors")['username_length'] != 'none':
-                        <span class="error_message error_back">Username must be less than 100 characters</span>
-                        % end
-                        % if get("errors")['user_exists_username'] != 'none':
-                        <span class="error_message error_back">A user with this username already exists</span>
-                        % end
-                        <span class="error_message error_span hidden">Username <span></span></span>
+
+                    % for error_obj in possible_errors["username"]:
+                    % if get("errors")[error_obj["error"]] != 'none':
+                    <span class="error_message error_back">{{error_obj["message"]}}</span>
+                    % end
+                    % end
+                    <span class="error_message error_span hidden">Username <span></span></span>
 
 
 
-                        <input type="text" name="signup_username" id="signup_username" placeholder="Username" data-min="1" data-max="100" data-required="true" data-no-spaces="true" value="{{form_values['username']}}">
-                    </label>
-                    <label for="signup_email" data-to-be-validated="true">
-                        E-mail
+                    <input type="text" name="signup_username" id="signup_username" placeholder="Username" data-min="1" data-max="100" data-required="true" data-no-spaces="true" data-no-special-characters="true" value="{{form_values['username']}}">
+                </label>
+                <label for="signup_email" data-to-be-validated="true">
+                    E-mail
 
 
 
-                        % if get("errors")['email_missing'] != 'none':
-                        <span class="error_message error_back">Email missing</span>
-                        % end
-                        % if get("errors")['email_invalid'] != 'none':
-                        <span class="error_message error_back">Email is invalid</span>
-                        % end
-                        % if get("errors")['user_exists_email'] != 'none':
-                        <span class="error_message error_back">A user with this email already exists</span>
-                        % end
-                        <span class="error_message error_span hidden">Email <span></span></span>
+
+                    % for error_obj in possible_errors["email"]:
+                    % if get("errors")[error_obj["error"]] != 'none':
+                    <span class="error_message error_back">{{error_obj["message"]}}</span>
+                    % end
+                    % end
+                    <span class="error_message error_span hidden">Email <span></span></span>
 
 
 
-                        <input type="text" name="signup_email" id="signup_email" placeholder="a@a.com" data-email="true" data-required="true" value="{{form_values['email']}}">
-                    </label>
-                    <label for="signup_password" data-to-be-validated="true">
-                        Password
+                    <input type="text" name="signup_email" id="signup_email" placeholder="a@a.com" data-email="true" data-required="true" value="{{form_values['email']}}">
+                </label>
+                <label for="signup_password" data-to-be-validated="true">
+                    Password
 
 
 
-                        % if get("errors")['password_missing'] != 'none':
-                        <span class="error_message error_back">Password missing</span>
-                        % end
-                        % if get("errors")['password_short'] != 'none':
-                        <span class="error_message error_back">Password must be more than 3 characters long</span>
-                        % end
-                        % if get("errors")['passwords_different'] != 'none':
-                        <span class="error_message error_back">Passwords don't match</span>
-                        % end
-                        <span class="error_message error_span hidden">Password <span></span></span>
+
+                    % for error_obj in possible_errors["password"]:
+                    % if get("errors")[error_obj["error"]] != 'none':
+                    <span class="error_message error_back">{{error_obj["message"]}}</span>
+                    % end
+                    % end
+                    <span class="error_message error_span hidden">Password <span></span></span>
 
 
 
-                        <input type="password" name="signup_password" id="signup_password" placeholder="***" data-required="true" data-min="3">
-                    </label>
-                    <label for="signup_password_repeat" data-to-be-validated="true">
-                        Repeat password
+                    <input type="password" name="signup_password" id="signup_password" placeholder="***" data-required="true" data-min="3">
+                </label>
+                <label for="signup_password_repeat" data-to-be-validated="true">
+                    Repeat password
 
 
 
-                        % if get("errors")['passwords_different'] != 'none':
-                        <span class="error_message error_back">Passwords don't match</span>
-                        % end
-                        <span class="error_message error_span hidden">Repeated password <span></span></span>
+                    % if get("errors")['passwords_different'] != 'none':
+                    <span class="error_message error_back">Passwords don't match</span>
+                    % end
+                    <span class="error_message error_span hidden">Repeated password <span></span></span>
 
 
 
-                        <input type="password" name="signup_password_repeat" id="signup_password_repeat" placeholder="***" data-required="true" data-min="3">
-                    </label>
-                    <input class="button color" type="submit" value="Sign up" onclick="sign_up(event)">
-                </form>
-            </main>
-            <footer class="link" onclick="spa('/login', true, event);">
+                    <input type="password" name="signup_password_repeat" id="signup_password_repeat" placeholder="***" data-required="true" data-min="3">
+                </label>
+                <input class="button color" type="submit" value="Sign up" onclick="sign_up(event)">
+            </form>
+            <button class="link" onclick="spa('/login', true, event);">
                 Already have an account? Log in here!
-            </footer>
-        </section>
+            </button>
+        </main>
     </main>
 </main>
+
+% # REBASE THE MODAL ON TOP OF THE INDEX PAGE
+% rebase('index', errors=errors, form_values=form_values)

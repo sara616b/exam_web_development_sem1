@@ -1,30 +1,28 @@
-% if not is_xhr:
-% include('header')
-% end
-<main id="home" class="content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
-    % include('navigation', users=users)
-    <main id="main_content">
-        <header id="page_title">
-            Home
-        </header>
-        <main id="content_container">
-            <header id="new_tweet_form_container">
-                % if modal == None:
-                % include('tweet_form', type='new')
-                % end
-            </header>
-            <main>
-                % for t in tweets:
-                % include('tweet_display', tweets=tweets, tweet=t, user_id=user_id, users=users)
-                % end
-            </main>
-        </main>
-    </main>
-    % include('aside', users=users)
+<header id="new_tweet_form_container">
+    % if modal == None:
+    % include('tweet_form', type='new')
+    % end
+</header>
+<main>
+    % # FEED DISPLAY - ALL POSTS
+    % include(
+    % 'feed_display',
+    % posts=posts,
+    % tweets=tweets,
+    % user_id=user_id,
+    % users=users
+    % )
 </main>
-% if modal and modal == 'tweet':
-% include('tweet_modal', tweet_id=tweet_id, tweet=tweet, type='edit')
-% end
-% if not is_xhr:
-% include('footer')
-% end
+
+% # REBASE INTO BASE TEMPLATE
+% rebase(
+% 'base',
+% users=get('users', None),
+% tweet_id=get('tweet_id', None),
+% posts=get('posts', None),
+% tweet=get('tweet', None),
+% user_profile_to_display=get('user_profile_to_display', None),
+% user_id=get('user_id', None),
+% tweets=get('tweets', None),
+% modal=get('modal', None)
+% )

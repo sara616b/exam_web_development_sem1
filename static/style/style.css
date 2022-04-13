@@ -48,7 +48,7 @@
 }
 
 .link {
-  color: #4d3220;
+  color: #63422c;
   text-decoration: underline;
   background: none;
   border: none;
@@ -58,6 +58,11 @@
 .link:hover {
   cursor: pointer;
   color: #dda900;
+}
+
+.hover:hover {
+  cursor: pointer;
+  opacity: 0.6;
 }
 
 label input:not([type=button]),
@@ -82,13 +87,14 @@ label span.error_message {
   top: 0;
   left: 0;
 }
-#index header {
+#index #index_logo_art {
   grid-column: 1/2;
   background-color: #dda900;
   overflow: hidden;
   height: 100vh;
+  background: linear-gradient(170deg, #ffde70 0%, #dda900 20%, #d89800 90%);
 }
-#index header svg {
+#index #index_logo_art svg {
   position: relative;
   right: 0;
   fill: white;
@@ -96,7 +102,7 @@ label span.error_message {
   height: 126%;
   transform: translateX(-22%);
 }
-#index main {
+#index #index_content {
   grid-column: 2/3;
   display: flex;
   flex-direction: column;
@@ -104,19 +110,19 @@ label span.error_message {
   padding: 2rem;
   height: 60vh;
 }
-#index main svg {
+#index #index_content svg {
   height: 80px;
   width: 80px;
   fill: #dda900;
   align-self: flex-start;
 }
-#index main section {
+#index #index_content #actions {
   width: 70%;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
 }
-#index main section h1 {
+#index #index_content #actions h1 {
   font-size: 3rem;
   color: #dda900;
   margin-bottom: 1rem;
@@ -126,16 +132,16 @@ label span.error_message {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
   }
-  #index header {
+  #index #index_logo_art {
     grid-column: 1/2;
     grid-row: 2/3;
   }
-  #index header svg {
+  #index #index_logo_art svg {
     width: 130%;
     height: 110%;
     transform: translate(-22%, -22%);
   }
-  #index main {
+  #index #index_content {
     grid-column: 1/2;
     grid-row: 1/2;
   }
@@ -150,8 +156,8 @@ label span.error_message {
   height: 100%;
   width: 100%;
 }
-#login #background,
-#signup #background {
+#login .background,
+#signup .background {
   background-color: rgba(221, 169, 0, 0.781);
   height: 100%;
   width: 100%;
@@ -160,12 +166,12 @@ label span.error_message {
   left: 0;
   z-index: 1;
 }
-#login #background:hover,
-#signup #background:hover {
+#login .background:hover,
+#signup .background:hover {
   cursor: pointer;
 }
-#login section:first-of-type,
-#signup section:first-of-type {
+#login #header_logo,
+#signup #header_logo {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -177,18 +183,18 @@ label span.error_message {
   z-index: 10;
   position: relative;
 }
-#login section:first-of-type svg,
-#signup section:first-of-type svg {
+#login #header_logo svg,
+#signup #header_logo svg {
   fill: white;
   height: 100px;
 }
-#login section:first-of-type h1,
-#signup section:first-of-type h1 {
+#login #header_logo h1,
+#signup #header_logo h1 {
   font-size: 2.5rem;
 }
 #login #modal,
 #signup #modal {
-  width: 300px;
+  width: 350px;
   height: auto;
   margin: 2rem auto;
   top: 0;
@@ -202,47 +208,30 @@ label span.error_message {
   flex-direction: column;
   justify-content: center;
 }
-@media screen and (max-width: 500px) {
-  #login #modal,
-#signup #modal {
-    width: 100%;
-    padding: 1.5rem 0.4rem;
-  }
-}
-#login #modal header,
-#signup #modal header {
+#login #modal h2,
+#signup #modal h2 {
   padding-bottom: 0.5rem;
   font-size: 1.5rem;
 }
-#login #modal main form,
-#signup #modal main form {
+#login #modal form,
+#signup #modal form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-#login #modal footer,
-#signup #modal footer {
+#login #modal button,
+#signup #modal button {
   padding-top: 0.5rem;
   text-align: center;
 }
-
-#signup #modal {
-  width: 400px;
-}
-@media screen and (max-width: 500px) {
-  #signup #modal {
-    width: 100%;
-  }
-}
+#login #modal span,
 #signup #modal span {
   font-size: 0.8rem;
   font-weight: 500;
 }
+#login #modal span.extra,
 #signup #modal span.extra {
-  color: #4d3220;
-}
-#signup #modal span.error {
-  color: red;
+  color: #63422c;
 }
 
 #page_title {
@@ -254,134 +243,125 @@ label span.error_message {
   top: 0;
   display: flex;
   flex-direction: row;
+  z-index: 0;
 }
-#page_title button {
+#page_title .back_button {
   background-color: #0000;
   border: none;
   width: auto;
   margin-right: 0.5rem;
 }
-#page_title button:hover {
-  cursor: pointer;
-  opacity: 0.6;
-}
 
-#logo_container:hover {
-  cursor: pointer;
-  opacity: 0.6;
-}
-
-#home {
+#buzzer {
   display: grid;
   grid-template-columns: 1fr minmax(50%, 600px) 1fr;
   grid-template-areas: "nav main aside";
   max-width: 1100px;
   margin: 0 auto;
 }
-#home #main_navigation,
-#home #main_aside {
+#buzzer #main_navigation,
+#buzzer #main_aside {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
-#home #main_navigation div,
-#home #main_aside div {
+#buzzer #main_navigation .content,
+#buzzer #main_aside .content {
   padding: 1rem;
   position: sticky;
   top: 0;
   width: 100%;
   height: calc(100vh - 2rem);
 }
-#home #main_navigation {
+#buzzer #main_navigation {
   grid-area: nav;
   justify-self: end;
   width: 175px;
 }
-#home #main_navigation #logo_container {
+#buzzer #main_navigation #logo_container {
   display: flex;
   align-items: center;
   flex-direction: column;
   margin-bottom: 0.4rem;
 }
-#home #main_navigation #logo_container svg {
+#buzzer #main_navigation #logo_container svg {
   fill: #dda900;
   width: 80px;
   height: 80px;
 }
-#home #main_navigation #navigation button {
+#buzzer #main_navigation #navigation button {
   margin-bottom: 0.4rem;
 }
-#home #main_navigation .profile_container {
+#buzzer #main_navigation #profile_container {
   position: absolute;
   bottom: 0;
   display: flex;
   flex-direction: row;
   width: calc(100% - 2rem);
   border-radius: 1.5rem;
-  padding: 0.5rem 1rem;
+  padding: 0rem 0.5rem;
 }
-#home #main_navigation .profile_container:hover {
+#buzzer #main_navigation #profile_container:hover {
   background-color: #f0f0f0;
   cursor: pointer;
 }
-#home #main_navigation .profile_container section {
+#buzzer #main_navigation #profile_container .user_display {
+  padding: 0;
+}
+#buzzer #main_navigation #profile_container .user_display:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+#buzzer #main_navigation #profile_container .user_display section {
   width: auto;
   height: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
 }
-#home #main_navigation .profile_container section p {
+#buzzer #main_navigation #profile_container .user_display section section {
+  display: flex;
+  flex-direction: column;
+}
+#buzzer #main_navigation #profile_container .user_display section p {
   padding: 0 0.4rem;
 }
-#home #main_navigation .profile_container section svg {
+#buzzer #main_navigation #profile_container .user_display section svg {
   width: 40px;
   height: 40px;
-  fill: #4d3220;
+  fill: #63422c;
   border-radius: 50%;
 }
-#home #main_content,
-#home #profile-content {
+#buzzer #main_content {
   grid-area: main;
   margin: 0 auto;
   max-width: 600px;
 }
-#home #main_content #content_container #new_tweet_form_container,
-#home #profile-content #content_container #new_tweet_form_container {
-  padding: 1rem 0.4rem;
-  border: solid #f0f0f0 thin;
+#buzzer #main_content .user_header svg {
+  fill: #63422c;
 }
-#home #main_content .user_header svg,
-#home #profile-content .user_header svg {
-  fill: #4d3220;
-}
-#home #main_content .user_info,
-#home #profile-content .user_info {
+#buzzer #main_content .user_info {
   margin: 1rem;
 }
-#home .tweet_container {
+#buzzer .tweet_container {
   padding: 1.5rem 0.5rem;
   border: solid #f0f0f0 thin;
   display: flex;
   flex-direction: row;
 }
-#home .tweet_container .icon_container {
+#buzzer .tweet_container .icon_container {
   width: 40px;
 }
-#home .tweet_container .icon_container:hover {
-  cursor: pointer;
-  opacity: 0.6;
-}
-#home .tweet_container .icon_container svg {
+#buzzer .tweet_container .icon_container svg {
   width: 40px;
   height: 40px;
-  fill: #4d3220;
+  fill: #63422c;
 }
-#home .tweet_container .content_container {
+#buzzer .tweet_container .content_container {
   width: 100%;
   padding-left: 0.4rem;
 }
-#home .tweet_container .content_container .user_information {
+#buzzer .tweet_container .content_container .user_information {
   width: auto;
   display: flex;
   flex-direction: row;
@@ -389,60 +369,66 @@ label span.error_message {
   gap: 0.4rem;
   width: 100%;
 }
-#home .tweet_container .content_container .user_information:hover {
-  opacity: 0.6;
-  cursor: pointer;
-}
-#home .tweet_container .content_container .user_information .user_display_name {
+#buzzer .tweet_container .content_container .user_information .user_display_name {
   font-weight: bold;
   width: auto;
 }
-#home .tweet_container .content_container .user_information p {
+#buzzer .tweet_container .content_container .user_information p {
   font-weight: 300;
   font-size: 0.85rem;
-  color: #4d3220;
   width: auto;
 }
-#home .tweet_container .content_container .tweet_content {
+#buzzer .tweet_container .content_container .tweet_content {
   padding: 0.2rem 0;
 }
-#home .tweet_container .content_container .tweet_content img {
+#buzzer .tweet_container .content_container .tweet_content img {
   margin: 1rem 0;
   border-radius: 0.5rem;
 }
-#home .tweet_container .content_container .like_container {
+#buzzer .tweet_container .content_container .like_container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-#home .tweet_container .content_container .like_container section {
+#buzzer .tweet_container .content_container .like_container section {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
   width: auto;
 }
-#home .tweet_container .content_container .like_container section svg {
-  stroke: black;
-  stroke-width: 3rem;
-  width: 50px;
+#buzzer .tweet_container .content_container .like_container section svg {
+  stroke: #63422c;
+  stroke-width: 2rem;
+  width: 80px;
   height: 30px;
   fill: white;
+  opacity: 0.7;
 }
-#home .tweet_container .content_container .like_container section svg:hover {
+#buzzer .tweet_container .content_container .like_container section svg:hover {
   stroke: #dda900;
   cursor: pointer;
 }
-#home .tweet_container .content_container .like_container section svg path {
+#buzzer .tweet_container .content_container .like_container section svg path {
   pointer-events: none;
 }
-#home .tweet_container .content_container .like_container section svg[data-liked=True] {
+#buzzer .tweet_container .content_container .like_container section svg[data-liked=True], #buzzer .tweet_container .content_container .like_container section svg[data-retweeted=True] {
   fill: #dda900;
+  stroke-width: 2rem;
+  opacity: 1;
 }
-#home .tweet_container .content_container .like_container section svg[data-liked=True] + p {
+#buzzer .tweet_container .content_container .like_container section svg[data-liked=True] + p, #buzzer .tweet_container .content_container .like_container section svg[data-retweeted=True] + p {
   font-weight: bold;
 }
-#home .tweet_container .actions_container {
+#buzzer .tweet_container .content_container .like_container section svg[data-liked=True] {
+  fill: #cc2c2c;
+  stroke: #cc2c2c;
+}
+#buzzer .tweet_container .content_container .like_container section svg[data-retweeted=True] {
+  fill: #3e8c3e;
+  stroke: #3e8c3e;
+}
+#buzzer .tweet_container .actions_container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -450,42 +436,42 @@ label span.error_message {
   gap: 0.4rem;
   width: auto;
 }
-#home .tweet_container .actions_container .button {
+#buzzer .tweet_container .actions_container .button {
   max-width: 100px;
   width: 100%;
 }
-#home .tweet_container .actions_container .tweet_actions {
+#buzzer .tweet_container .actions_container .tweet_actions {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
   width: 100%;
 }
-#home #main_aside {
+#buzzer #main_aside {
   width: 300px;
 }
-#home #main_aside div main {
+#buzzer #main_aside .content #who_to_follow {
   background-color: #f0f0f0;
   border-radius: 1.5rem;
 }
-#home #main_aside div main header {
+#buzzer #main_aside .content #who_to_follow h2 {
   padding: 1.2rem 1rem 0.6rem 1rem;
   font-weight: bold;
   border-radius: 1.5rem 1.5rem 0 0;
 }
-#home #main_aside div main footer {
+#buzzer #main_aside .content #who_to_follow #show_more {
   padding: 0.6rem 1rem 1.2rem 1rem;
   border-radius: 0 0 1.5rem 1.5rem;
   border-style: inset;
   border: solid #f0f0f0 thin;
 }
-#home #main_aside div main footer:hover {
+#buzzer #main_aside .content #who_to_follow #show_more:hover {
   background-color: white;
   color: #dda900;
   cursor: pointer;
 }
-#home #main_aside div main main {
-  border-top: solid #4d3220 thin;
-  border-bottom: solid #4d3220 thin;
+#buzzer #main_aside .content #who_to_follow #users_list {
+  border-top: solid #63422c thin;
+  border-bottom: solid #63422c thin;
   border-radius: 0;
 }
 
@@ -500,7 +486,7 @@ label span.error_message {
   background-color: white;
   cursor: pointer;
 }
-.user_display button {
+.user_display .follow_button {
   height: 100%;
   width: auto;
   display: flex;
@@ -529,19 +515,28 @@ label span.error_message {
 .user_display section svg {
   width: 30px;
   height: 30px;
-  fill: #4d3220;
+  fill: #63422c;
   border-radius: 50%;
 }
 
-#profile-content > main > header .background {
+#page_content {
+  height: auto;
+}
+#page_content .background {
   background-color: #f0a109;
   width: 100%;
   height: 150px;
+  z-index: -2;
+  position: relative;
 }
-#profile-content > main > header > header {
+#page_content #new_tweet_form_container {
+  padding: 1rem 0.4rem;
+  border: solid #f0f0f0 thin;
+}
+#page_content .user_header {
   height: 50px;
 }
-#profile-content > main > header svg {
+#page_content .user_header svg {
   width: 100px;
   height: 100px;
   transform: translateY(calc(-50% - 0.5rem - 0.25rem));
@@ -550,14 +545,39 @@ label span.error_message {
   margin: 1rem;
   border-radius: 100%;
   position: absolute;
+  z-index: -1;
 }
-#profile-content > main > header .button {
+#page_content .button {
   max-width: 100px;
   float: right;
   margin: 0.5rem;
 }
-#profile-content > main {
-  height: auto;
+
+.retweet_container {
+  padding-top: 1.5rem;
+  border: solid #f0f0f0 thin;
+}
+.retweet_container .retweet_header {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: #63422c;
+}
+.retweet_container .retweet_header .retweet_icon {
+  margin-left: 1rem;
+  width: 20px;
+  height: 20px;
+  fill: #63422c;
+}
+.retweet_container .retweet_header .delete_retweet {
+  width: auto;
+}
+.retweet_container .tweet_container {
+  padding-top: 0.2rem !important;
+  border: none !important;
 }
 
 #tweet_form {
@@ -571,7 +591,7 @@ label span.error_message {
 #tweet_form #profile_icon_container svg {
   width: 40px;
   height: 40px;
-  fill: #4d3220;
+  fill: #63422c;
 }
 #tweet_form #form_content {
   width: 100%;
@@ -614,6 +634,7 @@ label span.error_message {
   width: auto;
   height: auto;
   text-align: center;
+  max-width: unset;
 }
 #tweet_form #form_content #new_tweet_actions label.color,
 #tweet_form #form_content #new_tweet_actions button.color {
@@ -646,7 +667,7 @@ label span.error_message {
   width: 600px;
   min-width: 300px;
   height: auto;
-  margin: 2rem auto;
+  margin: 0 auto 2rem auto;
   top: 0;
   left: 0;
   position: relative;
@@ -658,31 +679,37 @@ label span.error_message {
   flex-direction: column;
   justify-content: center;
 }
+#tweet_modal #modal h2 {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding-bottom: 1rem;
+  color: #63422c;
+}
 @media screen and (max-width: 500px) {
   #tweet_modal #modal {
     width: 100%;
   }
 }
 
-#home.admin {
+#buzzer.admin {
   display: inline-block;
 }
-#home.admin h1 {
+#buzzer.admin h1 {
   font-size: 2rem;
   padding: 1rem;
   text-align: center;
 }
-#home.admin #administator {
+#buzzer.admin #administator {
   max-width: 400px;
   margin: 0 auto;
 }
 
-@media screen and (max-width: 980px) {
-  #home {
-    grid-template-areas: "nav main main";
-  }
-  #home #main_aside {
-    display: none !important;
+@media screen and (max-width: 500px) {
+  #login #modal,
+#signup #modal {
+    width: 100%;
+    padding: 1.5rem 0.4rem;
   }
 }
 @media screen and (max-width: 600px) {
@@ -690,18 +717,18 @@ label span.error_message {
     width: 100%;
   }
 
-  #home {
+  #buzzer {
     height: 100%;
     display: block;
   }
-  #home #main_content {
+  #buzzer #main_content {
     min-width: unset;
     max-width: none;
   }
-  #home #page_title {
+  #buzzer #page_title {
     position: relative;
   }
-  #home #main_navigation {
+  #buzzer #main_navigation {
     height: 50px;
     width: auto;
     max-width: none;
@@ -711,7 +738,7 @@ label span.error_message {
     z-index: 110;
     border-bottom: solid #f8f2ea thin;
   }
-  #home #main_navigation div {
+  #buzzer #main_navigation .content {
     padding: 0;
     display: flex;
     flex-direction: row;
@@ -719,14 +746,14 @@ label span.error_message {
     justify-content: center;
     height: 100%;
   }
-  #home #main_navigation div header {
+  #buzzer #main_navigation .content header {
     height: 30px;
     width: 30px;
   }
-  #home #main_navigation div footer {
+  #buzzer #main_navigation .content footer {
     display: none !important;
   }
-  #home #main_navigation div main {
+  #buzzer #main_navigation .content main {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -734,7 +761,7 @@ label span.error_message {
     height: 100%;
     width: auto;
   }
-  #home #main_navigation div main button {
+  #buzzer #main_navigation .content main button {
     height: 100%;
     width: auto;
     background-color: #0000;
@@ -744,13 +771,21 @@ label span.error_message {
     padding: 0 20px;
     order: 1;
   }
-  #home #main_navigation div main button:hover {
+  #buzzer #main_navigation .content main button:hover {
     color: #dda900;
   }
-  #home #main_navigation div main button:last-of-type {
+  #buzzer #main_navigation .content main button:last-of-type {
     order: 0;
   }
-  #home #main_aside {
+  #buzzer #main_aside {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 980px) {
+  #buzzer {
+    grid-template-areas: "nav main main";
+  }
+  #buzzer #main_aside {
     display: none !important;
   }
 }

@@ -1,23 +1,18 @@
 <nav id="main_navigation">
-    <div>
-        <header id="logo_container" onclick="open_home(event)">
+    <div class="content">
+        <header id="logo_container" class="hover" onclick="open_home(event)">
             % include('logo_icon')
         </header>
         % for user in users:
         % if user['user_id'] == user_id:
         <main id="navigation">
-            <button data-username="id{{user['user_username']}}" onclick="view_user(event)" class="button">PROFILE</button>
+            <button onclick="view_user(event)" data-username="id{{user['user_username']}}" class="button">PROFILE</button>
             <button onclick="spa('/tweets/new', true, event);" class="button color">TWEET</button>
             <button onclick="log_out(event)" class="link">LOG OUT</button>
         </main>
-        <footer class="profile_container" onclick="view_user(event)" data-username="id{{user['user_username']}}">
-            <section class="no_click">
-                % include('profile_icon')
-            </section>
-            <section class="no_click">
-                <p class="no_click">{{user["user_display_name"]}}</p>
-                <p class="no_click">@{{user["user_username"]}}</p>
-            </section>
+
+        <footer id="profile_container">
+            % include('user_display', user=user, user_id=user_id)
         </footer>
         % end
         % end

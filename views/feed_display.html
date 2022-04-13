@@ -1,0 +1,16 @@
+<main class="feed">
+    % for post in posts:
+
+    % # POST - EITHER TWEET_DISPLAY OR RETWEET_DISPLAY
+    % include(
+    % post['type'] + '_display',
+    % type=post["type"],
+    % post=post,
+    % tweets=tweets,
+    % tweet=post["tweet_id"],
+    % user_id=user_id,
+    % users=users
+    % )
+
+    % end
+</main>

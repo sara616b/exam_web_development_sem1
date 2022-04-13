@@ -4,31 +4,54 @@ from jwt.exceptions import InvalidSignatureError
 import sqlite3
 import uuid
 import time
+import os
+import re
+import imghdr
 import datetime
 
 JWT_KEY = f"{str(uuid.uuid4())}-{str(uuid.uuid4())}-{str(uuid.uuid4())}"
 REGEX_EMAIL = '^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
 
-def check_if_logged_in():
-    # is_logged_in = False
-    db = sqlite3.connect(f"{get_file_path()}/database/database.db")
+def confirm_user_is_logged_in():
+    db = None
+    try:
+        ##### get cookie
+        jwt_cookie = request.get_cookie("jwt", secret="secret")
+        if (jwt_cookie):
+            ##### try to decode or return if signature verfication fails
+            try: 
+                jwt.decode(
+                    jwt_cookie,
+                    JWT_KEY, algorithms=["HS256"]
+                ) or None
 
-    # TODO - Instead have the session unique for each user
-    jwt_cookie = request.get_cookie("jwt", secret="secret")
-    session_matches_user = str(db.execute("""
-            SELECT user_current_session, user_id
-            FROM users
-            WHERE user_current_session = :user_current_session
-            """, (str(jwt_cookie),)).fetchone())
-    if session_matches_user[0]:
-        session_matches_user = True
+            except InvalidSignatureError as error:
+                print(f"Invalid signature error: {error}")
+                return False
 
-    jwt.decode(
-            jwt_cookie,
-            JWT_KEY, algorithms=["HS256"]
-        ) or None
+            else:
+                db = sqlite3.connect(f"{get_file_path()}/database/database.db")
+                ##### find the users who match the jwt session cookie
+                session_matches_user = str(db.execute("""
+                        SELECT user_current_session, user_id
+                        FROM users
+                        WHERE user_current_session = :user_current_session
+                        """, (str(jwt_cookie),)).fetchone())
 
-    db.close()
+                ##### if it matches a user, return true - someone is logged in with a valid session
+                if session_matches_user != None:
+                    if session_matches_user[0]:
+                        return True
+                
+        return False
+
+    except Exception as ex:
+        print(f"Exception: {ex}")
+        return False
+
+    finally:
+        if db != None:
+            db.close()
 
 def time_since_from_epoch(epoch):
     time_since_seconds = int(time.time()) - int(epoch.split('.')[0])
@@ -60,6 +83,285 @@ def get_file_path():
     except:
       return "."
 
+def create_dictionary_from_data(values, data):
+    result_dict = {}
+    for index, value in enumerate(values):
+        result_dict[value] = data[index]
+    return result_dict
+
+def is_uuid(id):
+  if not id: return False
+  regex_uuid4 = "^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+  if not re.match(regex_uuid4, id) : return False
+  return True
+
+def get_all_tweets(user_id): # if user_id == None, likes data won't be included
+    
+    # print('get all tweets')
+
+    ###### connect to database
+    db = sqlite3.connect(f"{get_file_path()}/database/database.db")
+
+    ###### select all tweets joined with user information
+    tweet_values = ["tweet_id", "tweet_text", "tweet_created_at", "tweet_updated_at", "tweet_image", "tweet_user_id", "user_username", "user_display_name"]
+
+    all_tweets_data = db.execute(f"""
+        SELECT {','.join(tweet_values)}
+        FROM tweets
+        JOIN users
+        WHERE tweets.tweet_user_id = users.user_id
+        ORDER BY tweet_created_at DESC
+        """).fetchall()
+
+    if user_id:
+        ##### select all likes data            
+        all_likes_data = db.execute(f"""
+            SELECT fk_user_id AS user_id, fk_tweet_id AS tweet_id
+            FROM likes
+            """).fetchall()
+        
+        ##### select all retweets data           
+        all_retweets_data = db.execute(f"""
+            SELECT retweet_id, fk_user_id AS user_id, fk_tweet_id AS tweet_id, retweeted_at
+            FROM retweets
+            """).fetchall()
+        # print(all_retweets_data)
+
+    ##### organize tweet data into tweets dictionary
+    tweets = {}
+    for tweet in all_tweets_data:
+        ##### tweet data to dictionary 
+        tweet_dict = create_dictionary_from_data(tweet_values, tweet)
+
+        if user_id:
+            ##### has the user liked the tweet and list of likes
+            tweet_dict["tweet_likes"] = 0
+            tweet_dict["has_liked_tweet"] = False
+            for like in all_likes_data:
+                ##### if like['tweet_id'] is current tweet's id increse likes amount +1
+                if like[1] == tweet_dict["tweet_id"]:
+                    tweet_dict["tweet_likes"] += 1
+                    ##### if also like['user_id'] is the logged in user, set has_liked_tweet to True
+                    if like[0] == user_id:
+                        tweet_dict["has_liked_tweet"] = True
+            
+            ##### retweets
+            tweet_dict["tweet_retweets"] = 0
+            tweet_dict["has_retweeted_tweet"] = False
+            for retweet in all_retweets_data:
+                ##### if like['tweet_id'] is current tweet's id increse likes amount +1
+                if retweet[2] == tweet_dict["tweet_id"]:
+                    tweet_dict["tweet_retweets"] += 1
+                    ##### if also like['user_id'] is the logged in user, set has_liked_tweet to True
+                    if retweet[1] == user_id:
+                        tweet_dict["has_retweeted_tweet"] = True
+
+        ##### time since created and updated time
+        tweet_dict["tweet_time_since_created"] = time_since_from_epoch(tweet_dict["tweet_created_at"])
+        tweet_dict["tweet_updated_at_datetime"] = date_text_from_epoch(tweet_dict["tweet_updated_at"]) if tweet_dict["tweet_updated_at"] else None
+
+        ##### add tweet to all tweets dictionary
+        tweets[tweet_dict["tweet_id"]] = tweet_dict
+    
+    db.close()
+
+    return tweets
+
+def get_all_users(user_id): # if user_id == None, follower data won't be included
+    ###### connect to database
+    db = sqlite3.connect(f"{get_file_path()}/database/database.db")
+
+    ###### select all users and add to list
+    users_values = ["user_id", "user_display_name", "user_username"]
+    all_users = db.execute(f"""
+        SELECT {','.join(users_values)}
+        FROM users
+        ORDER BY user_created_at DESC
+        """).fetchall()
+    
+    if user_id:
+        ##### select all follow data            
+        all_followers_data = db.execute(f"""
+            SELECT fk_user_id_follower AS user_id_follower, fk_user_id_to_follow AS user_id_to_follow
+            FROM followers
+            """).fetchall()
+
+    users = []
+    for user in all_users:
+        user_dict = create_dictionary_from_data(users_values, user)
+
+        if user_id:
+            ##### user followers and followings
+            user_dict["followers"] = 0
+            user_dict["is_following"] = False
+            for follow in all_followers_data:
+                if follow[1] == user_dict["user_id"]:
+                    user_dict["followers"] += 1
+                    if follow[0] == user_id:
+                        user_dict["is_following"] = True
+
+        users.append(user_dict)
+    
+    db.close()
+
+    return users
+
+def get_all_posts(user_id, only_include_from_user_id=None):
+    try:
+        if not is_uuid(user_id):
+            response.status = 500
+            return
+
+        db = sqlite3.connect(f"{get_file_path()}/database/database.db")
+        
+        if only_include_from_user_id != None:
+            all_retweets_data = db.execute(f"""
+                SELECT retweet_id, fk_user_id AS user_id, fk_tweet_id AS tweet_id, retweeted_at
+                FROM retweets
+                WHERE fk_user_id = :user_id
+                ORDER BY retweeted_at DESC
+                """, (only_include_from_user_id,)).fetchall()
+        else:
+            all_retweets_data = db.execute(f"""
+                SELECT retweet_id, fk_user_id AS user_id, fk_tweet_id AS tweet_id, retweeted_at
+                FROM retweets
+                ORDER BY retweeted_at DESC
+                """).fetchall()
+
+        db.close()
+
+        posts = []
+
+        for retweet in all_retweets_data:
+            retweet_dict = create_dictionary_from_data(["retweet_id", "user_id", "tweet_id", "retweeted_at"], retweet)
+            retweet_dict["latest_updated_at"] = retweet_dict["retweeted_at"]
+            retweet_dict["type"] = "retweet"
+            posts.append(retweet_dict)
+
+        tweets = get_all_tweets(user_id)
+        for tweet in tweets:
+            post = {
+                "tweet_id": tweets[tweet]['tweet_id'],
+                "tweet_user_id": tweets[tweet]['tweet_user_id'],
+                "latest_updated_at": tweets[tweet]["tweet_updated_at"] if tweets[tweet]["tweet_updated_at"] != None else tweets[tweet]["tweet_created_at"],
+                "type": "tweet",
+            }
+            if only_include_from_user_id != None and tweets[tweet]["tweet_user_id"] == only_include_from_user_id:
+                posts.append(post)
+            elif only_include_from_user_id == None:
+                posts.append(post)
+
+        sorted_posts = sorted(posts, key=lambda d: d["latest_updated_at"], reverse=True)
+        return sorted_posts
+    
+    except Exception as ex:
+        print(f"Exception: {ex}")
+        response.status = 500
+        return
+
+def check_the_image(image_file):
+    image_name = None
+    if image_file:
+        # get extention and validate
+        file_name, file_extension = os.path.splitext(image_file.filename)
+        if file_extension.lower() == ".jpg": file_extension = ".jpeg"
+        if file_extension.lower() not in (".png", ".jpg", ".jpeg"):
+            redirectPath = f"/tweets/new?error=image-not-allowed"
+            return redirectPath, image_name
+
+        # image name
+        image_name = f"{str(uuid.uuid4())}{file_extension}"
+
+        # save image
+        image_file.save(f"{get_file_path()}/static/images/tweets/{image_name}")
+
+        # is the image valid
+        imghdr_extension = imghdr.what(f"{get_file_path()}/static/images/tweets/{image_name}")
+        if file_extension != f".{imghdr_extension}":
+            # delete the invalid image 
+            os.remove(f"{get_file_path()}/static/images/tweets/{image_name}")
+            redirectPath = f"/tweets/new?error=image-not-allowed"
+            return redirectPath, image_name
+    return None, image_name
+
+def validate_tweet_text(tweet_text, tweet_id):
+    if not tweet_text:
+        # text is required in tweets
+        response.status = 204
+        redirectPath = f"/tweets/{tweet_id}?error=empty"
+        return None, redirectPath
+    if len(tweet_text) < 2:
+        response.status = 400
+        redirectPath = f"/tweets/{tweet_id}?error=short&text={tweet_text}"
+        return None, redirectPath
+    if len(tweet_text) > 250:
+        response.status = 400
+        redirectPath = f"/tweets/{tweet_id}?error=long&text={tweet_text}"
+        return None, redirectPath
+
+    if tweet_text:
+        return tweet_text, None
+    
+    return None, None
+
+##### delete tweet, all connected likes, and any possible image
+def delete_tweet(tweet_id):
+    if not is_uuid(tweet_id):
+        response.status = 500
+        return
+    # connect to database
+    db = sqlite3.connect(f"{get_file_path()}/database/database.db")
+
+    # find image and delete it from the folder if it exists
+    tweet_image = db.execute("""
+        SELECT tweet_image
+        FROM tweets
+        WHERE tweet_id = :tweet_id
+        """, (tweet_id,)).fetchone()[0]
+    if tweet_image:
+        if os.path.exists(f"{get_file_path()}/static/images/tweets/{tweet_image}"):
+            os.remove(f"{get_file_path()}/static/images/tweets/{tweet_image}")
+
+    # delete tweet from database
+    counter = db.execute("""
+        DELETE FROM tweets
+        WHERE tweet_id = :tweet_id
+        """, (tweet_id,)).rowcount
+
+    # delete tweet likes from database
+    db.execute("""
+        DELETE FROM likes
+        WHERE fk_tweet_id = :tweet_id
+        """, (tweet_id,))
+    
+    # delete tweet retweet from database
+    db.execute("""
+        DELETE FROM retweets
+        WHERE fk_tweet_id = :tweet_id
+        """, (tweet_id,))
+
+    db.commit()
+    db.close()
+    return counter
+
+##### delete tweet, all connected likes, and any possible image
+def delete_retweet(retweet_id):
+    # connect to database
+    db = sqlite3.connect(f"{get_file_path()}/database/database.db")
+
+    # delete tweet from database
+    counter = db.execute("""
+        DELETE FROM retweets
+        WHERE retweet_id = :retweet_id
+        """, (retweet_id,)).rowcount
+        
+    db.commit()
+    db.close()
+    return counter
+
+def only_update_body():
+    only_update_body = True if request.headers.get('spa') else False
+    return only_update_body
 
 # from bottle import response
 # import sqlite3
