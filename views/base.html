@@ -1,39 +1,28 @@
-% if not only_update_body:
-% include('header')
-% end
+<!DOCTYPE html>
+<html lang="en">
 
-<main id="buzzer" class="content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
-    % include('navigation', users=users)
-    <main id="main_content">
-        <header id="page_title">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* TO AVOID FLASH OF UNSTYLED CONTENT */
+        /* Hide everything while stylesheet is being loaded (reversed at the end of the below stylesheet) */
+        html {
+            visibility: hidden;
+            opacity: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="../static/style/style.css">
+    <link rel="icon" type="image/svg+xml" href="../static/images/icon.svg">
+    <script src="../static/js/script.js" defer></script>
+    <script src="../static/js/spa.js" defer></script>
+    <script src="../static/js/validator.js" defer></script>
+    <title>Buzzer</title>
+</head>
 
-            % if title and title != 'Home': # no back button on home but on all other pages
-            <button class="back_button hover" onclick="open_home(event);">🡠</button>
-            % end
+<body>
+    {{!base}}
+</body>
 
-            {{get('title')}}
-
-        </header>
-        <main id="page_content">
-
-            % # PAGE CONTENT FROM REBASE
-            % include
-
-        </main>
-    </main>
-    % include('aside', users=users)
-</main>
-
-% # TWEET MODAL
-% if modal and modal == 'tweet':
-% include(
-% 'tweet_modal',
-% tweet_id=tweet_id,
-% tweet=tweet,
-% type='edit'
-% )
-% end
-
-% if not only_update_body:
-% include('footer')
-% end
+</html>

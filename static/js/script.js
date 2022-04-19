@@ -1,9 +1,12 @@
 const sign_up = async (event) => {
   event.preventDefault();
   event.stopPropagation();
+  // add elipses to indicate that something is happening
+  const submit_button_value = event.target.value;
+  event.target.value = "signing up...";
   const form = event.target.form;
-  const is_valid = true;
-  // const is_valid = validate(form);
+  // const is_valid = true;
+  const is_valid = validate(form);
   if (is_valid) {
     await fetch("/signup", {
       method: "POST",
@@ -21,11 +24,17 @@ const sign_up = async (event) => {
       }
     });
   }
+  // remove elipses
+  event.target.value = submit_button_value;
 };
 
 const log_in = async (event) => {
   event.preventDefault();
   event.stopPropagation();
+  // add elipses to indicate that something is happening
+  const submit_button_value = event.target.value;
+  event.target.value = "logging in...";
+
   const form = event.target.form;
   const is_valid = validate(form);
   // const is_valid = true;
@@ -46,11 +55,17 @@ const log_in = async (event) => {
       }
     });
   }
+  // remove elipses
+  event.target.value = submit_button_value;
 };
 
 const log_out = async (event) => {
   event.preventDefault();
   event.stopPropagation();
+  // add elipses to indicate that something is happening
+  const submit_button_value = event.target.textContent;
+  event.target.textContent = "logging out...";
+  event.target.classList.add("disabled");
   await fetch("/logout", {
     method: "PUT",
   }).then((response) => {
@@ -60,11 +75,18 @@ const log_out = async (event) => {
     // get to frontpage
     spa("/", true, event);
   });
+  // remove elipses
+  event.target.textContent = submit_button_value;
+  event.target.classList.remove("disabled");
 };
 
 const post_new_tweet = async (event) => {
   event.preventDefault();
   event.stopPropagation();
+  // add elipses to indicate that something is happening
+  const submit_button_value = event.target.textContent;
+  event.target.textContent = "posting...";
+  event.target.classList.add("disabled");
   const form = event.target.form;
   const is_valid = validate(form);
   if (is_valid) {
@@ -84,11 +106,18 @@ const post_new_tweet = async (event) => {
       }
     });
   }
+  // remove elipses
+  event.target.textContent = submit_button_value;
+  event.target.classList.remove("disabled");
 };
 
 const put_edited_tweet = async (event) => {
   event.preventDefault();
   event.stopPropagation();
+  // add elipses to indicate that something is happening
+  const submit_button_value = event.target.textContent;
+  event.target.textContent = "posting...";
+  event.target.classList.add("disabled");
   const form = event.target.form;
   const tweet_id = event.target.id.slice(2);
   const is_valid = validate(form);
@@ -109,14 +138,29 @@ const put_edited_tweet = async (event) => {
       }
     });
   }
+  // remove elipses
+  event.target.textContent = submit_button_value;
+  event.target.classList.remove("disabled");
 };
 
 const delete_tweet = async (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  // add elipses to indicate that something is happening
+  const submit_button_value = event.target.textContent;
+  event.target.textContent = "deleting...";
+  event.target.classList.add("disabled");
   const tweet_id = event.target.id.slice(2);
   await fetch("/tweets/delete/" + tweet_id, {
     method: "DELETE",
   }).then((response) => {
     if (!response.ok) {
+      return;
+    }
+    if (response.redirected) {
+      event.target.textContent = submit_button_value;
+      spa(response.url, false, event);
+      event.target.classList.remove("disabled");
       return;
     }
     // delete tweet from ui (could be done with spa, but this saves a get request)
@@ -136,9 +180,14 @@ const delete_tweet = async (event) => {
     });
     // spa(window.location.pathname, false, event);
   });
+  // remove elipses
+  event.target.textContent = submit_button_value;
+  event.target.classList.remove("disabled");
 };
 
 const retweet_tweet = async (event) => {
+  event.preventDefault();
+  event.stopPropagation();
   const tweet_id = event.target.dataset.tweetId.slice(2);
   // if (event.target.dataset.twee == "False") {
   await fetch("/tweets/retweet/" + tweet_id, {
@@ -161,6 +210,12 @@ const retweet_tweet = async (event) => {
 };
 
 const delete_retweet = async (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  // add elipses to indicate that something is happening
+  const submit_button_value = event.target.textContent;
+  event.target.textContent = "deleting...";
+  event.target.classList.add("disabled");
   const retweet_id = event.target.dataset.retweetId.slice(2);
   // const tweet_id = event.target.dataset.tweetId.slice(2);
   await fetch("/retweets/delete/" + retweet_id, {
@@ -169,27 +224,24 @@ const delete_retweet = async (event) => {
     if (!response.ok) {
       return;
     }
-    // delete tweet from ui (could be done with spa, but this saves a get request)
-    // const retweet = document.querySelector(
-    //   ".retweet_container[data-retweet-id='id" + retweet_id + "']"
-    // );
-    // retweet.remove();
-    // const tweet_retweet_count = document.querySelector(
-    //   "[data-tweet-id='id" + tweet_id + "'][data-retweeted='True']"
-    // );
-    // console.log(tweet_retweet_count);
-    // tweet_retweet_count.dataset.retweeted =
-    //   tweet_retweet_count.dataset.retweeted == "True" ? "False" : "True";
-
-    // tweet_retweet_count.nextElementSibling.textContent =
-    //   parseInt(tweet_retweet_count.nextElementSibling.textContent) - 1;
-
+    if (response.redirected) {
+      event.target.textContent = submit_button_value;
+      spa(response.url, false, event);
+      event.target.classList.remove("disabled");
+      return;
+    }
     spa(window.location.pathname, false, event);
   });
+  // remove elipses
+  event.target.textContent = submit_button_value;
+  event.target.classList.remove("disabled");
 };
 
-const like_tweet = async (event) => {
+const toggle_like_tweet = async (event) => {
   const tweet_id = event.target.id.slice(4);
+  const like_buttons = document.querySelectorAll(
+    "[data-tweet-id='id" + tweet_id + "'].like_button"
+  );
   if (event.target.dataset.liked == "False") {
     await fetch("/tweets/like/" + tweet_id, {
       method: "POST",
@@ -197,8 +249,14 @@ const like_tweet = async (event) => {
       if (!response.ok) {
         return;
       }
-      event.target.nextElementSibling.textContent =
-        parseInt(event.target.nextElementSibling.textContent) + 1;
+      if (response.redirected) {
+        spa(response.url, false, event);
+        return;
+      }
+      like_buttons.forEach((button) => {
+        button.nextElementSibling.textContent =
+          parseInt(button.nextElementSibling.textContent) + 1;
+      });
     });
   } else {
     await fetch("/tweets/like/" + tweet_id, {
@@ -207,13 +265,20 @@ const like_tweet = async (event) => {
       if (!response.ok) {
         return;
       }
-      event.target.nextElementSibling.textContent =
-        parseInt(event.target.nextElementSibling.textContent) - 1;
+      if (response.redirected) {
+        spa(response.url, false, event);
+        return;
+      }
+      like_buttons.forEach((button) => {
+        button.nextElementSibling.textContent =
+          parseInt(button.nextElementSibling.textContent) - 1;
+      });
     });
   }
   // update ui (could be done with spa, but save the request)
-  event.target.dataset.liked =
-    event.target.dataset.liked == "True" ? "False" : "True";
+  like_buttons.forEach((button) => {
+    button.dataset.liked = button.dataset.liked == "True" ? "False" : "True";
+  });
   // spa(window.location.pathname, false, event);
 };
 
@@ -225,11 +290,22 @@ const view_user = async (event) => {
     if (!response.ok) {
       return;
     }
+    if (response.redirected) {
+      spa(response.url, true, event);
+      return;
+    }
     spa("/users/" + username, true, event);
   });
 };
 
 const follow_user = async (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  // add elipses to indicate that something is happening
+  const submit_button_value = event.target.textContent;
+  event.target.textContent =
+    event.target.dataset.follows == "False" ? "following..." : "unfollowing...";
+  event.target.classList.add("disabled");
   const user_id_to_follow = event.target.dataset.userid.slice(2);
   if (event.target.dataset.follows == "False") {
     await fetch("/users/follow/" + user_id_to_follow, {
@@ -238,12 +314,24 @@ const follow_user = async (event) => {
       if (!response.ok) {
         return;
       }
+      if (response.redirected) {
+        event.target.textContent = submit_button_value;
+        spa(response.url, true, event);
+        event.target.classList.remove("disabled");
+        return;
+      }
     });
   } else {
     await fetch("/users/follow/" + user_id_to_follow, {
       method: "DELETE",
     }).then((response) => {
       if (!response.ok) {
+        return;
+      }
+      if (response.redirected) {
+        event.target.textContent = submit_button_value;
+        spa(response.url, true, event);
+        event.target.classList.remove("disabled");
         return;
       }
     });
@@ -260,6 +348,7 @@ const follow_user = async (event) => {
       button.dataset.follows == "True" ? "FOLLOWING" : "FOLLOW";
   });
   // spa(window.location.pathname, false, event);
+  event.target.classList.remove("disabled");
 };
 
 const open_home = (event) => {
@@ -267,6 +356,12 @@ const open_home = (event) => {
 };
 
 const admin_delete_tweet = async (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  // add elipses to indicate that something is happening
+  const submit_button_value = event.target.textContent;
+  event.target.textContent = "deleting...";
+  event.target.classList.add("disabled");
   const tweet_id = event.target.id.slice(2);
   await fetch("/admin/delete/" + tweet_id, {
     method: "DELETE",
@@ -281,6 +376,9 @@ const admin_delete_tweet = async (event) => {
     tweet.remove();
     // spa("/admin", false, event);
   });
+  // remove elipses
+  event.target.textContent = submit_button_value;
+  event.target.classList.remove("disabled");
 };
 
 const remove_selected_image = (event) => {
@@ -290,6 +388,7 @@ const remove_selected_image = (event) => {
   image_input.value = "";
   const image_name_display = document.querySelector("#image_name");
   if (image_input.value == "") {
+    image_name_display.value = "No image";
     image_name_display.textContent = "No image";
     document
       .querySelector("label[for='tweet_image']")

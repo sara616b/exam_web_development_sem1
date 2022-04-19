@@ -16,9 +16,9 @@
     % include('feed_display', posts=posts, tweets=tweets, user_id=user_id, users=users)
 </main>
 
-% # REBASE INTO BASE TEMPLATE
+% # REBASE INTO BUZZER BASE TEMPLATE
 % rebase(
-% 'base',
+% 'buzzer_base',
 % users=get('users', None),
 % tweet_id=get('tweet_id', None),
 % posts=get('posts', None),

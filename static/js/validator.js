@@ -15,7 +15,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //      will return 'true' if form is valid and 'false' if invalid
-function validate(form) {
+const validate = (form) => {
   //    validate labels
   const labels_to_validate = form.querySelectorAll("[data-to-be-validated]");
   if (labels_to_validate) {
@@ -114,4 +114,4 @@ function validate(form) {
     input.focus();
     return false;
   }
-}
+};

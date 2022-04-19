@@ -1,12 +1,16 @@
+% if users and users != []:
 % for user in users:
 % if user["user_id"] != user_id:
 % include('user_display', user=user)
 % end
 % end
+% else:
+<p>There're no users!</p>
+% end
 
-% # REBASE INTO BASE TEMPLATE
+% # REBASE INTO BUZZER BASE TEMPLATE
 % rebase(
-% 'base',
+% 'buzzer_base',
 % users=get('users', None),
 % tweet_id=get('tweet_id', None),
 % posts=get('posts', None),

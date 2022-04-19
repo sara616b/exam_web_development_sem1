@@ -1,7 +1,7 @@
-% include('header')
 <main id="buzzer" class="admin content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
     <h1>Administator panel</h1>
     <main id="administator">
+        % if tweets and tweets != {}:
         % for tweet in tweets:
         <article class="tweet_container" data-id="id{{tweet}}">
             <section class="icon_container hover" id="id{{tweets[tweet]['user_username']}}">
@@ -31,6 +31,10 @@
             </main>
         </article>
         % end
+        % else:
+        <p>There're no tweets!</p>
+        % end
     </main>
 </main>
-% include('footer')
+
+% rebase('base', title=title)

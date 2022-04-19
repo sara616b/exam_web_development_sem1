@@ -3,20 +3,22 @@
 window.addEventListener("DOMContentLoaded", () => {
   const mainContent = document.querySelector(".content");
 
-  // set title
-  const title = mainContent.dataset.title;
-  document.title = title;
-
   // Set the state for the first loaded page
   const url = mainContent.dataset.url;
   history.replaceState({ url: url }, "", url);
+
+  // set title
+  const title = mainContent.dataset.title;
+  document.title = title;
 });
 
 ////////////////////////////////////////////////////////////////
 // spa - fetch and show content
-const spa = async (url, replace_state = true, event) => {
-  event.preventDefault();
-  event.stopPropagation();
+const spa = async (url, replace_state = true, event = null) => {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
 
   // Check if page is already loaded
   // Fetch the html content
@@ -26,18 +28,24 @@ const spa = async (url, replace_state = true, event) => {
   // set the html to the content
   document.querySelector("body").innerHTML = html;
 
-  // set title
-  const mainContent = document.querySelector(".content");
-  const title = mainContent.dataset.title;
-  document.title = title;
-
   // set state
   if (replace_state) {
     history.pushState({ url: conn.url }, "", conn.url);
     // scroll to top of page
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+  } else {
+    // if the connection has been redirected, call spa again to update to correct page
+    // this happens when clicking the backbutton and landing on '/login' which, while logged in, will redirect to '/home'
+    if (conn.redirected) {
+      spa(conn.url, true);
+    }
   }
+
+  // set title
+  const mainContent = document.querySelector(".content");
+  const title = mainContent.dataset.title;
+  document.title = title;
 };
 
 ////////////////////////////////////////////////////////////////

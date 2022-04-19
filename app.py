@@ -1,6 +1,4 @@
-from bottle import default_app, get, static_file, redirect, run, view, error
-import sqlite3
-from settings import get_file_path, confirm_user_is_logged_in, time_since_from_epoch, date_text_from_epoch, REGEX_EMAIL, JWT_KEY
+from bottle import default_app, get, static_file, request, run, view, error
 
 # STYLESHEET #########################
 @get("/static/style/style.css")
@@ -38,20 +36,14 @@ from tweets import post_tweet, edit_tweet, delete_tweet, tweet_modal, like_tweet
 from users import user_view, follow_user, unfollow_user, all_users_view
 from admin import admin_view, admin_delete_tweet
 
-
-
-##############################
-@error(404)
-def _(error):
-  return f"Sorry, an error occured: {error}"
-##############################
+# ERROR ###############################
 @error(500)
-def _(error):
-  return f"Sorry, an error occured: {error}"
-##############################
 @error(400)
+@error(404)
+@error(204)
+@view("error.html")
 def _(error):
-  return f"Sorry, an error occured: {error}"
+  return dict(error=error, title="Error", url=request.path)
 
 # SERVER #############################
 try:

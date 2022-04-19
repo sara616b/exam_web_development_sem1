@@ -1,5 +1,5 @@
 <header id="new_tweet_form_container">
-    % if modal == None:
+    % if get('modal', None) == None:
     % include('tweet_form', type='new')
     % end
 </header>
@@ -14,9 +14,9 @@
     % )
 </main>
 
-% # REBASE INTO BASE TEMPLATE
+% # REBASE INTO BUZZER BASE TEMPLATE
 % rebase(
-% 'base',
+% 'buzzer_base',
 % users=get('users', None),
 % tweet_id=get('tweet_id', None),
 % posts=get('posts', None),

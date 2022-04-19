@@ -1,7 +1,3 @@
-% if not only_update_body:
-% include('header')
-% end
-
 <main id="index" class="content" data-url="{{get('url', '/')}}" data-title="{{get('title', 'Buzzer')}} | Buzzer">
     <header id="index_logo_art">
         % include('logo_icon')
@@ -18,9 +14,17 @@
 
 % # CONTENT FROM REBASE IS LOGIN OR SIGNUP MODAL
 % if get('base'):
-% include
+{{!base}}
+% end
+
+
+% if get('alert_info'):
+% include(
+% 'alert_info',
+% text=alert_info,
+% )
 % end
 
 % if not only_update_body:
-% include('footer')
+% rebase('base')
 % end

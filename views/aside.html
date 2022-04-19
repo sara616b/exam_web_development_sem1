@@ -5,10 +5,14 @@
                 Who to follow
             </h2>
             <main id="users_list">
+                % if users and users != []:
                 % for user in users[:5]:
                 % if user['user_id'] != user_id:
                 % include('user_display', user=user)
                 % end
+                % end
+                % else:
+                <p>There're no users!</p>
                 % end
             </main>
             <footer id="show_more" onclick="spa('/users', true, event)">

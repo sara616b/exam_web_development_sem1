@@ -89,5 +89,33 @@ TODO:
 -- for some reason push back button twice
 -- STATUS CODES
 -- username only have letters allowed
+-- spa error - when backbutton landing on login, the url doesn't update
+-- style input in tweet modal when editing image_name
 
 SASS: sass --watch style.scss style.css
+
+
+
+
+FILES CHECKED
+- common
+- app
+- admin
+- index
+- home
+- login
+- signup
+- tweets
+
+also added more status codes and validation
+- users
+
+TODO
+- views
+- style
+- js
+
+- check mail when signing up
+
+
+status codes, admin okay?, arg!

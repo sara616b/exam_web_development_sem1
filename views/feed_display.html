@@ -1,4 +1,5 @@
 <main class="feed">
+    % if posts and posts != [] and posts != None:
     % for post in posts:
 
     % # POST - EITHER TWEET_DISPLAY OR RETWEET_DISPLAY
@@ -12,5 +13,8 @@
     % users=users
     % )
 
+    % end
+    % else:
+    <p>There're no tweets to display!</p>
     % end
 </main>

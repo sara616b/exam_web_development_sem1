@@ -1,6 +1,5 @@
 from bottle import get, response, view
-
-from settings import get_all_tweets
+from common import get_all_tweets
 
 @get("/admin")
 @view("admin.html")
@@ -13,10 +12,10 @@ def _():
         return dict(
             tweets=tweets,          # all tweets
             url="/admin",           # url
-            title="Administrator",  # title
+            title="Admin Board",    # title
             )
 
     except Exception as ex:
-        print(ex)
+        print("Exception: " + str(ex))
         response.status = 500
         return

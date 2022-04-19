@@ -9,23 +9,21 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-from settings import get_file_path, confirm_user_is_logged_in, REGEX_EMAIL, JWT_KEY
+from common import get_file_path, confirm_user_is_logged_in, REGEX_EMAIL, JWT_KEY, REGEX_NO_SPECIAL_CHARACTERS
 
 @post("/signup")
 def _():
-
     ##### if user is logged in redirect to home, if not stay on page
     if confirm_user_is_logged_in():
         return redirect("/home", code=303)
 
-    # TODO - add try except
     db = None
-    redirectPath = "/"
+    redirect_path = None
     try:
+        ##### form validation errors
         errors = []
+        ##### form input values
         form_inputs = {}
-
-        # TODO - IT DOESN'T REMEMBER VALUES WHEN BACKEND VALIDATING 
 
         ##### display name
         display_name = request.forms.get("signup_display_name")
@@ -38,9 +36,12 @@ def _():
 
         ##### username
         username = request.forms.get("signup_username")
-        username.replace(" ", "")
         if not username:
             errors.append("username-missing")
+        elif not re.match(REGEX_NO_SPECIAL_CHARACTERS, username):
+            errors.append("username-no-special-characters")
+        elif " " in username:
+            errors.append("username-no-spaces")
         elif len(display_name) < 1 or len(display_name) > 100:
             errors.append("username-length")
         if username:
@@ -70,7 +71,7 @@ def _():
         users_in_database = db.execute("""
             SELECT user_username, user_email
             FROM users
-            WHERE user_username = :new_user_username OR user_email = :user_email
+            WHERE user_username = :username OR user_email = :email
             """, (username, email)).fetchall()
 
         ##### if any users were found, check whether username or email is already in use
@@ -90,10 +91,15 @@ def _():
             form_input_string = ''
             for value in form_inputs:
                 form_input_string += f"&{value}={form_inputs[value]}"
-            redirectPath = f"/signup?{error_string}{form_input_string}"
 
             ##### return if errors were found
+            redirect_path = f"/signup?{error_string}{form_input_string}"
             return
+
+
+        #################################
+        ##### NO ERRORS SIGN UP USER!
+        #################################
 
         ##### new user details dictionary
         new_user = {
@@ -106,9 +112,8 @@ def _():
             "user_current_session": None,
         }
 
-        # TODO - ADD counter to check that the insert goes through
         ##### insert user into database
-        db.execute("""
+        counter = db.execute("""
             INSERT INTO users
             VALUES(
                 :user_id,
@@ -118,10 +123,15 @@ def _():
                 :user_password,
                 :user_created_at,
                 :user_current_session)
-            """, new_user)
+            """, new_user).rowcount
+
+        ##### if no row or more than one row was affected, return error
+        if counter != 1:
+            redirect_path = "/signup?alert-info=Sorry, an error occured trying to sign you up. Please try again."
+            return
         db.commit()
 
-        ##### log in the user
+        ##### log in the user and redirect to feed
         ##### encode session and set it in database and cookie
         session_id = jwt.encode({"user_id":new_user["user_id"]}, JWT_KEY, algorithm="HS256")
         db.execute("""
@@ -131,6 +141,8 @@ def _():
             """, (session_id, new_user["user_id"]))
         db.commit()
         response.set_cookie("jwt", session_id, secret="secret")
+        redirect_path = "/home"
+
 
         ##### send signup email
         sender_email = "sarahwebdev2022@gmail.com"
@@ -143,12 +155,12 @@ def _():
         message["To"] = receiver_email
 
         ##### text and HTML message
-        text = MIMEText(f"Hi {new_user['user_username']}! Thanks for signing up to Buzzer.", "plain")
+        text = MIMEText(f"Hi @{new_user['user_username']}! Thanks for signing up to Buzzer.", "plain")
         html = MIMEText(f"""\
             <html>
                 <body>
                 <p>
-                    Hi {new_user['user_username']},<br>
+                    Hi @{new_user['user_username']},<br>
                     Thank you for signing up to Buzzer.<br>
                 </p>
                 </body>
@@ -166,18 +178,17 @@ def _():
                 server.sendmail(sender_email, receiver_email, message.as_string())
                 return
             except Exception as ex:
-                print(ex)
+                print("Exception: " + str(ex))
                 return
-        return
 
     except Exception as ex:
-        print(ex)
+        print("Exception: " + str(ex))
         response.status = 500
-        redirectPath = "/"
+        return
 
     finally:
         if db != None:
             db.close()
-        if redirectPath != None:
-            return redirect(redirectPath)
+        if redirect_path != None:
+            return redirect(redirect_path)
 

@@ -36,11 +36,7 @@
                     Add image
                 </label>
                 <input onchange="tweet_image_changed(event)" type="file" name="tweet_image" id="tweet_image">
-                <p id="image_name">
-                    % if get('tweet') and tweet['tweet_image'] and type == 'edit':
-                    {{tweet['tweet_image']}}
-                    % end
-                </p>
+                <input id="image_name" name="image_name" value="{{tweet['tweet_image']}}">
                 % else:
                 <button id="remove_image" onclick="remove_selected_image(event)" class="hidden button">Remove
                     image</button>
