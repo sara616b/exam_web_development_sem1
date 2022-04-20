@@ -318,7 +318,7 @@ def check_the_image(image_file):
             file_name, file_extension = os.path.splitext(image_file.filename)
             if file_extension.lower() == ".jpg": file_extension = ".jpeg"
             if file_extension.lower() not in (".png", ".jpg", ".jpeg"):
-                redirect_path = f"/tweets/new?error=image-not-allowed"
+                redirect_path = f"?error=image-not-allowed"
                 return redirect_path, image_name
 
             # image name
@@ -332,7 +332,7 @@ def check_the_image(image_file):
             if file_extension != f".{imghdr_extension}":
                 # delete the corrupted/invalid image
                 os.remove(f"{get_file_path()}/static/images/tweets/{image_name}")
-                redirect_path = f"/tweets/new?error=image-not-allowed"
+                redirect_path = f"?error=image-not-allowed"
                 return redirect_path, image_name
 
         return None, image_name

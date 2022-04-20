@@ -37,4 +37,11 @@
     </main>
 </main>
 
+% if get('alert_info'):
+% include(
+% 'alert_info',
+% text="Sorry, an error occured. " + alert_info,
+% )
+% end
+
 % rebase('base', title=title)

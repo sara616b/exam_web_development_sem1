@@ -16,21 +16,17 @@ def _():
         ##### email
         email = request.forms.get("login_email")
         if not email:
-            response.status = 204
             redirect_path = "/login?error=email-missing"
             return
         if not re.match(REGEX_EMAIL, email):
-            response.status = 400
             redirect_path = "/login?error=email-invalid"
             return
 
         ##### password
         if not request.forms.get("login_password"):
-            response.status = 204
             redirect_path = f"/login?error=password-missing&email={email}"
             return
         if len(request.forms.get("login_password")) < 3:
-            response.status = 400
             redirect_path = f"/login?error=password-short&email={email}"
             return
 

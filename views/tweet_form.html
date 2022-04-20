@@ -36,7 +36,7 @@
                     Add image
                 </label>
                 <input onchange="tweet_image_changed(event)" type="file" name="tweet_image" id="tweet_image">
-                <input id="image_name" name="image_name" value="{{tweet['tweet_image']}}">
+                <input id="image_name" name="image_name" class="no_click" value="{{tweet['tweet_image']}}" readonly="readonly">
                 % else:
                 <button id="remove_image" onclick="remove_selected_image(event)" class="hidden button">Remove
                     image</button>

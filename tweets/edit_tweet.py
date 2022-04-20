@@ -17,7 +17,6 @@ def _(tweet_id):
     try:
         ##### check whether the id is a uuid4
         if is_uuid(tweet_id) == False:
-            response.status = 400
             redirect_path = "/home?alert-info=Trying to edit the tweet failed. Please try again."
             return
         
@@ -62,14 +61,14 @@ def _(tweet_id):
 
         ##### if there's no image or the image name isn't the same as the current image name, delete current image
         if not image_name or current_image != image_name:
-            if os.path.exists(f"assets/images/{current_image}"):
-                os.remove(f"assets/images/{current_image}")
+            if os.path.exists(f"{get_file_path()}/static/images/tweets/{current_image}"):
+                os.remove(f"{get_file_path()}/static/images/tweets/{current_image}")
             updated_tweet_data["tweet_image"] = None
             
             ##### check if there's an image in request.files and if so, validate it 
             redirect_image_error, new_image_name = check_the_image(request.files.get("tweet_image"))
             if redirect_image_error:
-                redirect_path = f"{redirect_image_error}&text={tweet_text}"
+                redirect_path = f"/tweets/{tweet_id}{redirect_image_error}&text={tweet_text}"
                 return
 
             ##### set new image name
@@ -100,7 +99,6 @@ def _(tweet_id):
 
         db.commit()
 
-        response.status = 200 # TODO - nessesary=???
         return
 
     except Exception as ex:

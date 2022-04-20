@@ -116,6 +116,7 @@ TODO
 - js
 
 - check mail when signing up
+- delete images not in use
 
 
 status codes, admin okay?, arg!

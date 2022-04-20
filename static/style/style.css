@@ -624,6 +624,11 @@ label span.error_message {
 #tweet_form #form_content #new_tweet_actions #image_actions #tweet_image {
   display: none;
 }
+#tweet_form #form_content #new_tweet_actions #image_actions #image_name {
+  border: none;
+  width: auto;
+  word-wrap: break-word;
+}
 #tweet_form #form_content #new_tweet_actions p {
   width: auto;
   height: auto;

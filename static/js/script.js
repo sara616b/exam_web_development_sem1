@@ -242,39 +242,30 @@ const toggle_like_tweet = async (event) => {
   const like_buttons = document.querySelectorAll(
     "[data-tweet-id='id" + tweet_id + "'].like_button"
   );
-  if (event.target.dataset.liked == "False") {
-    await fetch("/tweets/like/" + tweet_id, {
-      method: "POST",
-    }).then((response) => {
-      if (!response.ok) {
-        return;
-      }
-      if (response.redirected) {
-        spa(response.url, false, event);
-        return;
-      }
-      like_buttons.forEach((button) => {
+  const method = event.target.dataset.liked == "False" ? "POST" : "DELETE";
+  // if (event.target.dataset.liked == "False") {
+  await fetch("/tweets/like/" + tweet_id, {
+    method: method,
+  }).then((response) => {
+    if (!response.ok) {
+      return;
+    }
+    // only redirected if there's an error
+    if (response.redirected) {
+      // redirected url will contain error alert message - don't replace state, stay on page
+      spa(response.url, false);
+      return;
+    }
+    like_buttons.forEach((button) => {
+      if (event.target.dataset.liked == "False") {
         button.nextElementSibling.textContent =
           parseInt(button.nextElementSibling.textContent) + 1;
-      });
-    });
-  } else {
-    await fetch("/tweets/like/" + tweet_id, {
-      method: "DELETE",
-    }).then((response) => {
-      if (!response.ok) {
-        return;
-      }
-      if (response.redirected) {
-        spa(response.url, false, event);
-        return;
-      }
-      like_buttons.forEach((button) => {
+      } else {
         button.nextElementSibling.textContent =
           parseInt(button.nextElementSibling.textContent) - 1;
-      });
+      }
     });
-  }
+  });
   // update ui (could be done with spa, but save the request)
   like_buttons.forEach((button) => {
     button.dataset.liked = button.dataset.liked == "True" ? "False" : "True";
@@ -369,6 +360,10 @@ const admin_delete_tweet = async (event) => {
     if (!response.ok) {
       return;
     }
+    if (response.redirected) {
+      spa(response.url, false, event);
+      return;
+    }
     // delete tweet from ui (could be done with spa, but this saves a get request)
     const tweet = document.querySelector(
       ".tweet_container[data-id='id" + tweet_id + "']"
@@ -398,15 +393,18 @@ const remove_selected_image = (event) => {
 };
 
 const tweet_image_changed = (event) => {
-  const image_filename = event.target.value.slice(
-    event.target.value.lastIndexOf("\\") + 1
-  );
+  const image_filename = document
+    .querySelector("#tweet_image")
+    .value.slice(
+      document.querySelector("#tweet_image").value.lastIndexOf("\\") + 1
+    );
   const image_name_display = document.querySelector("#image_name");
   if (image_filename !== "" && image_filename !== undefined) {
+    image_name_display.value = image_filename;
     image_name_display.textContent = image_filename;
     document.querySelector("label[for='tweet_image']").classList.add("hidden");
     document.querySelector("#remove_image").classList.remove("hidden");
   } else {
-    image_name_display.textContent = "No image";
+    image_name_display.value = "No image";
   }
 };

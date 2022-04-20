@@ -15,21 +15,18 @@ def _(user_id_to_follow):
     try:
         ##### check whether the id is a uuid4
         if is_uuid(user_id_to_follow) == False:
-            response.status = 400
             redirect_path = "/home?alert-info=Trying to unfollow the user failed. Please try again."
             return
 
         ##### decode jwt cookie to get user id
         user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
         if not user_id or is_uuid(user_id) == False:
-            response.status = 204
             redirect_path = "/home?alert-info=Trying to unfollow the user failed. Please try again."
             return
 
         ##### connect to database
         db = sqlite3.connect(f"{get_file_path()}/database/database.db")
         if not db: 
-            response.status = 204
             redirect_path = "/home?alert-info=Trying to unfollow the user failed. Please try again."
             return
 
@@ -42,13 +39,11 @@ def _(user_id_to_follow):
 
         ##### if no row or more than one row was affected, return error
         if counter != 1:
-            response.status = 500
             redirect_path = "/home?alert-info=Trying to unfollow the user failed. Please try again."
             return
 
         db.commit()
             
-        response.status = 200
         return
 
     except Exception as ex:

@@ -14,7 +14,6 @@ def _():
         ##### logged in user
         user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
         if not user_id or is_uuid(user_id) == False:
-            response.status = 204
             redirect_path = "/home?alert-info=Trying to follow the user failed. Please try again."
             return
 

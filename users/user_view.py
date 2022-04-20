@@ -13,14 +13,12 @@ def _(username):
     try:
         ##### check that a username has been passed
         if not username or username == '' or username == None:
-            response.status = 204
             redirect_path = "/home?alert-info=Couldn't find user. Please try again."
             return
 
         ##### logged in user_id
         user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
         if not user_id or is_uuid(user_id) == False:
-            response.status = 204
             redirect_path = "/home?alert-info=Couldn't find user. Please try again."
             return
 
@@ -36,7 +34,6 @@ def _(username):
 
         ##### if no user with the right username is found redirect with error
         if user_profile_to_display == None:
-            response.status = 204
             redirect_path = "/home?alert-info=Couldn't find user. Please try again."
             return
 

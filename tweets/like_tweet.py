@@ -14,7 +14,6 @@ def _(tweet_id):
     try:
         ##### check whether the id is a uuid4
         if is_uuid(tweet_id) == False:
-            response.status = 400
             redirect_path = "/home?alert-info=Trying to like the tweet failed. Please try again."
             return
 

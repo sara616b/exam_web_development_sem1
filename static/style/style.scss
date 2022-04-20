@@ -633,6 +633,11 @@ label {
         #tweet_image {
           display: none;
         }
+        #image_name {
+          border: none;
+          width: auto;
+          word-wrap: break-word;
+        }
       }
       p {
         width: auto;

@@ -65,7 +65,6 @@ def _(tweet_id):
         elif tweet_id != 'new': # if the tweet id isn't 'new' the user is editing an existing tweet
             ##### check whether the id is a uuid4
             if is_uuid(tweet_id) == False:
-                response.status = 400
                 redirect_path = "/home?alert-info=Tweet not found."
                 return
 
@@ -80,7 +79,6 @@ def _(tweet_id):
                 """, (tweet_id, user_id)).fetchall())
             if tweet_and_user_id_match != 1:
                 redirect_path = "/home?alert-info=Tweet doesn't exist or isn't yours"
-                response.status = 204
                 return
 
             tweet_to_edit = {}
@@ -95,7 +93,6 @@ def _(tweet_id):
             ##### redirect if tweet doesn't exist
             if not tweet:
                 redirect_path = "/home?alert-info=Tweet not found."
-                response.status = 204
                 return
 
             # if tweet is found, set info that's needed to display the editing inputs
