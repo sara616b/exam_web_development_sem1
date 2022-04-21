@@ -17,6 +17,11 @@
   pointer-events: none;
 }
 
+.disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
 .button {
   border-radius: 2rem;
   padding: 0.3rem 1rem;
@@ -41,10 +46,6 @@
   background-color: white;
   color: #dda900;
   border: #dda900 0.2rem solid;
-}
-.button.disabled {
-  pointer-events: none;
-  opacity: 0.7;
 }
 
 .link {
@@ -265,8 +266,8 @@ label span.error_message {
   flex-direction: column;
   align-items: flex-end;
 }
-#buzzer #main_navigation .content,
-#buzzer #main_aside .content {
+#buzzer #main_navigation .content_container,
+#buzzer #main_aside .content_container {
   padding: 1rem;
   position: sticky;
   top: 0;
@@ -379,6 +380,7 @@ label span.error_message {
 }
 #buzzer .tweet_container .content_container .tweet_content {
   padding: 0.2rem 0;
+  font-weight: 400;
 }
 #buzzer .tweet_container .content_container .tweet_content img {
   margin: 1rem 0;
@@ -448,27 +450,27 @@ label span.error_message {
 #buzzer #main_aside {
   width: 300px;
 }
-#buzzer #main_aside .content #who_to_follow {
+#buzzer #main_aside .content_container #who_to_follow {
   background-color: #f0f0f0;
   border-radius: 1.5rem;
 }
-#buzzer #main_aside .content #who_to_follow h2 {
+#buzzer #main_aside .content_container #who_to_follow h2 {
   padding: 1.2rem 1rem 0.6rem 1rem;
   font-weight: bold;
   border-radius: 1.5rem 1.5rem 0 0;
 }
-#buzzer #main_aside .content #who_to_follow #show_more {
+#buzzer #main_aside .content_container #who_to_follow #show_more {
   padding: 0.6rem 1rem 1.2rem 1rem;
   border-radius: 0 0 1.5rem 1.5rem;
   border-style: inset;
   border: solid #f0f0f0 thin;
 }
-#buzzer #main_aside .content #who_to_follow #show_more:hover {
+#buzzer #main_aside .content_container #who_to_follow #show_more:hover {
   background-color: white;
   color: #dda900;
   cursor: pointer;
 }
-#buzzer #main_aside .content #who_to_follow #users_list {
+#buzzer #main_aside .content_container #who_to_follow #users_list {
   border-top: solid #63422c thin;
   border-bottom: solid #63422c thin;
   border-radius: 0;
@@ -791,7 +793,7 @@ label span.error_message {
     z-index: 110;
     border-bottom: solid #f8f2ea thin;
   }
-  #buzzer #main_navigation .content {
+  #buzzer #main_navigation .content_container {
     padding: 0;
     display: flex;
     flex-direction: row;
@@ -799,14 +801,14 @@ label span.error_message {
     justify-content: center;
     height: 100%;
   }
-  #buzzer #main_navigation .content header {
+  #buzzer #main_navigation .content_container header {
     height: 30px;
     width: 30px;
   }
-  #buzzer #main_navigation .content footer {
+  #buzzer #main_navigation .content_container footer {
     display: none !important;
   }
-  #buzzer #main_navigation .content main {
+  #buzzer #main_navigation .content_container main {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -814,7 +816,7 @@ label span.error_message {
     height: 100%;
     width: auto;
   }
-  #buzzer #main_navigation .content main button {
+  #buzzer #main_navigation .content_container main button {
     height: 100%;
     width: auto;
     background-color: #0000;
@@ -824,10 +826,10 @@ label span.error_message {
     padding: 0 20px;
     order: 1;
   }
-  #buzzer #main_navigation .content main button:hover {
+  #buzzer #main_navigation .content_container main button:hover {
     color: #dda900;
   }
-  #buzzer #main_navigation .content main button:last-of-type {
+  #buzzer #main_navigation .content_container main button:last-of-type {
     order: 0;
   }
   #buzzer #main_aside {

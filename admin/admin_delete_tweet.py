@@ -7,7 +7,6 @@ def _(tweet_id):
     try:
         ##### if tweet_id doesn't exist
         if not tweet_id:
-            response.status = 204
             redirect_path = "/admin?alert-info=Tweet not found. Please try again"
             return
 
@@ -16,9 +15,7 @@ def _(tweet_id):
 
         ##### if no tweet has been deleted, error 
         if counter != 1:
-            print("No tweets deleted")
             redirect_path = "/admin?alert-info=No tweets deleted. Please try again"
-            response.status = 204
             return
 
         return

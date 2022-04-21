@@ -1,5 +1,5 @@
 <nav id="main_navigation">
-    <div class="content">
+    <div class="content_container">
         <header id="logo_container" class="hover" onclick="open_home(event)">
             % include('logo_icon')
         </header>
@@ -8,7 +8,7 @@
         <main id="navigation">
             <button onclick="view_user(event)" data-username="id{{user['user_username']}}" class="button">PROFILE</button>
             <button onclick="spa('/tweets/new', true, event);" class="button color">TWEET</button>
-            <button onclick="log_out(event)" class="link">LOG OUT</button>
+            <button onclick="log_out(event)" class="link" data-text="Log out" data-text-processing="Logging out...">LOG OUT</button>
         </main>
 
         <footer id="profile_container">

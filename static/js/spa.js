@@ -1,15 +1,16 @@
+"use strict";
+
 ////////////////////////////////////////////////////////////////
 // The first time the page loads set title and state
 window.addEventListener("DOMContentLoaded", () => {
-  const mainContent = document.querySelector(".content");
+  const main_content = document.querySelector(".content");
 
-  // Set the state for the first loaded page
-  const url = mainContent.dataset.url;
+  // set the state for the first loaded page
+  const url = main_content.dataset.url;
   history.replaceState({ url: url }, "", url);
 
   // set title
-  const title = mainContent.dataset.title;
-  document.title = title;
+  document.title = main_content.dataset.title;
 });
 
 ////////////////////////////////////////////////////////////////
@@ -20,8 +21,7 @@ const spa = async (url, replace_state = true, event = null) => {
     event.stopPropagation();
   }
 
-  // Check if page is already loaded
-  // Fetch the html content
+  // fetch the html content
   let conn = await fetch(url, { headers: { spa: "yes" } });
   let html = await conn.text();
 
@@ -34,23 +34,22 @@ const spa = async (url, replace_state = true, event = null) => {
     // scroll to top of page
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-  } else {
+  } else if (conn.redirected) {
     // if the connection has been redirected, call spa again to update to correct page
     // this happens when clicking the backbutton and landing on '/login' which, while logged in, will redirect to '/home'
-    if (conn.redirected) {
-      spa(conn.url, true);
-    }
+    spa(conn.url, true);
   }
 
   // set title
-  const mainContent = document.querySelector(".content");
-  const title = mainContent.dataset.title;
+  const main_content = document.querySelector(".content");
+  const title = main_content.dataset.title;
   document.title = title;
 };
 
 ////////////////////////////////////////////////////////////////
 // handle clicking 'back' in the browsers
 window.addEventListener("popstate", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
   spa(event.state.url, false, event);
-  return false;
 });

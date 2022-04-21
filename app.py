@@ -1,4 +1,4 @@
-from bottle import default_app, get, static_file, request, run, view, error
+from bottle import default_app, get, static_file, request, run, view, error, response
 
 # STYLESHEET #########################
 @get("/static/style/style.css")

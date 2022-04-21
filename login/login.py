@@ -1,10 +1,10 @@
-from bottle import redirect, response, request, post
+from bottle import redirect, response, request, put
 import re
 import jwt
 import sqlite3
 from common import get_file_path, confirm_user_is_logged_in, REGEX_EMAIL, JWT_KEY
 
-@post("/login")
+@put("/login")
 def _():
     ##### if user is logged in redirect to home
     if confirm_user_is_logged_in():
@@ -30,28 +30,22 @@ def _():
             redirect_path = f"/login?error=password-short&email={email}"
             return
 
-        # check if email and password match a user's in the database:
-        # log in,
-        # set session,
-        # set cookie,
-        # and redirect to feed
-
         ##### connect to database
         db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
-        ##### user_id for who's logged in
+        ##### check if email and password match a user's in the database
         user_id = db.execute("""
             SELECT user_id
             FROM users
             WHERE user_email IS :user_email AND user_password IS :user_password
             """, (email, request.forms.get("login_password"))).fetchone()
-        
+
         ##### if no users and password matched input, redirect
-        if not user_id or len(user_id) != 1:
+        if not user_id:
             redirect_path = (f"/login?error=no-match&email={email}")
             return
-
-        user_id = user_id[0]
+        else:
+            user_id = user_id[0]
 
         ##### encode session
         session_id = jwt.encode({"user_id":user_id}, JWT_KEY, algorithm="HS256")
@@ -66,12 +60,12 @@ def _():
 
         ##### set session in cookie
         response.set_cookie("jwt", session_id, secret="secret")
-        
         return
 
     except Exception as ex:
         print("Exception: " + str(ex))
         response.status = 500
+        redirect_path = "/login?alert-info=Sorry, an error occured. Please try again."
         return
 
     finally:
@@ -81,4 +75,3 @@ def _():
         ##### redirect with query string (errors and email)
         if redirect_path != None:
             return redirect(redirect_path)
-    

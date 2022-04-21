@@ -1,4 +1,4 @@
-<main id="login" class="content">
+<main id="login">
     <section class="background" onclick="spa('/', true, event);">
     </section>
     <main>
@@ -39,7 +39,7 @@
                 </label>
 
                 % # SUBMIT BUTTON
-                <input class="button color" type="submit" value="Log in" onclick="log_in(event)">
+                <input class="button color" type="submit" value="Log in" onclick="log_in(event)" data-text="Log in" data-text-processing="Logging in...">
 
             </form>
             <button class="link" onclick="spa('/signup', true, event);">

@@ -1,0 +1,160 @@
+[
+  {
+    "stmt": "SELECT * FROM users;",
+    "header": [
+      "user_id",
+      "user_display_name",
+      "user_username",
+      "user_email",
+      "user_password",
+      "user_created_at",
+      "user_current_session"
+    ],
+    "rows": [
+      [
+        "0b06d740-e998-409f-8837-7c75dac2857c",
+        "test",
+        "todlfkjgdflg",
+        "slkfjs@df.com",
+        "\"><script>console.log(\"test\")</script><\"",
+        "1649501402.38458",
+        "NULL"
+      ],
+      [
+        "14d88bba-f22e-4524-8e05-eca3f1e0d005",
+        "Katniss Everdeen",
+        "fromtheforest",
+        "cdd8a4ab-b734-4757-bc5a-513f03a66950@mail.com",
+        "123",
+        "1649397957.41647",
+        "NULL"
+      ],
+      [
+        "1f0e0c12-2c44-4dfc-aec5-42c5246fc986",
+        "Alex Claremont Diaz",
+        "historyhuh",
+        "e0518854-fc4b-4229-b56a-634a9d083fa2@mail.com",
+        "123",
+        "1649398612.03702",
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMWYwZTBjMTItMmM0NC00ZGZjLWFlYzUtNDJjNTI0NmZjOTg2In0.gun-G_rayI3XYrj0IzaeVbw8W76Uf2rD0BYiYYHpxbc"
+      ],
+      [
+        "34a6ff78-c5e1-457a-b280-b8579f86cb91",
+        "Eleanor Shellstrop",
+        "shellstroptrash",
+        "1847511e-5bc3-4d57-994a-f606c0224495@mail.com",
+        "123",
+        "1648886269.28514",
+        "NULL"
+      ],
+      [
+        "3c2ddeb8-57ad-4f82-a3f9-f2ab43b3e20f",
+        "Charlie Spring",
+        "charliespring",
+        "b4e7c3da-b11c-4511-9bcf-13b8b48e12ba@mail.com",
+        "123",
+        "1650267323.57986",
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiM2MyZGRlYjgtNTdhZC00ZjgyLWEzZjktZjJhYjQzYjNlMjBmIn0.qjtIgTKwIqY9NjYhzYkpvR19VR6H55xcUqSb4apYq9E"
+      ],
+      [
+        "3d8e92c4-ef4b-4895-8441-4b71ac186861",
+        "Crowley",
+        "thedevil",
+        "acolorfulreader@gmail.com",
+        "123",
+        "1650267661.66887",
+        "NULL"
+      ],
+      [
+        "57ac0b6d-5738-4a91-acb5-e16e2bde35da",
+        "Sarah",
+        "hi",
+        "sarahifrederiksen@gmail.com",
+        "123",
+        "1648389371.26464",
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiNTdhYzBiNmQtNTczOC00YTkxLWFjYjUtZTE2ZTJiZGUzNWRhIn0.HeL2Qs7Xp9KZHQQC592hkvholN8dwroC2s6HldDU9Iw"
+      ],
+      [
+        "57d54ab5-b352-4ddf-b7e6-e7dec50737dd",
+        "April May",
+        "robotsareawesome",
+        "588f75a4-b32d-4c19-8deb-a1711c4bc866@mail.com",
+        "123",
+        "1650266955.36961",
+        "NULL"
+      ],
+      [
+        "7581ff0e-c1f6-443a-824d-afec5f7be28f",
+        "Jessica Day",
+        "itsjess",
+        "a1dfee33-d85c-4d31-b8cf-3ed751cfed80@mail.com",
+        "123",
+        "1649398244.95512",
+        "NULL"
+      ],
+      [
+        "792d8494-60e9-4af0-b5ac-fa1ff168f664",
+        "Percy Jackson",
+        "sonofagod",
+        "11111111111112222222222222jjjjjjjewpodnic@mail.com",
+        "123",
+        "1650529336.19697",
+        "NULL"
+      ],
+      [
+        "8bd8de27-bf46-4e65-84dd-830177ee6ac3",
+        "Send mail",
+        "mailuser",
+        "mail@mail.com",
+        "123",
+        "1648655440.03107",
+        "NULL"
+      ],
+      [
+        "b1589d36-40d6-49f6-bacb-d35a9e7dd474",
+        "Sarah Is Here",
+        "sarah",
+        "sarah@mail.com",
+        "123",
+        "12345",
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYjE1ODlkMzYtNDBkNi00OWY2LWJhY2ItZDM1YTllN2RkNDc0In0.8pC4_P_g7RWMwli50kwLyzU6m9iA4JtHvs5CQm9lQ6I"
+      ],
+      [
+        "bb14054e-af4d-42ac-87c0-9b0dabbcee51",
+        "This is a name",
+        "newuser",
+        "sisabellafs@gmail.com",
+        "123",
+        "1648655535.621",
+        "NULL"
+      ],
+      [
+        "d73fbd92-20db-44c0-8403-5c9f2eb2c13b",
+        "God",
+        "god",
+        "941cea23-5189-41b5-8e09-97dee20e1475@mail.com",
+        "123",
+        "1649405275.96416",
+        "NULL"
+      ],
+      [
+        "dd457f5e-fa59-4938-b066-31b48a6681ba",
+        "Test",
+        "test",
+        "test@test.com",
+        "test",
+        "1648553557.57016",
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZGQ0NTdmNWUtZmE1OS00OTM4LWIwNjYtMzFiNDhhNjY4MWJhIn0.Ovt1XKNPfrvZa82pEgwYLu2Y5CPdPQDKmBUzEw2koHg"
+      ],
+      [
+        "f94fcdc6-a222-41bb-a48d-d42cf3f48596",
+        "Mickey Mouse",
+        "disneysman",
+        "5f7e0672-0a45-4627-90b5-51f54c7709f1@mail.com",
+        "123",
+        "1650267381.15164",
+        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZjk0ZmNkYzYtYTIyMi00MWJiLWE0OGQtZDQyY2YzZjQ4NTk2In0.vE2ZHKO5BTAyI9A0EXR-Pcs5bsH0tiltzEFFD7vCLsE"
+      ]
+    ]
+  }
+]

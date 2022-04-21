@@ -30,7 +30,7 @@
         <footer id="new_tweet_actions">
             <section id="image_actions">
                 % if get('tweet_id') and tweet_id != "new" and tweet['tweet_image'] and type == 'edit':
-                <button id="remove_image" onclick="remove_selected_image(event)" class="button">Remove
+                <button id="remove_image" onclick="remove_selected_image(event)" class="button" data-text="Remove image" data-text-processing="Removing...">Remove
                     image</button>
                 <label class="button hidden" for="tweet_image">
                     Add image
@@ -38,7 +38,7 @@
                 <input onchange="tweet_image_changed(event)" type="file" name="tweet_image" id="tweet_image">
                 <input id="image_name" name="image_name" class="no_click" value="{{tweet['tweet_image']}}" readonly="readonly">
                 % else:
-                <button id="remove_image" onclick="remove_selected_image(event)" class="hidden button">Remove
+                <button id="remove_image" onclick="remove_selected_image(event)" class="hidden button" data-text="Remove image" data-text-processing="Removing...">Remove
                     image</button>
                 <label class="button" for="tweet_image">
                     Add image
@@ -48,11 +48,11 @@
                 % end
             </section>
             % if get('tweet_id') and tweet_id != "new":
-            <button type="submit" class="button color" onclick="put_edited_tweet(event);" id="id{{tweet_id}}">
+            <button type="submit" class="button color" onclick="put_edited_tweet(event);" id="id{{tweet_id}}" data-text="Save edits" data-text-processing="Saving...">
                 SAVE EDITS
             </button>
             % else:
-            <button type="submit" class="button color" onclick="post_new_tweet(event);">
+            <button type="submit" class="button color" onclick="post_new_tweet(event);" data-text="Post tweet" data-text-processing="Posting...">
                 POST TWEET
                 % end
             </button>

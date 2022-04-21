@@ -36,4 +36,4 @@ def _():
     except Exception as ex:
         print("Exception: " + str(ex))
         response.status = 500
-        return
+        return {"error": str(ex)}

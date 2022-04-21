@@ -47,7 +47,7 @@ def _(username):
             posts=posts,                                    # all posts from the user to display
             tweets=tweets,                                  # all tweets 
             url=f"/users/{username}",                       # url
-            title=username,                                 # title
+            title=f"@{username}",                                 # title
             modal=None,                                     # what modal is open
             only_update_body=only_update_body(),            # load header and footer?
             user_profile_to_display=user_profile_to_display,# the user whose info we're viewing

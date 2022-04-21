@@ -43,22 +43,21 @@
                 </svg>
                 <p>{{tweets[tweet]['tweet_retweets']}}</p>
             </section>
-
+            % for user in users:
+            % if user['user_id'] != user_id:
+            % if tweets[tweet]['tweet_user_id'] == user['user_id']:
+            % include('follow_button', user=user)
+            % end
+            % end
+            % end
+            % if tweets[tweet]['tweet_user_id'] == user_id and type == "tweet":
             <aside class="actions_container">
-                % for user in users:
-                % if user['user_id'] != user_id:
-                % if tweets[tweet]['tweet_user_id'] == user['user_id']:
-                % include('follow_button', user=user)
-                % end
-                % end
-                % end
-                % if tweets[tweet]['tweet_user_id'] == user_id and type == "tweet":
                 <section class="tweet_actions">
                     <button onclick="spa('/tweets/{{tweet}}', true, event)" class="link">EDIT</button>
-                    <button onclick="delete_tweet(event)" id="id{{tweet}}" class="link">DELETE</button>
+                    <button onclick="delete_tweet(event)" id="id{{tweet}}" class="link" data-text="delete" data-text-processing="deleting...">DELETE</button>
                 </section>
-                % end
             </aside>
+            % end
         </footer>
     </main>
 </article>

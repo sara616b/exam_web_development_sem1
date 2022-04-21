@@ -31,7 +31,8 @@ def _():
     except Exception as ex:
         print("Exception: " + str(ex))
         response.status = 500
-    
+        return {"error": str(ex)}
+
     finally:
         if db != None:
             db.close()

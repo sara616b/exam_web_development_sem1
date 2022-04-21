@@ -116,7 +116,10 @@ TODO
 - js
 
 - check mail when signing up
-- delete images not in use
+- nameing of files
+- lowercase emails and usernames - case insensitive
+- update profile?
+- confirming email
+- redirect - match py + js
 
-
-status codes, admin okay?, arg!
+status codes

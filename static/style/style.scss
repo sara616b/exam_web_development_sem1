@@ -35,6 +35,11 @@ $primary-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   pointer-events: none;
 }
 
+.disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
 .button {
   border-radius: 2rem;
   padding: 0.3rem 1rem;
@@ -59,10 +64,6 @@ $primary-font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       color: $primary-color;
       border: $primary-color 0.2rem solid;
     }
-  }
-  &.disabled {
-    pointer-events: none;
-    opacity: 0.7;
   }
 }
 .link {
@@ -269,7 +270,7 @@ label {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    .content {
+    .content_container {
       padding: 1rem;
       position: sticky;
       top: 0;
@@ -387,6 +388,7 @@ label {
       }
       .tweet_content {
         padding: 0.2rem 0;
+        font-weight: 400;
         img {
           margin: 1rem 0;
           border-radius: 0.5rem;
@@ -459,7 +461,7 @@ label {
   }
   #main_aside {
     width: 300px;
-    .content {
+    .content_container {
       #who_to_follow {
         background-color: $tertiar-color;
         border-radius: 1.5rem;
@@ -801,7 +803,7 @@ label {
       background-color: $light-color;
       z-index: 110;
       border-bottom: solid #f8f2ea thin;
-      .content {
+      .content_container {
         padding: 0;
         display: flex;
         flex-direction: row;

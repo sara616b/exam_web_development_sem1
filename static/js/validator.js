@@ -13,9 +13,10 @@
 // </label>
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
+"use strict";
 
 //      will return 'true' if form is valid and 'false' if invalid
-const validate = (form) => {
+const is_it_valid = (form) => {
   //    validate labels
   const labels_to_validate = form.querySelectorAll("[data-to-be-validated]");
   if (labels_to_validate) {
@@ -39,7 +40,7 @@ const validate = (form) => {
       if (error_message) {
         error_message.classList.add("hidden");
       } else {
-        return true;
+        return;
       }
 
       //      called when a validation error is found
@@ -100,6 +101,8 @@ const validate = (form) => {
         show_error("must be less than " + input.dataset.maxNumber);
       }
     });
+  } else {
+    return true;
   }
 
   //      check if form is valid
