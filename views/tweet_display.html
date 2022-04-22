@@ -1,6 +1,14 @@
 <article class="tweet_container" data-id="id{{tweet}}">
     <section onclick="view_user(event)" class="icon_container hover" data-username="id{{tweets[tweet]['user_username']}}">
+        % for user in users:
+        % if tweets[tweet]['tweet_user_id'] == user['user_id']:
+        % if user['user_profile_image'] != "NULL":
+        <img id="{{user['user_profile_image']}}" src=" /static/images/profiles/{{user['user_profile_image']}}" alt='{{user["user_display_name"]}} profile image' />
+        % else:
         % include('profile_icon')
+        % end
+        % end
+        % end
     </section>
     <main class="content_container">
         <header onclick="view_user(event)" class="user_information hover" data-username="id{{tweets[tweet]['user_username']}}">

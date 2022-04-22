@@ -51,8 +51,10 @@ const is_it_valid = (form) => {
       };
 
       //      required -- data-required="true"
-      if (input.dataset.required && !input.value) {
+      if (input.dataset.required == "true" && !input.value) {
         show_error("is required");
+      } else if (input.dataset.required == "false" && !input.value) {
+        return;
       }
       //      minimum length -- data-min="2"
       else if (input.dataset.min && input.dataset.min > input.value.length) {
@@ -73,6 +75,14 @@ const is_it_valid = (form) => {
       ) {
         show_error("can't contain special characters");
       }
+      //      hex color -- data-hex-color="true"
+      else if (
+        input.dataset.hexColor &&
+        !/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(input.value)
+      ) {
+        show_error("isn't a valid hex color code");
+      }
+
       //      email -- data-email="true"
       else if (
         input.dataset.email &&

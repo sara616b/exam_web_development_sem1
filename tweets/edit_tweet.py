@@ -66,7 +66,7 @@ def _(tweet_id):
             updated_tweet_data["tweet_image"] = None
             
             ##### check if there's an image in request.files and if so, validate it 
-            redirect_image_error, new_image_name = check_the_image(request.files.get("tweet_image"))
+            redirect_image_error, new_image_name = check_the_image(request.files.get("tweet_image"), "tweets")
             if redirect_image_error:
                 redirect_path = f"/tweets/{tweet_id}{redirect_image_error}&text={tweet_text}"
                 return

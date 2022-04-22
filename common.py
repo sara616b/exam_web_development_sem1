@@ -12,6 +12,7 @@ import datetime
 JWT_KEY = f"{str(uuid.uuid4())}-{str(uuid.uuid4())}-{str(uuid.uuid4())}"
 REGEX_EMAIL = '^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
 REGEX_NO_SPECIAL_CHARACTERS = '^[A-Za-z0-9 ]+$'
+REGEX_HEX_COLOR = '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$'
 
 ##### file paths are different in development and production
 def get_file_path():
@@ -185,7 +186,7 @@ def get_all_users(user_id): # if user_id == None, follower data won't be include
         db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
         ###### select all users
-        users_values = ["user_id", "user_display_name", "user_username"]
+        users_values = ["user_id", "user_display_name", "user_username", "user_profile_image", "user_profile_header", "user_is_verified"]
         all_users = db.execute(f"""
             SELECT {','.join(users_values)}
             FROM users
@@ -310,7 +311,7 @@ def get_all_posts(user_id, only_include_from_user_id=None):
             db.close()
 
 ##### check an image based on extention and corruption - returns a redirection path if an error is found and the image name
-def check_the_image(image_file):
+def check_the_image(image_file, type):
     try:
         image_name = None
         if image_file:
@@ -325,13 +326,13 @@ def check_the_image(image_file):
             image_name = f"{str(uuid.uuid4())}{file_extension}"
 
             # save image
-            image_file.save(f"{get_file_path()}/static/images/tweets/{image_name}")
+            image_file.save(f"{get_file_path()}/static/images/{type}/{image_name}")
 
             # is the image corrupted/valid
-            imghdr_extension = imghdr.what(f"{get_file_path()}/static/images/tweets/{image_name}")
+            imghdr_extension = imghdr.what(f"{get_file_path()}/static/images/{type}/{image_name}")
             if file_extension != f".{imghdr_extension}":
                 # delete the corrupted/invalid image
-                os.remove(f"{get_file_path()}/static/images/tweets/{image_name}")
+                os.remove(f"{get_file_path()}/static/images/{type}/{image_name}")
                 redirect_path = f"?error=image-not-allowed"
                 return redirect_path, image_name
 

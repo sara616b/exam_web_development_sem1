@@ -39,7 +39,8 @@ def _(username):
 
         ##### get all posts data
         posts = get_all_posts(user_id, user_profile_to_display["user_id"])
-        
+
+        print(user_profile_to_display)
         ##### return view
         return dict(
             user_id=user_id,                                # user who's logged in

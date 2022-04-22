@@ -335,6 +335,12 @@ label {
             fill: $secondary-color;
             border-radius: 50%;
           }
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
         }
       }
     }
@@ -347,6 +353,10 @@ label {
     .user_header {
       svg {
         fill: $secondary-color;
+      }
+      .open_edit_user_button {
+        width: auto;
+        float: right;
       }
     }
     .user_info {
@@ -364,6 +374,12 @@ label {
         width: 40px;
         height: 40px;
         fill: $secondary-color;
+      }
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
       }
     }
     .content_container {
@@ -531,6 +547,12 @@ label {
       fill: $secondary-color;
       border-radius: 50%;
     }
+    img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
   }
 }
 #page_content {
@@ -557,6 +579,17 @@ label {
       border-radius: 100%;
       position: absolute;
       z-index: -1;
+    }
+    img {
+      width: 100px;
+      height: 100px;
+      transform: translateY(calc(-50% - 0.5rem - 0.25rem));
+      padding: 0.5rem;
+      margin: 1rem;
+      border-radius: 100%;
+      position: absolute;
+      z-index: -1;
+      object-fit: cover;
     }
   }
   .button {
@@ -604,6 +637,12 @@ label {
       width: 40px;
       height: 40px;
       fill: $secondary-color;
+    }
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      object-fit: cover;
     }
   }
   #form_content {
@@ -659,7 +698,35 @@ label {
   }
 }
 
-#tweet_modal {
+#user_form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  input {
+    margin-top: 0.5rem;
+  }
+  #image_actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.4rem;
+    #user_image {
+      display: none;
+    }
+    label,
+    button {
+      width: auto;
+    }
+    #image_name {
+      border: none;
+      width: auto;
+      word-wrap: break-word;
+    }
+  }
+}
+
+#tweet_modal,
+#user_modal {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -781,7 +848,8 @@ label {
   }
 }
 @media screen and (max-width: 600px) {
-  #tweet_modal #modal {
+  #tweet_modal #modal,
+  #user_modal #modal {
     width: 100%;
   }
   #buzzer {

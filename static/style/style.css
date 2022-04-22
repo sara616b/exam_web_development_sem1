@@ -332,6 +332,12 @@ label span.error_message {
   fill: #63422c;
   border-radius: 50%;
 }
+#buzzer #main_navigation #profile_container .user_display section img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 #buzzer #main_content {
   grid-area: main;
   margin: 0 auto;
@@ -339,6 +345,10 @@ label span.error_message {
 }
 #buzzer #main_content .user_header svg {
   fill: #63422c;
+}
+#buzzer #main_content .user_header .open_edit_user_button {
+  width: auto;
+  float: right;
 }
 #buzzer #main_content .user_info {
   margin: 1rem;
@@ -356,6 +366,12 @@ label span.error_message {
   width: 40px;
   height: 40px;
   fill: #63422c;
+}
+#buzzer .tweet_container .icon_container img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 #buzzer .tweet_container .content_container {
   width: 100%;
@@ -519,6 +535,12 @@ label span.error_message {
   fill: #63422c;
   border-radius: 50%;
 }
+.user_display section img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
 #page_content {
   height: auto;
@@ -547,6 +569,17 @@ label span.error_message {
   border-radius: 100%;
   position: absolute;
   z-index: -1;
+}
+#page_content .user_header img {
+  width: 100px;
+  height: 100px;
+  transform: translateY(calc(-50% - 0.5rem - 0.25rem));
+  padding: 0.5rem;
+  margin: 1rem;
+  border-radius: 100%;
+  position: absolute;
+  z-index: -1;
+  object-fit: cover;
 }
 #page_content .button {
   max-width: 100px;
@@ -593,6 +626,12 @@ label span.error_message {
   width: 40px;
   height: 40px;
   fill: #63422c;
+}
+#tweet_form #profile_icon_container img {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  object-fit: cover;
 }
 #tweet_form #form_content {
   width: 100%;
@@ -647,7 +686,35 @@ label span.error_message {
   width: 150px;
 }
 
-#tweet_modal {
+#user_form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+#user_form input {
+  margin-top: 0.5rem;
+}
+#user_form #image_actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+}
+#user_form #image_actions #user_image {
+  display: none;
+}
+#user_form #image_actions label,
+#user_form #image_actions button {
+  width: auto;
+}
+#user_form #image_actions #image_name {
+  border: none;
+  width: auto;
+  word-wrap: break-word;
+}
+
+#tweet_modal,
+#user_modal {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -657,7 +724,8 @@ label span.error_message {
   position: fixed;
   top: 0;
 }
-#tweet_modal #background {
+#tweet_modal #background,
+#user_modal #background {
   background-color: rgba(221, 169, 0, 0.781);
   height: 100vh;
   width: 100%;
@@ -666,10 +734,12 @@ label span.error_message {
   left: 0;
   z-index: 1;
 }
-#tweet_modal #background:hover {
+#tweet_modal #background:hover,
+#user_modal #background:hover {
   cursor: pointer;
 }
-#tweet_modal #modal {
+#tweet_modal #modal,
+#user_modal #modal {
   width: 600px;
   min-width: 300px;
   height: auto;
@@ -685,7 +755,8 @@ label span.error_message {
   flex-direction: column;
   justify-content: center;
 }
-#tweet_modal #modal h2 {
+#tweet_modal #modal h2,
+#user_modal #modal h2 {
   font-size: 1rem;
   font-weight: bold;
   text-transform: uppercase;
@@ -693,7 +764,8 @@ label span.error_message {
   color: #63422c;
 }
 @media screen and (max-width: 500px) {
-  #tweet_modal #modal {
+  #tweet_modal #modal,
+#user_modal #modal {
     width: 100%;
   }
 }
@@ -768,7 +840,8 @@ label span.error_message {
   }
 }
 @media screen and (max-width: 600px) {
-  #tweet_modal #modal {
+  #tweet_modal #modal,
+#user_modal #modal {
     width: 100%;
   }
 

@@ -1,6 +1,9 @@
 <header id="new_tweet_form_container">
     % if get('modal', None) == None:
-    % include('tweet_form', type='new')
+    % include('tweet_form',
+    % type='new',
+    % user_id=user_id,
+    % users=users)
     % end
 </header>
 <main>

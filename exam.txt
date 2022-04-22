@@ -121,5 +121,7 @@ TODO
 - update profile?
 - confirming email
 - redirect - match py + js
+- set user_created_at to be without comma
+- check styling in mobile
 
 status codes

@@ -13,22 +13,22 @@ INSERT INTO users (
         user_is_verified
         ) 
 VALUES (
-        "e5afcc6a-4b9d-4298-b99c-b6f55f1da21a",
-        "New User",
-        "testinginsert",
-        "e5afcc6a-4b9d-4298-b99c-b6f55f1da21a@mail.com",
+        "f94fcdc6-a222-41bb-a48d-d42cf3f48596",
+        "Mickey Mouse",
+        "disneysfavorite",
+        "5f7e0672-0a45-4627-90b5-51f54c7709f1@mail.com",
         "123",
-        "1648886269",
+        "1650267381",
+        "NULL"
+      
+        ,"NULL",
         "NULL",
-
-        "NULL",
-        "NULL",
-        False,
+        False
         );
 
 
 -- DELETE FROM users 
--- WHERE user_id = "d7535bcf-8fde-4e73-b534-335104d28165";
+-- WHERE user_id = "1f0e0c12-2c44-4dfc-aec5-42c5246fc986";
 
 -- UPDATE users
 -- SET user_id = "b1589d36-40d6-49f6-bacb-d35a9e7dd474"

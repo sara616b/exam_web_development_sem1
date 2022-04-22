@@ -1,9 +1,15 @@
 <header>
-    <section class="background"></section>
+    <section class="background" style="background-color: {{user_profile_to_display['user_profile_header']}}" data-header-color="{{user_profile_to_display['user_profile_header']}}"></section>
     <header class="user_header">
+        % if user_profile_to_display['user_profile_image'] != "NULL":
+        <img id="{{user_profile_to_display['user_profile_image']}}" src=" /static/images/profiles/{{user_profile_to_display['user_profile_image']}}" alt='{{user_profile_to_display["user_display_name"]}} profile image' />
+        % else:
         % include('profile_icon')
+        % end
         % if user_id != user_profile_to_display["user_id"]:
         % include('follow_button', user=user_profile_to_display)
+        % else:
+        <p class="button color open_edit_user_button hover" data-user-id="{{user_profile_to_display['user_id']}}" onclick="open_edit_user(event)" data-text="Edit user" data-text-processing="Opening...">Edit user</p>
         % end
     </header>
     <main class="user_info">

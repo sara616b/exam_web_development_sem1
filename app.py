@@ -24,8 +24,11 @@ def icon():
 def profile_default():
     return static_file("/static/images/profile/default.svg", root=".")
 @get("/static/images/tweets/<filename>")
-def image(filename):
+def tweet_image(filename):
     return static_file(f"/static/images/tweets/{filename}", root=".")
+@get("/static/images/profiles/<filename>")
+def profile_image(filename):
+    return static_file(f"/static/images/profiles/{filename}", root=".")
 
 # IMPORT MODULES #####################
 from index import index_view
@@ -33,7 +36,7 @@ from signup import signup_view, signup
 from login import login_view, login, logout
 from home import home_view
 from tweets import post_tweet, edit_tweet, delete_tweet, tweet_modal, like_tweet, dislike_tweet, retweet_tweet, delete_retweet
-from users import user_view, follow_user, unfollow_user, all_users_view
+from users import user_view, follow_user, unfollow_user, all_users_view, user_modal, update_user
 from admin import admin_view, admin_delete_tweet
 
 # ERROR ###############################

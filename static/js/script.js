@@ -305,6 +305,46 @@ const admin_delete_tweet = async (event) => {
   });
 };
 
+const open_edit_user = (event) => {
+  stop_event_default(event);
+  set_button_status_processing(event.target);
+  const user_id = event.target.dataset.userId;
+  spa("/edit/" + user_id, true, event);
+  set_button_status_default(event.target);
+};
+
+const edit_user = async (event) => {
+  stop_event_default(event);
+  set_button_status_processing(event.target);
+  const form = event.target.form;
+  const user_id = event.target.dataset.userId;
+  const username = event.target.dataset.username;
+  if (is_it_valid(form)) {
+    await fetch("/edit/" + user_id, {
+      method: "PUT",
+      body: new FormData(form),
+    }).then((response) => {
+      if (!response.ok) {
+        return;
+      }
+      if (response.redirected) {
+        // if it's been redirected there're errors send with query string
+        spa(response.url, true, event);
+      } else {
+        // get home feed
+        spa(
+          "/users/" + form.querySelector("#user_username").value
+            ? form.querySelector("#user_username").value
+            : username,
+          true,
+          event
+        );
+      }
+    });
+  }
+  set_button_status_default(event.target);
+};
+
 const remove_selected_image = (event) => {
   stop_event_default(event);
   set_button_status_processing(event.target);
@@ -333,6 +373,38 @@ const tweet_image_changed = (event) => {
     image_name_display.value = image_filename;
     image_name_display.textContent = image_filename;
     document.querySelector("label[for='tweet_image']").classList.add("hidden");
+    document.querySelector("#remove_image").classList.remove("hidden");
+  } else {
+    image_name_display.value = "No image";
+  }
+};
+const remove_user_selected_image = (event) => {
+  stop_event_default(event);
+  set_button_status_processing(event.target);
+  const image_input = document.querySelector("#user_image");
+  image_input.value = "";
+  const image_name_display = document.querySelector("#image_name");
+  if (image_input.value == "") {
+    image_name_display.value = "No image";
+    image_name_display.textContent = "No image";
+    document
+      .querySelector("label[for='user_image']")
+      .classList.remove("hidden");
+    document.querySelector("#remove_image").classList.add("hidden");
+  }
+  set_button_status_default(event.target);
+};
+const user_image_changed = (event) => {
+  const image_filename = document
+    .querySelector("#user_image")
+    .value.slice(
+      document.querySelector("#user_image").value.lastIndexOf("\\") + 1
+    );
+  const image_name_display = document.querySelector("#image_name");
+  if (image_filename !== "" && image_filename !== undefined) {
+    image_name_display.value = image_filename;
+    image_name_display.textContent = image_filename;
+    document.querySelector("label[for='user_image']").classList.add("hidden");
     document.querySelector("#remove_image").classList.remove("hidden");
   } else {
     image_name_display.value = "No image";
