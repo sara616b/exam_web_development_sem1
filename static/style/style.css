@@ -585,7 +585,7 @@ label span.error_message {
   object-fit: cover;
 }
 #page_content .button {
-  max-width: 100px;
+  max-width: 103px;
   float: right;
   margin: 0.5rem;
 }
@@ -692,7 +692,7 @@ label span.error_message {
   width: 40%;
 }
 #tweet_form #form_content #new_tweet_actions label {
-  max-width: 115px;
+  max-width: 117px;
 }
 
 #user_form {
@@ -822,7 +822,7 @@ label span.error_message {
   }
 }
 #buzzer.admin {
-  display: inline-block;
+  display: block;
 }
 #buzzer.admin h1 {
   font-size: 2rem;

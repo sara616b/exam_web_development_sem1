@@ -13,12 +13,12 @@
 --         user_is_verified
 --         ) 
 -- VALUES (
---         "f94fcdc6-a222-41bb-a48d-d42cf3f48596",
---         "Mickey Mouse",
---         "disneysfavorite",
---         "5f7e0672-0a45-4627-90b5-51f54c7709f1@mail.com",
---         "123",
---         "1650267381",
+--         "",
+--         "",
+--         "",
+--         "",
+--         "",
+--         "",
 --         "NULL"
       
 --         ,"NULL",
@@ -27,8 +27,8 @@
 --         );
 
 
-DELETE FROM users 
-WHERE user_username = "heindenudiabcefbnirnnecrecirjn";
+DELETE FROM likes 
+WHERE fk_tweet_id = "123";
 
 -- UPDATE users
 -- SET user_id = "b1589d36-40d6-49f6-bacb-d35a9e7dd474"
