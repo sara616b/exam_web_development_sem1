@@ -35,20 +35,20 @@ def _():
             form_inputs["display-name"] = display_name
 
         ##### username
-        username = request.forms.get("signup_username")
+        username = request.forms.get("signup_username").lower()
         if not username:
             errors.append("username-missing")
         elif not re.match(REGEX_NO_SPECIAL_CHARACTERS, username):
             errors.append("username-no-special-characters")
         elif " " in username:
             errors.append("username-no-spaces")
-        elif len(display_name) < 1 or len(display_name) > 100:
+        elif len(username) < 1 or len(username) > 100:
             errors.append("username-length")
         if username:
             form_inputs["username"] = username
 
         ##### email
-        email = request.forms.get("signup_email")
+        email = request.forms.get("signup_email").lower()
         if not email:
             errors.append("email-missing")
         elif not re.match(REGEX_EMAIL, email):
@@ -108,8 +108,9 @@ def _():
             "user_username": username,
             "user_email": email,
             "user_password": request.forms.get("signup_password"),
-            "user_created_at": time.time(),
+            "user_created_at": str(time.time()).split(".")[0],
             "user_current_session": None,
+            "user_is_verified": False,
         }
 
         ##### insert user into database
@@ -122,7 +123,10 @@ def _():
                 :user_email,
                 :user_password,
                 :user_created_at,
-                :user_current_session)
+                :user_current_session,
+                '',
+                '',
+                :user_is_verified)
             """, new_user).rowcount
 
         ##### if no row or more than one row was affected, return error

@@ -14,16 +14,13 @@ def _():
         ##### logged in user
         user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
         if not user_id or is_uuid(user_id) == False:
-            redirect_path = "/home?alert-info=Trying to follow the user failed. Please try again."
+            redirect_path = "/home?alert-info=Trying to view all users failed. Please try again."
             return
-
-        ##### get all users data
-        users = get_all_users(user_id)
 
         ##### return view
         return dict(
             user_id=user_id,                        # user who's logged in
-            users=users,                            # all users
+            users=get_all_users(user_id),           # all users
             url="/users",                           # url
             title="Users",                          # title
             only_update_body=only_update_body(),    # load header and footer?

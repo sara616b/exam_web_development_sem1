@@ -14,7 +14,7 @@ def _():
     redirect_path = None
     try:
         ##### email
-        email = request.forms.get("login_email")
+        email = request.forms.get("login_email").lower()
         if not email:
             redirect_path = "/login?error=email-missing"
             return

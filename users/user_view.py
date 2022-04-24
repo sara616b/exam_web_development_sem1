@@ -1,6 +1,6 @@
 from bottle import get, view, request, redirect, response
 import jwt
-from common import get_all_posts, only_update_body, get_all_tweets, is_uuid, get_all_users, confirm_user_is_logged_in, JWT_KEY
+from common import get_all_posts, get_one_user, only_update_body, get_all_tweets, is_uuid, get_all_users, confirm_user_is_logged_in, JWT_KEY
 
 @get("/users/<username>")
 @view("user.html")
@@ -22,41 +22,29 @@ def _(username):
             redirect_path = "/home?alert-info=Couldn't find user. Please try again."
             return
 
-        ##### get all users and tweets data
-        users = get_all_users(user_id)
-        tweets = get_all_tweets(user_id)
-
-        ###### specify user profile to display
-        user_profile_to_display = None
-        for user in users:
-            if user["user_username"] == username:
-                user_profile_to_display = user
-
-        ##### if no user with the right username is found redirect with error
-        if user_profile_to_display == None:
-            redirect_path = "/home?alert-info=Couldn't find user. Please try again."
+        ##### get the user to display's data
+        user_to_display, error_redirect_path = get_one_user(username, user_id)
+        if error_redirect_path != None:
+            redirect_path = error_redirect_path
             return
 
-        ##### get all posts data
-        posts = get_all_posts(user_id, user_profile_to_display["user_id"])
-
-        print(user_profile_to_display)
         ##### return view
         return dict(
-            user_id=user_id,                                # user who's logged in
-            users=users,                                    # all users to display 'who to follow'
-            posts=posts,                                    # all posts from the user to display
-            tweets=tweets,                                  # all tweets 
-            url=f"/users/{username}",                       # url
-            title=f"@{username}",                                 # title
-            modal=None,                                     # what modal is open
-            only_update_body=only_update_body(),            # load header and footer?
-            user_profile_to_display=user_profile_to_display,# the user whose info we're viewing
+            user_id=user_id,                                            # user who's logged in
+            users=get_all_users(user_id),                                                # all users to display 'who to follow'
+            posts=get_all_posts(user_id, user_to_display["user_id"]),   # all posts from the user to display
+            tweets=get_all_tweets(user_id),                             # all tweets 
+            url=f"/users/{username}",                                   # url
+            title=f"@{username}",                                       # title
+            modal=None,                                                 # what modal is open
+            only_update_body=only_update_body(),                        # load header and footer?
+            user_to_display=user_to_display,                            # the user whose info we're viewing
             )
 
     except Exception as ex:
         print("Exception: " + str(ex))
         response.status = 500
+        redirect_path = '/home?alert-info=Something went wrong.'
         return
     
     finally:

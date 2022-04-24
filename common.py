@@ -43,14 +43,14 @@ def confirm_user_is_logged_in():
             else:
                 db = sqlite3.connect(f"{get_file_path()}/database/database.db")
                 ##### find the users who matches the jwt session cookie
-                session_matches_user = str(db.execute("""
-                        SELECT user_current_session, user_id
+                session_matches_user = db.execute("""
+                        SELECT user_id
                         FROM users
                         WHERE user_current_session = :user_current_session
-                        """, (str(jwt_cookie),)).fetchone())
+                        """, (str(jwt_cookie),)).fetchone()
 
                 ##### if it matches a user, return true - someone is logged in with a valid session
-                if session_matches_user != None:
+                if len(session_matches_user) == 1:
                     return True
 
         return False
@@ -65,7 +65,7 @@ def confirm_user_is_logged_in():
 
 ##### get string of amount of time since posting from epoch value
 def time_since_from_epoch(epoch):
-    time_since_seconds = int(time.time()) - int(epoch.split('.')[0]) # now minus posting time
+    time_since_seconds = int(str(time.time()).split('.')[0]) - int(epoch.split('.')[0]) # now minus posting time
     if time_since_seconds < 60:
         return f"{str(time_since_seconds).split('.')[0]}s"
 
@@ -106,7 +106,7 @@ def get_all_tweets(user_id): # if user_id == None, likes data won't be included
         db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
         ###### select all tweets joined with user information
-        tweet_values = ["tweet_id", "tweet_text", "tweet_created_at", "tweet_updated_at", "tweet_image", "tweet_user_id", "user_username", "user_display_name"]
+        tweet_values = ["tweet_id", "tweet_text", "tweet_created_at", "tweet_updated_at", "tweet_image", "tweet_user_id", "user_username", "user_display_name", "user_profile_image"]
         all_tweets_data = db.execute(f"""
             SELECT {','.join(tweet_values)}
             FROM tweets
@@ -137,6 +137,8 @@ def get_all_tweets(user_id): # if user_id == None, likes data won't be included
         for tweet in all_tweets_data:
             ##### tweet data to dictionary 
             tweet_dict = create_dictionary_from_sqlite_data(tweet_values, tweet)
+            ##### update text to visually display the linebreaks in html
+            tweet_dict["tweet_text"] = tweet_dict["tweet_text"].replace("\r\n", "<br>")
 
             if user_id:
                 ##### has the user liked the tweet and amount of likes
@@ -170,65 +172,6 @@ def get_all_tweets(user_id): # if user_id == None, likes data won't be included
 
         return tweets
     
-    except Exception as ex:
-        print("Exception: " + str(ex))
-        return False
-
-    finally:
-        if db != None:
-            db.close()
-
-##### get all users data as dictionary
-def get_all_users(user_id): # if user_id == None, follower data won't be included
-    db = None
-    try:
-        ###### connect to database
-        db = sqlite3.connect(f"{get_file_path()}/database/database.db")
-
-        ###### select all users
-        users_values = ["user_id", "user_display_name", "user_username", "user_profile_image", "user_profile_header", "user_is_verified"]
-        all_users = db.execute(f"""
-            SELECT {','.join(users_values)}
-            FROM users
-            ORDER BY user_created_at DESC
-            """).fetchall()
-
-        if user_id:
-            ##### check if the user_id is a uuid4
-            if not is_uuid(user_id):
-                response.status = 500
-                return
-            ##### select all follow data            
-        ##### select all follow data            
-            ##### select all follow data            
-        ##### select all follow data            
-            ##### select all follow data            
-            all_followers_data = db.execute(f"""
-                SELECT fk_user_id_follower AS user_id_follower, fk_user_id_to_follow AS user_id_to_follow
-                FROM followers
-                """).fetchall()
-
-        ##### organize users data in list
-        users = []
-        for user in all_users:
-            user_dict = create_dictionary_from_sqlite_data(users_values, user)
-
-            if user_id:
-                ##### user followers and followings
-                user_dict["followers"] = 0
-                user_dict["is_following"] = False
-                for follow in all_followers_data:
-                    ##### if follow['user_id_to_follow'] is this user, add to followers amount
-                    if follow[1] == user_dict["user_id"]:
-                        user_dict["followers"] += 1
-                        ##### if follow['user_id_follower'] is the logged in user set is_following to True
-                        if follow[0] == user_id:
-                            user_dict["is_following"] = True
-
-            users.append(user_dict)
-
-        return users
-
     except Exception as ex:
         print("Exception: " + str(ex))
         return False
@@ -310,6 +253,123 @@ def get_all_posts(user_id, only_include_from_user_id=None):
         if db != None:
             db.close()
 
+##### get all users data as dictionary
+def get_all_users(user_id): # if user_id == None, follower data won't be included
+    db = None
+    try:
+        ###### connect to database
+        db = sqlite3.connect(f"{get_file_path()}/database/database.db")
+
+        ###### select all users
+        users_values = ["user_id", "user_display_name", "user_username", "user_profile_image", "user_profile_header", "user_is_verified"]
+        all_users = db.execute(f"""
+            SELECT {','.join(users_values)}
+            FROM users
+            ORDER BY user_created_at DESC
+            """).fetchall()
+
+        if user_id:
+            ##### check if the user_id is a uuid4
+            if not is_uuid(user_id):
+                response.status = 500
+                return
+            ##### select all follow data        
+            all_followers_data = db.execute(f"""
+                SELECT fk_user_id_follower AS user_id_follower, fk_user_id_to_follow AS user_id_to_follow
+                FROM followers
+                """).fetchall()
+
+        ##### organize users data in list
+        users = []
+        for user in all_users:
+            user_dict = create_dictionary_from_sqlite_data(users_values, user)
+
+            if user_id:
+                ##### user followers and followings
+                user_dict["followers"] = 0
+                user_dict["is_following"] = False
+                for follow in all_followers_data:
+                    ##### if follow['user_id_to_follow'] is this user, add to followers amount
+                    if follow[1] == user_dict["user_id"]:
+                        user_dict["followers"] += 1
+                        ##### if follow['user_id_follower'] is the logged in user set is_following to True
+                        if follow[0] == user_id:
+                            user_dict["is_following"] = True
+
+            users.append(user_dict)
+
+        return users
+
+    except Exception as ex:
+        print("Exception: " + str(ex))
+        return False
+
+    finally:
+        if db != None:
+            db.close()
+
+##### get one user data as dictionary
+def get_one_user(username, user_id): # if user_id == None, follower data won't be included
+    redirect_path = None
+    db = None
+    try:
+        
+        ###### connect to database
+        db = sqlite3.connect(f"{get_file_path()}/database/database.db")
+
+        ###### select all users
+        users_values = ["user_id", "user_display_name", "user_username", "user_profile_image", "user_profile_header", "user_is_verified"]
+        user_data = db.execute(f"""
+            SELECT {','.join(users_values)}
+            FROM users
+            WHERE user_username = :username
+            """, (username,)).fetchone()
+
+        if user_id:
+            ##### check if the user_id is a uuid4
+            if not is_uuid(user_id):
+                response.status = 500
+                return
+            ##### select all follow data        
+            all_followers_data = db.execute(f"""
+                SELECT fk_user_id_follower AS user_id_follower, fk_user_id_to_follow AS user_id_to_follow
+                FROM followers
+                """).fetchall()
+
+        ##### organize users data in list
+        user_dict = create_dictionary_from_sqlite_data(users_values, user_data)
+
+        if user_id:
+            ##### user followers and followings
+            user_dict["followers"] = 0
+            user_dict["is_following"] = False
+            for follow in all_followers_data:
+                ##### if follow['user_id_to_follow'] is this user, add to followers amount
+                if follow[1] == user_dict["user_id"]:
+                    user_dict["followers"] += 1
+                    ##### if follow['user_id_follower'] is the logged in user set is_following to True
+                    if follow[0] == user_id:
+                        user_dict["is_following"] = True
+
+        ###### specify user profile to display
+        user_to_return = user_dict
+
+        ##### if no user with the right username is found redirect with error
+        if user_to_return == None:
+            redirect_path = "/home?alert-info=Couldn't find user. Please try again."
+            return None, redirect_path
+        
+        return user_to_return, redirect_path
+
+    except Exception as ex:
+        redirect_path = "/home?alert-info=Couldn't find user. Please try again."
+        print("Exception: " + str(ex))
+        return None, redirect_path
+
+    finally:
+        if db != None:
+            db.close()
+
 ##### check an image based on extention and corruption - returns a redirection path if an error is found and the image name
 def check_the_image(image_file, type):
     try:
@@ -347,19 +407,16 @@ def check_the_image(image_file, type):
 def validate_tweet_text(tweet_text, tweet_id):
     if not tweet_text:
         # text is required in tweets
-        response.status = 204
         redirect_path = f"/tweets/{tweet_id}?error=empty"
         return None, redirect_path
 
     if len(tweet_text) < 2:
         # text must be longer than 2 characters
-        response.status = 400
         redirect_path = f"/tweets/{tweet_id}?error=short&text={tweet_text}"
         return None, redirect_path
 
     if len(tweet_text) > 250:
         # text must be shorter than 250 characters
-        response.status = 400
         redirect_path = f"/tweets/{tweet_id}?error=long&text={tweet_text}"
         return None, redirect_path
 

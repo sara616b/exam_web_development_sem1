@@ -14,11 +14,7 @@
                 <label for="login_email" data-to-be-validated="true">
                     E-mail
 
-                    % for error_obj in possible_errors["email"]:
-                    % if (get("error") and get("error") == error_obj["error"]):
-                    <span class="error_message">{{error_obj["message"]}}</span>
-                    % end
-                    % end
+                    % include('error_message_backend', name='email')
                     <span class="error_message error_span hidden">Email <span></span></span>
 
                     <input type="text" name="login_email" id="login_email" placeholder="a@a.com" value="{{email or ''}}" data-email="true" data-required="true">
@@ -28,11 +24,7 @@
                 <label for="login_password" data-to-be-validated="true">
                     Password
 
-                    % for error_obj in possible_errors["password"]:
-                    % if (get("error") and get("error") == error_obj["error"]):
-                    <span class="error_message">{{error_obj["message"]}}</span>
-                    % end
-                    % end
+                    % include('error_message_backend', name='password')
                     <span class="error_message error_span hidden">Password <span></span></span>
 
                     <input type="password" name="login_password" id="login_password" placeholder="***" data-required="true" data-min="3">

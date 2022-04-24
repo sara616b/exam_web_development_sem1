@@ -88,7 +88,7 @@ def _():
         form_values = {}
         for input in ["display_name", "username", "email"]:
             form_values[input] = request.params.get(input.replace("_", "-")) if request.params.get(input.replace("_", "-")) else ''
-
+        
         ##### get alert info
         alert_info = request.params.get("alert-info") or None
 

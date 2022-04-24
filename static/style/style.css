@@ -661,14 +661,16 @@ label span.error_message {
   flex-direction: row;
   align-items: center;
   gap: 0.4rem;
+  width: 60%;
 }
 #tweet_form #form_content #new_tweet_actions #image_actions #tweet_image {
   display: none;
 }
 #tweet_form #form_content #new_tweet_actions #image_actions #image_name {
   border: none;
-  width: auto;
+  width: 40%;
   word-wrap: break-word;
+  outline: none;
 }
 #tweet_form #form_content #new_tweet_actions p {
   width: auto;
@@ -683,7 +685,11 @@ label span.error_message {
 }
 #tweet_form #form_content #new_tweet_actions label.color,
 #tweet_form #form_content #new_tweet_actions button.color {
-  width: 150px;
+  max-width: 120px;
+  width: 40%;
+}
+#tweet_form #form_content #new_tweet_actions label {
+  max-width: 115px;
 }
 
 #user_form {
@@ -711,6 +717,7 @@ label span.error_message {
   border: none;
   width: auto;
   word-wrap: break-word;
+  outline: none;
 }
 
 #tweet_modal,
@@ -723,6 +730,8 @@ label span.error_message {
   width: 100%;
   position: fixed;
   top: 0;
+  left: 0;
+  z-index: 100;
 }
 #tweet_modal #background,
 #user_modal #background {
@@ -762,6 +771,10 @@ label span.error_message {
   text-transform: uppercase;
   padding-bottom: 1rem;
   color: #63422c;
+}
+#tweet_modal #modal .button,
+#user_modal #modal .button {
+  max-width: none;
 }
 @media screen and (max-width: 500px) {
   #tweet_modal #modal,

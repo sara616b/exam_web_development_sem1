@@ -3,18 +3,18 @@
         <header id="logo_container" class="hover" onclick="open_home(event)">
             % include('logo_icon')
         </header>
-        % for user in users:
-        % if user['user_id'] == user_id:
+
+        % user = [user for user in users if user['user_id'] == user_id][0]
+        % if user:
         <main id="navigation">
             <button onclick="view_user(event)" data-username="id{{user['user_username']}}" class="button">PROFILE</button>
             <button onclick="spa('/tweets/new', true, event);" class="button color">TWEET</button>
             <button onclick="log_out(event)" class="link" data-text="Log out" data-text-processing="Logging out...">LOG OUT</button>
         </main>
-
         <footer id="profile_container">
             % include('user_display', user=user, user_id=user_id)
         </footer>
         % end
-        % end
+
     </div>
 </nav>

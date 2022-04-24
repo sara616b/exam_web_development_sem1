@@ -8,66 +8,37 @@
             <label for="user_display_name" data-to-be-validated="true">
                 Display name
 
-
-
-                % for error_obj in possible_errors["display_name"]:
-                % if get("errors") and get("errors")[error_obj["error"]] != 'none':
-                <span class="error_message error_back">{{error_obj["message"]}}</span>
-                % end
-                % end
-
+                % include('error_message_backend', name='display_name')
                 <span class="error_message error_span hidden">Display name <span></span></span>
 
-
-
-                <input type="text" name="user_display_name" id="user_display_name" placeholder="Name" data-min="1" data-max="100" data-required="true" data-no-special-characters="true" value="{{user_to_edit['user_display_name']}}">
+                <input type="text" name="user_display_name" id="user_display_name" placeholder="Name" data-min="1" data-max="100" data-required="true" data-no-special-characters="true" value="{{form_values['user_display_name'] or user_to_edit['user_display_name']}}">
             </label>
             <label for="user_username" data-to-be-validated="true">
                 Username
 
-
-
-                % for error_obj in possible_errors["username"]:
-                % if get("errors") and get("errors")[error_obj["error"]] != 'none':
-                <span class="error_message error_back">{{error_obj["message"]}}</span>
-                % end
-                % end
+                % include('error_message_backend', name='username')
                 <span class="error_message error_span hidden">Username <span></span></span>
 
-
-
-                <span class="error_message error_span hidden">Username <span></span></span>
-
-
-
-                <input type="text" name="user_username" id="user_username" placeholder="Username" data-min="1" data-max="100" data-required="true" data-no-spaces="true" data-no-special-characters="true" value="{{user_to_edit['user_username']}}">
+                <input type="text" name="user_username" id="user_username" placeholder="Username" data-min="1" data-max="100" data-required="true" data-no-spaces="true" data-no-special-characters="true" value="{{form_values['user_username'] or user_to_edit['user_username']}}">
             </label>
 
             <label for="user_header" data-to-be-validated="true">
                 Header color
 
-
-
-                % for error_obj in possible_errors["header_color"]:
-                % if get("errors") and get("errors")[error_obj["error"]] != 'none':
-                <span class="error_message error_back">{{error_obj["message"]}}</span>
-                % end
-                % end
+                % include('error_message_backend', name='header_color')
                 <span class="error_message error_span hidden">Header color <span></span></span>
 
-
-
-                <input type="text" name="user_header" id="user_header" placeholder="#000000" data-hex-color="true" data-required="false" value="{{user_to_edit['user_profile_header'] or ''}}">
+                <input type="text" name="user_header" id="user_header" placeholder="#000000" data-hex-color="true" data-required="false" value="{{form_values['user_profile_header'] or user_to_edit['user_profile_header'] or ''}}">
             </label>
 
             <section id="image_actions">
-                <button id="remove_image" onclick="remove_user_selected_image(event)" class="hidden button" data-text="Remove image" data-text-processing="Removing...">Remove
+                <button id="remove_image" onclick="remove_selected_image(event, 'user')" class="hidden button" data-text="Remove image" data-text-processing="Removing...">Remove
                     image</button>
                 <label class="button" for="user_image">
-                    New profile picture
+                    Add new profile picture
                 </label>
                 <input onchange="user_image_changed(event)" type="file" name="user_image" id="user_image">
-                <input id="image_name" name="image_name" class="no_click" readonly="readonly">
+                <input id="image_name" name="image_name" readonly="readonly">
             </section>
 
             <input class="button color" type="submit" data-user-id="{{user_to_edit['user_id']}}" data-username="{{user_to_edit['user_username']}}" value="Save profile" onclick="edit_user(event)" data-text="Save profile" data-text-processing="Saving...">
@@ -75,3 +46,6 @@
 
     </main>
 </main>
+
+% # REBASE THE MODAL ON TOP OF THE USER PAGE
+% rebase('user')

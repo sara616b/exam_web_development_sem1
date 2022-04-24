@@ -3,11 +3,7 @@
     </section>
     <main id="modal">
 
-        % if tweet_id == "new":
-        <h2>New tweet</h2>
-        % else:
-        <h2>Edit tweet</h2>
-        % end
+        <h2>{{'New tweet' if tweet_id == "new" else 'Edit tweet'}}</h2>
 
         % # TWEET FORM
         % include(
@@ -23,3 +19,6 @@
 
     </main>
 </main>
+
+% # REBASE THE MODAL ON TOP OF THE USER PAGE
+% rebase('home', modal_open=True)

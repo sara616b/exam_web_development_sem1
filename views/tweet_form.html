@@ -1,69 +1,56 @@
 <form method="post" action="/tweets/{{get('tweet_id', 'new')}}" enctype="multipart/form-data" id="tweet_form">
     <section id="profile_icon_container">
-        % for user in users:
-        % if user_id == user['user_id']:
-        % if user['user_profile_image'] != "NULL":
-        <img id="{{user['user_profile_image']}}" src=" /static/images/profiles/{{user['user_profile_image']}}" alt='{{user["user_display_name"]}} profile image' />
-        % else:
-        % include('profile_icon')
-        % end
-        % end
-        % end
+        % # GET CORRECT USER IMAGE
+        % user_image = [user for user in users if user_id == user['user_id']][0]['user_profile_image']
+        % include('profile_icon', image=user_image)
     </section>
     <section id="form_content">
 
         <label for="tweet_text" data-to-be-validated="true">
 
-
-
-            % if get('error'):
-            % for possible_error in possible_errors:
-            % if error == possible_error["error"]:
-            <span class="error_message">{{possible_error["message"]}}</span>
-            % end
-            % end
+            % if get('possible_errors'):
+            % include('error_message_backend', name='text')
             % end
             <span class="error_message error_span hidden">Tweet text <span></span></span>
 
 
-
-            % if get('tweet') and type == 'edit':
-            <textarea name="tweet_text" id="tweet_text" data-required="true" data-min="2" data-max="250" placeholder="What're you thinking about?">{{tweet['tweet_text']}}</textarea>
-            % elif get('tweet_text'):
-            <textarea name="tweet_text" id="tweet_text" data-required="true" data-min="2" data-max="250" placeholder="What're you thinking about?">{{tweet_text}}</textarea>
+            % # GET THE TWEET TEXT IF ANY
+            % if get('tweet_text'):
+            % text = tweet_text
+            % elif get('tweet') and type == 'edit':
+            % text = tweet['tweet_text']
             % else:
-            <textarea name="tweet_text" id="tweet_text" data-required="true" data-min="2" data-max="250" placeholder="What're you thinking about?"></textarea>
+            % text = ''
             % end
+
+            <textarea name="tweet_text" id="tweet_text" data-required="true" data-min="2" data-max="250" placeholder="What're you thinking about?">{{text}}</textarea>
+
         </label>
         <footer id="new_tweet_actions">
             <section id="image_actions">
-                % if get('tweet_id') and tweet_id != "new" and tweet['tweet_image'] and type == 'edit':
-                <button id="remove_image" onclick="remove_selected_image(event)" class="button" data-text="Remove image" data-text-processing="Removing...">Remove
+
+                % # DEPENDING ON THE PRESENCE OF AN IMAGE DIFFERENT BUTTONS ARE HIDDEN
+                % image_is_present = True if get('tweet') and tweet['tweet_image'] and type == 'edit' else False
+
+                <button id="remove_image" onclick="remove_selected_image(event, 'tweet')" class="button {{'' if image_is_present else 'hidden'}}" data-text="Remove image" data-text-processing="Removing...">Remove
                     image</button>
-                <label class="button hidden" for="tweet_image">
+                <label class="button {{'hidden' if image_is_present else ''}}" for="tweet_image">
                     Add image
                 </label>
+
                 <input onchange="tweet_image_changed(event)" type="file" name="tweet_image" id="tweet_image">
-                <input id="image_name" name="image_name" class="no_click" value="{{tweet['tweet_image']}}" readonly="readonly">
-                % else:
-                <button id="remove_image" onclick="remove_selected_image(event)" class="hidden button" data-text="Remove image" data-text-processing="Removing...">Remove
-                    image</button>
-                <label class="button" for="tweet_image">
-                    Add image
-                </label>
-                <input onchange="tweet_image_changed(event)" type="file" name="tweet_image" id="tweet_image">
-                <input id="image_name" name="image_name" class="no_click" readonly="readonly" value="No image">
-                % end
+
+                % # SET IMAGE NAME IF ANY
+                % image = tweet['tweet_image'] if get('tweet') and tweet['tweet_image'] else "No image"
+                <input id="image_name" name="image_name" value="{{image}}" readonly="readonly">
+
             </section>
-            % if get('tweet_id') and tweet_id != "new":
-            <button type="submit" class="button color" onclick="put_edited_tweet(event);" id="id{{tweet_id}}" data-text="Save edits" data-text-processing="Saving...">
-                SAVE EDITS
+
+            <button type="submit" class="button color" onclick="submit_tweet_form(event);" data-method="{{'PUT' if type=='edit' else 'POST'}}" data-tweet-id="{{tweet_id if defined('tweet_id') else 'new'}}" data-text="{{'Save edits' if type=='edit' else 'Post tweet'}}" data-text-processing="{{'Saving...' if type=='edit' else 'Posting...'}}">
+                {{'SAVE EDITS' if type == 'edit' else 'POST TWEET'}}
             </button>
-            % else:
-            <button type="submit" class="button color" onclick="post_new_tweet(event);" data-text="Post tweet" data-text-processing="Posting...">
-                POST TWEET
-                % end
-            </button>
+
+            % end
         </footer>
     </section>
 </form>

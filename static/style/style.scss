@@ -671,13 +671,15 @@ label {
         flex-direction: row;
         align-items: center;
         gap: 0.4rem;
+        width: 60%;
         #tweet_image {
           display: none;
         }
         #image_name {
           border: none;
-          width: auto;
+          width: 40%;
           word-wrap: break-word;
+          outline: none;
         }
       }
       p {
@@ -691,8 +693,12 @@ label {
         text-align: center;
         max-width: unset;
         &.color {
-          width: 150px;
+          max-width: 120px;
+          width: 40%;
         }
+      }
+      label {
+        max-width: 115px;
       }
     }
   }
@@ -721,6 +727,7 @@ label {
       border: none;
       width: auto;
       word-wrap: break-word;
+      outline: none;
     }
   }
 }
@@ -735,6 +742,8 @@ label {
   width: 100%;
   position: fixed;
   top: 0;
+  left: 0;
+  z-index: 100;
   #background {
     background-color: $primary-color-transparent;
     height: 100vh;
@@ -768,6 +777,9 @@ label {
       text-transform: uppercase;
       padding-bottom: 1rem;
       color: $secondary-color;
+    }
+    .button {
+      max-width: none;
     }
     @media screen and (max-width: 500px) {
       width: 100%;

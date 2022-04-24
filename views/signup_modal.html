@@ -15,13 +15,7 @@
                     Display name
 
 
-
-                    % for error_obj in possible_errors["display_name"]:
-                    % if get("errors")[error_obj["error"]] != 'none':
-                    <span class="error_message error_back">{{error_obj["message"]}}</span>
-                    % end
-                    % end
-
+                    % include('error_message_backend', name='display_name')
                     <span class="error_message error_span hidden">Display name <span></span></span>
 
 
@@ -34,12 +28,7 @@
 
 
 
-
-                    % for error_obj in possible_errors["username"]:
-                    % if get("errors")[error_obj["error"]] != 'none':
-                    <span class="error_message error_back">{{error_obj["message"]}}</span>
-                    % end
-                    % end
+                    % include('error_message_backend', name='username')
                     <span class="error_message error_span hidden">Username <span></span></span>
 
 
@@ -51,12 +40,7 @@
 
 
 
-
-                    % for error_obj in possible_errors["email"]:
-                    % if get("errors")[error_obj["error"]] != 'none':
-                    <span class="error_message error_back">{{error_obj["message"]}}</span>
-                    % end
-                    % end
+                    % include('error_message_backend', name='email')
                     <span class="error_message error_span hidden">Email <span></span></span>
 
 
@@ -68,12 +52,7 @@
 
 
 
-
-                    % for error_obj in possible_errors["password"]:
-                    % if get("errors")[error_obj["error"]] != 'none':
-                    <span class="error_message error_back">{{error_obj["message"]}}</span>
-                    % end
-                    % end
+                    % include('error_message_backend', name='password')
                     <span class="error_message error_span hidden">Password <span></span></span>
 
 
@@ -82,7 +61,6 @@
                 </label>
                 <label for="signup_password_repeat" data-to-be-validated="true">
                     Repeat password
-
 
 
                     % if get("errors")['passwords_different'] != 'none':

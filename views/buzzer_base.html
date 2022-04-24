@@ -20,23 +20,6 @@
     % include('aside', users=users)
 </main>
 
-% # TWEET MODAL
-% if modal and modal == 'tweet':
-% include(
-% 'tweet_modal',
-% tweet_id=tweet_id,
-% tweet=tweet,
-% type='edit'
-% )
-% end
-
-% # USER MODAL
-% if modal and modal == 'user':
-% include(
-% 'user_modal',
-% )
-% end
-
 % if get('alert_info'):
 % include(
 % 'alert_info',

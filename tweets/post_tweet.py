@@ -22,7 +22,7 @@ def _():
         if redirect_error_path:
             redirect_path = redirect_error_path
             return
-        new_tweet_text = new_tweet_text.replace("\n", "<br />")
+        new_tweet_text = new_tweet_text
 
         ##### check if there's an image in request.files and if so, validate it 
         redirect_image_error, image_name = check_the_image(request.files.get("tweet_image"), "tweets")
@@ -34,7 +34,7 @@ def _():
         new_tweet = {
             "tweet_id": str(uuid.uuid4()),
             "tweet_text": new_tweet_text,
-            "tweet_created_at": str(time.time()),
+            "tweet_created_at": str(time.time()).split('.')[0],
             "tweet_updated_at": None,
             "tweet_image": image_name if image_name else None,
             "tweet_user_id": user_id,

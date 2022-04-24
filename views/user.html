@@ -1,26 +1,29 @@
 <header>
-    <section class="background" style="background-color: {{user_profile_to_display['user_profile_header']}}" data-header-color="{{user_profile_to_display['user_profile_header']}}"></section>
+    <section class="background" style="background-color: {{user_to_display['user_profile_header']}}"></section>
     <header class="user_header">
-        % if user_profile_to_display['user_profile_image'] != "NULL":
-        <img id="{{user_profile_to_display['user_profile_image']}}" src=" /static/images/profiles/{{user_profile_to_display['user_profile_image']}}" alt='{{user_profile_to_display["user_display_name"]}} profile image' />
+        % include('profile_icon', image=user_to_display['user_profile_image'])
+        % if user_id != user_to_display["user_id"]:
+        % include('follow_button', user=user_to_display)
         % else:
-        % include('profile_icon')
-        % end
-        % if user_id != user_profile_to_display["user_id"]:
-        % include('follow_button', user=user_profile_to_display)
-        % else:
-        <p class="button color open_edit_user_button hover" data-user-id="{{user_profile_to_display['user_id']}}" onclick="open_edit_user(event)" data-text="Edit user" data-text-processing="Opening...">Edit user</p>
+        <p class="button color open_edit_user_button hover" data-user-id="{{user_to_display['user_id']}}" onclick="open_edit_user(event)" data-text="Edit user" data-text-processing="Opening...">Edit user</p>
         % end
     </header>
     <main class="user_info">
-        <h2>{{user_profile_to_display['user_display_name']}}</h2>
-        <p>@{{user_profile_to_display['user_username']}}</p>
-        <p>{{user_profile_to_display['followers']}} followers</p>
+        <h2>{{user_to_display['user_display_name']}}</h2>
+        <p>@{{user_to_display['user_username']}}</p>
+        <p>{{user_to_display['followers']}} followers</p>
     </main>
 </header>
 <main>
     % include('feed_display', posts=posts, tweets=tweets, user_id=user_id, users=users)
 </main>
+
+
+% # CONTENT FROM REBASE IS EDIT USER MODAL
+% if get('base'):
+{{!base}}
+% end
+
 
 % # REBASE INTO BUZZER BASE TEMPLATE
 % rebase(
@@ -29,8 +32,7 @@
 % tweet_id=get('tweet_id', None),
 % posts=get('posts', None),
 % tweet=get('tweet', None),
-% user_profile_to_display=get('user_profile_to_display', None),
+% user_to_display=get('user_to_display', None),
 % user_id=get('user_id', None),
 % tweets=get('tweets', None),
-% modal=get('modal', None)
 % )

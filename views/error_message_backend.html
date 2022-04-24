@@ -1,0 +1,9 @@
+% for error_obj in possible_errors[name]:
+% if (get("error") and get("error") == error_obj["error"]):
+<span class="error_message">{{error_obj["message"]}}</span>
+% # if there can be plural error messages they'll be gathered in a dictionary
+% elif get("errors") and get("errors")[error_obj["error"]] != 'none':
+% print(get("errors")[error_obj["error"]])
+<span class="error_message error_back">{{error_obj["message"]}}</span>
+% end
+% end

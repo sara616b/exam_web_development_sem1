@@ -4,7 +4,7 @@ import jwt
 from common import get_file_path, get_all_posts, is_uuid, only_update_body, get_all_tweets, get_all_users, confirm_user_is_logged_in, JWT_KEY
 
 @get("/tweets/<tweet_id>")
-@view("home.html")
+@view("tweet_modal.html")
 def _(tweet_id):
     ##### the user needs to be logged in to access this page
     if not confirm_user_is_logged_in():
@@ -15,24 +15,26 @@ def _(tweet_id):
     try:
         ##### get errors from query string
         error = request.params.get("error")
-        possible_errors = [
-            {
-                "error": "empty",
-                "message": "Tweet must contain text",
-            },
-            {
-                "error": "short",
-                "message": "Tweet must be 2 or more characters long",
-            },
-            {
-                "error": "long",
-                "message": "Tweet can only be 250 characters long",
-            },
-            {
-                "error": "image-not-allowed",
-                "message": "Image must be a .png or .jpeg (.jpg)"
-            }
-        ]
+        possible_errors = {
+            "text": [
+                {
+                    "error": "empty",
+                    "message": "Tweet must contain text",
+                },
+                {
+                    "error": "short",
+                    "message": "Tweet must be 2 or more characters long",
+                },
+                {
+                    "error": "long",
+                    "message": "Tweet can only be 250 characters long",
+                },
+                {
+                    "error": "image-not-allowed",
+                    "message": "Image must be a .png or .jpeg (.jpg)"
+                }
+            ]
+        }
 
         ##### get tweet text from params to set as value in input 
         tweet_text = request.params.get("text")
@@ -54,12 +56,12 @@ def _(tweet_id):
                 tweet_id=tweet_id,                  # id will be 'new' and thereby not the real id
                 url="/tweets/" + tweet_id,          # url
                 title="New tweet",                  # title
-                modal='tweet',                      # the modal that's open is 'tweet'
                 tweet=None,                         # since it's a new tweet, no values are predefined
                 only_update_body=only_update_body(),# update header and footer?
                 error=error,                        # any form validation error
                 tweet_text=tweet_text,              # tweet text
                 possible_errors=possible_errors,    # possible form validation errors
+                type='new'
                 )
         
         elif tweet_id != 'new': # if the tweet id isn't 'new' the user is editing an existing tweet
@@ -98,7 +100,7 @@ def _(tweet_id):
             # if tweet is found, set info that's needed to display the editing inputs
             tweet_to_edit = {
                 "tweet_id": tweet_id,
-                "tweet_text": tweet[0],
+                "tweet_text": tweet[0].replace("<br />", ""),
                 "tweet_image": tweet[1]
             }
 
@@ -111,11 +113,11 @@ def _(tweet_id):
                 tweet=tweet_to_edit,                # the tweet the user is editing
                 url="/tweets/" + tweet_id,          # url
                 title="Edit tweet",                 # title
-                modal='tweet',                      # the 'tweet' modal is open
                 only_update_body=only_update_body(),# update header and footer?
                 error=error,                        # any form validation error
                 tweet_text=tweet_text,              # tweet text
                 possible_errors=possible_errors,    # possible form validation errors
+                type='edit'
                 )
         return
 

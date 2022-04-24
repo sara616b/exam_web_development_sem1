@@ -61,9 +61,10 @@ def _(tweet_id):
 
         ##### if there's no image or the image name isn't the same as the current image name, delete current image
         if not image_name or current_image != image_name:
-            if os.path.exists(f"{get_file_path()}/static/images/tweets/{current_image}"):
-                os.remove(f"{get_file_path()}/static/images/tweets/{current_image}")
-            updated_tweet_data["tweet_image"] = None
+            if current_image != '':
+                if os.path.exists(f"{get_file_path()}/static/images/tweets/{current_image}"):
+                    os.remove(f"{get_file_path()}/static/images/tweets/{current_image}")
+            updated_tweet_data["tweet_image"] = ''
             
             ##### check if there's an image in request.files and if so, validate it 
             redirect_image_error, new_image_name = check_the_image(request.files.get("tweet_image"), "tweets")
@@ -76,7 +77,7 @@ def _(tweet_id):
                 updated_tweet_data["tweet_image"] = new_image_name
 
         ##### set updated at time
-        updated_tweet_data["tweet_updated_at"] = time.time()
+        updated_tweet_data["tweet_updated_at"] = str(time.time()).split('.')[0]
 
         ##### create string for all values that need to be set in the database query
         set_parts = []
