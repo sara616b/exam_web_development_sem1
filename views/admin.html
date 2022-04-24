@@ -3,7 +3,7 @@
     <main id="administator">
         % if tweets and tweets != {}:
         % for tweet in tweets:
-        <article class="tweet_container" data-id="id{{tweet}}">
+        <article class="tweet_container" data-tweet-id="{{tweet}}">
             <section class="icon_container hover" id="id{{tweets[tweet]['user_username']}}">
                 % include('profile_icon', image=tweets[tweet]['user_profile_image'])
             </section>
@@ -26,7 +26,7 @@
                     % end
                 </main>
                 <footer class="actions_container">
-                    <button onclick="admin_delete_tweet(event)" id="id{{tweet}}" class="button color" data-text="delete" data-text-processing="deleting...">DELETE</button>
+                    <button onclick="admin_delete_tweet(event)" data-tweet-id="{{tweet}}" class="button color" data-text="delete" data-text-processing="deleting...">DELETE</button>
                 </footer>
             </main>
         </article>

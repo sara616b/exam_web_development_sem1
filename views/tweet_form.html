@@ -38,7 +38,7 @@
                     Add image
                 </label>
 
-                <input onchange="tweet_image_changed(event)" type="file" name="tweet_image" id="tweet_image">
+                <input onchange="image_changed(event, 'tweet')" type="file" name="tweet_image" id="tweet_image">
 
                 % # SET IMAGE NAME IF ANY
                 % image = tweet['tweet_image'] if get('tweet') and tweet['tweet_image'] else "No image"

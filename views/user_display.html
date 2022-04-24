@@ -1,5 +1,5 @@
 <article class="user_display ">
-    <section onclick="view_user(event)" data-username="id{{user['user_username']}}">
+    <section onclick="spa('/users/' + event.target.dataset.username, true, event)" data-username="{{user['user_username']}}">
         <section class="no_click">
             % include('profile_icon', image=user['user_profile_image'])
         </section>

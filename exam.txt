@@ -94,11 +94,9 @@ FILES CHECKED
 - signup
 - tweets
 - users
+- js
 
 TODO
 - views
 - style
-- js
 
-
-- redirect - match py + js

@@ -1,3 +1,3 @@
-<button onclick="follow_user(event)" data-userid="id{{user['user_id']}}" data-follows="{{user['is_following']}}" class="button follow_button" data-text-false="Follow" data-text-processing-false="Following..." data-text-true="Following" data-text-processing-true="Unfollowing...">
+<button onclick="follow_user(event)" data-user-id="{{user['user_id']}}" data-follows="{{user['is_following']}}" class="button follow_button" data-text-false="Follow" data-text-processing-false="Following..." data-text-true="Following" data-text-processing-true="Unfollowing...">
     {{'FOLLOWING' if user['is_following'] else 'FOLLOW'}}
 </button>

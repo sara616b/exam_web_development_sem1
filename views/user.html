@@ -5,7 +5,7 @@
         % if user_id != user_to_display["user_id"]:
         % include('follow_button', user=user_to_display)
         % else:
-        <p class="button color open_edit_user_button hover" data-user-id="{{user_to_display['user_id']}}" onclick="open_edit_user(event)" data-text="Edit user" data-text-processing="Opening...">Edit user</p>
+        <p class="button color open_edit_user_button hover" data-user-id="{{user_to_display['user_id']}}" onclick="spa('/edit/' + event.target.dataset.userId, true, event)" data-text="Edit user" data-text-processing="Opening...">Edit user</p>
         % end
     </header>
     <main class="user_info">

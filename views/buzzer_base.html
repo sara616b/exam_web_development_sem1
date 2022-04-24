@@ -4,7 +4,7 @@
         <header id="page_title">
 
             % if title and title != 'Home': # no back button on home but on all other pages
-            <button class="back_button hover" onclick="open_home(event);">🡠</button>
+            <button class="back_button hover" onclick="spa('/home', true, event)">🡠</button>
             % end
 
             {{get('title', 'Buzzer')}}

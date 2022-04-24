@@ -1,13 +1,13 @@
 <nav id="main_navigation">
     <div class="content_container">
-        <header id="logo_container" class="hover" onclick="open_home(event)">
+        <header id="logo_container" class="hover" onclick="spa('/home', true, event)">
             % include('logo_icon')
         </header>
 
         % user = [user for user in users if user['user_id'] == user_id][0]
         % if user:
         <main id="navigation">
-            <button onclick="view_user(event)" data-username="id{{user['user_username']}}" class="button">PROFILE</button>
+            <button onclick="spa('/users/' + event.target.dataset.username, true, event)" data-username="{{user['user_username']}}" class="button">PROFILE</button>
             <button onclick="spa('/tweets/new', true, event);" class="button color">TWEET</button>
             <button onclick="log_out(event)" class="link" data-text="Log out" data-text-processing="Logging out...">LOG OUT</button>
         </main>
