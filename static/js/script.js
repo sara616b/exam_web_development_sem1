@@ -85,8 +85,6 @@ const submit_tweet_form = async (event) => {
       method: event.target.dataset.method,
       body: new FormData(form),
     }).then((response) => {
-      console.log(response);
-      console.log(response.ok);
       if (response.ok) {
         if (response.redirected) {
           // validation errors send with query string
@@ -317,8 +315,6 @@ const edit_user = async (event) => {
 };
 
 const remove_selected_image = (event, type) => {
-  console.log("remove_selected_image");
-
   stop_event_default(event);
   set_button_status_processing(event.target);
 
@@ -340,7 +336,6 @@ const remove_selected_image = (event, type) => {
   set_button_status_default(event.target);
 };
 const image_changed = (event, type) => {
-  console.log("tweet_image_changed");
   stop_event_default(event);
 
   const image_filename = document

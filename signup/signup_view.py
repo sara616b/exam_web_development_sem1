@@ -82,13 +82,13 @@ def _():
         ##### get errors from query string
         errors = {}
         for error in possible_errors_list:
-            errors[error] = request.params.get(error.replace("_", "-")) if request.params.get(error.replace("_", "-")) else 'None'
+            errors[error] = request.params.get(error.replace("_", "-")) if request.params.get(error.replace("_", "-")) else 'none'
 
         ##### get values for form from query string
         form_values = {}
         for input in ["display_name", "username", "email"]:
             form_values[input] = request.params.get(input.replace("_", "-")) if request.params.get(input.replace("_", "-")) else ''
-        
+
         return dict(
             url="/signup",                                      # url
             title="Sign up",                                    # title
