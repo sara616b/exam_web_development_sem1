@@ -21,6 +21,9 @@ def _(tweet_id):
 
         ##### user id of logged in user
         user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
+        if not user_id or is_uuid(user_id) == False:
+            redirect_path = "/home?alert-info=Trying to retweet the tweet failed. Please try again."
+            return
 
         ##### connect to database
         db = sqlite3.connect(f"{get_file_path()}/database/database.db")

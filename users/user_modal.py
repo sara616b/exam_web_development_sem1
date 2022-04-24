@@ -15,11 +15,14 @@ def _(user_id):
     try:
         ##### validate that the id is a uuid4
         if is_uuid(user_id) == False:
-            redirect_path = "/home?alert-info=Trying to edit the user failed. Please try again."
+            redirect_path = "/home?alert-info=Trying to edit the profile failed. Please try again."
             return
         
         ##### user id of logged in user
         logged_in_user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
+        if not logged_in_user_id or is_uuid(logged_in_user_id) == False:
+            redirect_path = "/home?alert-info=Trying to edit the profile failed. Please try again."
+            return
         ##### make sure the user is trying to edit their own profile
         if logged_in_user_id != user_id:
             redirect_path = f"/home?alert-info=Trying to edit the profile failed. You can only edit your own profile."

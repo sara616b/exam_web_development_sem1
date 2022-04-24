@@ -14,19 +14,19 @@
             % if tweets[tweet]['tweet_time_since_updated']:
             % if len(tweets[tweet]['tweet_time_since_updated']) != 2 and len(tweets[tweet]['tweet_time_since_updated']) != 3:
             <p class="no_click">
-                (last updated {{tweets[tweet]['tweet_time_since_updated']}})</p>
+                (last edited {{tweets[tweet]['tweet_time_since_updated']}})</p>
             % else:
             <p class="no_click">
-                (last updated {{tweets[tweet]['tweet_time_since_updated']}} ago)</p>
+                (last edited {{tweets[tweet]['tweet_time_since_updated']}} ago)</p>
             % end
             % end
         </header>
         <main class="tweet_content">
             % if tweets and tweet:
             {{!tweets[tweet]['tweet_text']}}
-            % end
             % if tweets[tweet]["tweet_image"]:
             <img id='{{tweets[tweet]["tweet_image"]}}' src="/static/images/tweets/{{tweets[tweet]['tweet_image']}}" alt='{{tweets[tweet]["tweet_text"]}}' />
+            % end
             % end
         </main>
         <footer class="like_container">

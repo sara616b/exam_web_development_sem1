@@ -6,6 +6,7 @@
     </section>
     <section id="form_content">
 
+        % # TWEET TEXT INPUT
         <label for="tweet_text" data-to-be-validated="true">
 
             % if get('possible_errors'):
@@ -26,6 +27,8 @@
             <textarea name="tweet_text" id="tweet_text" data-required="true" data-min="2" data-max="250" placeholder="What're you thinking about?">{{text}}</textarea>
 
         </label>
+
+        % # TWEET IMAGE ACTIONS
         <footer id="new_tweet_actions">
             <section id="image_actions">
 

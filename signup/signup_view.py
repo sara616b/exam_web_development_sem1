@@ -89,17 +89,14 @@ def _():
         for input in ["display_name", "username", "email"]:
             form_values[input] = request.params.get(input.replace("_", "-")) if request.params.get(input.replace("_", "-")) else ''
         
-        ##### get alert info
-        alert_info = request.params.get("alert-info") or None
-
         return dict(
-            url="/signup",                          # url
-            title="Sign up",                        # title
-            only_update_body=only_update_body(),    # load header and footer?
-            errors=errors,                          # form validation errors
-            form_values=form_values,                # values for form input
-            possible_errors=possible_errors,        # possible errors for form input
-            alert_info=alert_info,                  # alert message
+            url="/signup",                                      # url
+            title="Sign up",                                    # title
+            only_update_body=only_update_body(),                # load header and footer?
+            errors=errors,                                      # form validation errors
+            form_values=form_values,                            # values for form input
+            possible_errors=possible_errors,                    # possible errors for form input
+            alert_info=request.params.get("alert-info") or None,# alert message
             )
     
     except Exception as ex:

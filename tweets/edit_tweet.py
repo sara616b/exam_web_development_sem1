@@ -22,6 +22,9 @@ def _(tweet_id):
         
         ##### user id of logged in user
         user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
+        if not user_id or is_uuid(user_id) == False:
+            redirect_path = "/home?alert-info=Trying to edit tweet failed. Please try again."
+            return
         
         ##### tweet id stays the same
         updated_tweet_data = {"tweet_id":tweet_id}

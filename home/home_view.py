@@ -13,24 +13,16 @@ def _():
         ##### logged in user's id
         user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
 
-        ##### get all users, tweets and posts data
-        users = get_all_users(user_id)
-        tweets = get_all_tweets(user_id)
-        posts = get_all_posts(user_id)
-
-        ##### alert info
-        alert_info = request.params.get("alert-info") or None
-
         ##### return view
         return dict(
-            user_id=user_id,                        # user who's logged in
-            users=users,                            # all users to display 'who to follow'
-            posts=posts,                            # all posts for feed
-            tweets=tweets,                          # all tweets for feed
-            url="/home",                            # url
-            title="Home",                           # title
-            only_update_body=only_update_body(),    # load header and footer?
-            alert_info=alert_info,                  # alert message if any
+            user_id=user_id,                                    # user who's logged in
+            users=get_all_users(user_id),                       # all users to display 'who to follow'
+            posts=get_all_posts(user_id),                       # all posts for feed
+            tweets=get_all_tweets(user_id),                     # all tweets for feed
+            url="/home",                                        # url
+            title="Home",                                       # title
+            only_update_body=only_update_body(),                # load header and footer?
+            alert_info=request.params.get("alert-info") or None,# alert message if any
             )
 
     except Exception as ex:

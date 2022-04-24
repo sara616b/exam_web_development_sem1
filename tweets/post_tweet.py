@@ -3,7 +3,7 @@ import uuid
 import jwt
 import time
 import sqlite3
-from common import get_file_path, check_the_image, validate_tweet_text, confirm_user_is_logged_in, JWT_KEY
+from common import get_file_path, check_the_image, is_uuid, validate_tweet_text, confirm_user_is_logged_in, JWT_KEY
 
 @post("/tweets/new")
 def _():
@@ -16,6 +16,9 @@ def _():
     try:
         ##### user id of logged in user
         user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
+        if not user_id or is_uuid(user_id) == False:
+            redirect_path = "/home?alert-info=Trying to post tweet failed. Please try again."
+            return
         
         ##### text - get and validate
         new_tweet_text, redirect_error_path = validate_tweet_text(request.forms.get("tweet_text"), "new")

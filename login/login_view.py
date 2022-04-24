@@ -9,8 +9,7 @@ def _():
         return redirect("/home", code=303)
 
     try:
-        ##### get form validation errors from query string
-        error = request.params.get("error")
+        ##### possible validation errors
         possible_errors = {
             "email": [
                 {
@@ -42,21 +41,15 @@ def _():
             ]
         }
 
-        ##### get email from params to set as value in input 
-        email = request.params.get("email")
-
-        ##### alert info
-        alert_info = request.params.get("alert-info") or None
-
         ##### return view
         return dict(
-            url="/login",                           # url
-            title="Log in",                         # title
-            only_update_body=only_update_body(),    # load header and footer?
-            error=error,                            # form input validation error
-            possible_errors=possible_errors,        # the possible errors that could be with the validation
-            email=email,                            # email to display in input
-            alert_info=alert_info,                  # alert message
+            url="/login",                                           # url
+            title="Log in",                                         # title
+            only_update_body=only_update_body(),                    # load header and footer?
+            error=request.params.get("error"),                      # form input validation error
+            possible_errors=possible_errors,                        # the possible errors that could be with the validation
+            email=request.params.get("email"),                      # email to display in input
+            alert_info=request.params.get("alert-info") or None,    # alert message
             )
 
     except Exception as ex:

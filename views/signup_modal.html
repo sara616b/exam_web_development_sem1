@@ -11,68 +11,63 @@
                 Sign up
             </h2>
             <form>
+
+                % # DISPLAY NAME INPUT
                 <label for="signup_display_name" data-to-be-validated="true">
                     Display name
-
 
                     % include('error_message_backend', name='display_name')
                     <span class="error_message error_span hidden">Display name <span></span></span>
 
-
-
                     <span class="extra"><br>This is the name that other users will see.</span>
                     <input type="text" name="signup_display_name" id="signup_display_name" placeholder="Name" data-min="1" data-max="100" data-required="true" data-no-special-characters="true" value="{{form_values['display_name']}}">
                 </label>
+
+                % # USERNAME INPUT
                 <label for="signup_username" data-to-be-validated="true">
                     Username
-
-
 
                     % include('error_message_backend', name='username')
                     <span class="error_message error_span hidden">Username <span></span></span>
 
-
-
                     <input type="text" name="signup_username" id="signup_username" placeholder="Username" data-min="1" data-max="100" data-required="true" data-no-spaces="true" data-no-special-characters="true" value="{{form_values['username']}}">
                 </label>
+
+                % # EMAIL INPUT
                 <label for="signup_email" data-to-be-validated="true">
                     E-mail
-
-
 
                     % include('error_message_backend', name='email')
                     <span class="error_message error_span hidden">Email <span></span></span>
 
-
-
                     <input type="text" name="signup_email" id="signup_email" placeholder="a@a.com" data-email="true" data-required="true" value="{{form_values['email']}}">
                 </label>
+
+                % # PASSWORD INPUT
                 <label for="signup_password" data-to-be-validated="true">
                     Password
-
-
 
                     % include('error_message_backend', name='password')
                     <span class="error_message error_span hidden">Password <span></span></span>
 
-
-
                     <input type="password" name="signup_password" id="signup_password" placeholder="***" data-required="true" data-min="3">
                 </label>
+
+                % # REPEAT PASSWORD INPUT
                 <label for="signup_password_repeat" data-to-be-validated="true">
                     Repeat password
-
 
                     % if get("errors")['passwords_different'] != 'none':
                     <span class="error_message error_back">Passwords don't match</span>
                     % end
                     <span class="error_message error_span hidden">Repeated password <span></span></span>
 
-
-
                     <input type="password" name="signup_password_repeat" id="signup_password_repeat" placeholder="***" data-required="true" data-min="3">
                 </label>
+
+                % # SUBMIT BUTTON
                 <input class="button color" type="submit" value="Sign up" onclick="sign_up(event)" data-text="Sign up" data-text-processing="Signing up...">
+
             </form>
             <button class="link" onclick="spa('/login', true, event);">
                 Already have an account? Log in here!

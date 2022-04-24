@@ -9,15 +9,12 @@ def _():
         return redirect("/home", code=303)
 
     try:
-        ##### alert info that may come with the query string
-        alert_info = request.params.get("alert-info") or None
-
         ##### return view
         return dict(
-            url="/",                                # url
-            title="Buzzer",                         # title
-            only_update_body=only_update_body(),    # load header and footer?
-            alert_info=alert_info,                  # alert message that may be None
+            url="/",                                            # url
+            title="Buzzer",                                     # title
+            only_update_body=only_update_body(),                # load header and footer?
+            alert_info=request.params.get("alert-info") or None,# alert message that may be None
             )
 
     except Exception as ex:

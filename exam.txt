@@ -80,23 +80,3 @@ Use regular expressions when needed
 
 
 SASS: sass --watch style.scss style.css
-
-
-
-
-FILES CHECKED
-- common
-- app
-- admin
-- index
-- home
-- login
-- signup
-- tweets
-- users
-- js
-
-TODO
-- views
-- style
-

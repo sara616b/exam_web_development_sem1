@@ -5,20 +5,13 @@ from common import get_all_tweets, get_all_users
 @view("admin.html")
 def _():
     try:
-        ##### get all tweets and users data
-        tweets = get_all_tweets(None)
-        users = get_all_users(None)
-
-        ##### alert info
-        alert_info = request.params.get("alert-info") or None
-
         ##### return view
         return dict(
-            tweets=tweets,          # all tweets
-            users=users,            # all users
-            url="/admin",           # url
-            title="Admin Board",    # title
-            alert_info=alert_info   # alert message
+            tweets=get_all_tweets(None),                        # all tweets
+            users=get_all_users(None),                          # all users
+            url="/admin",                                       # url
+            title="Admin Board",                                # title
+            alert_info=request.params.get("alert-info") or None # alert message
             )
 
     except Exception as ex:

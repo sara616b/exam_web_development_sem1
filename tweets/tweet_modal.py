@@ -41,6 +41,9 @@ def _(tweet_id):
 
         ##### get user id
         user_id = jwt.decode(request.get_cookie("jwt", secret="secret"), JWT_KEY, algorithms=["HS256"])["user_id"]
+        if not user_id or is_uuid(user_id) == False:
+            redirect_path = "/home?alert-info=Trying to open tweet modal failed. Please try again."
+            return
 
         ##### get all users data and all tweets data
         users = get_all_users(user_id)
