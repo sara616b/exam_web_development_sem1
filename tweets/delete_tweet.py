@@ -4,7 +4,7 @@ from common import delete_tweet, confirm_user_is_logged_in, is_uuid
 @delete("/tweets/delete/<tweet_id>")
 def _(tweet_id):
     
-    ##### the user needs to be logged in to access this page
+    ##### the user needs to be logged in to delete tweet
     if not confirm_user_is_logged_in():
         return redirect("/login?alert-info=You're not logged in.", code=303)
   

@@ -14,7 +14,7 @@ def _():
             url="/",                                            # url
             title="Buzzer",                                     # title
             only_update_body=only_update_body(),                # load header and footer?
-            alert_info=request.params.get("alert-info") or None,# alert message that may be None
+            alert_info=request.params.get("alert-info") or None,# alert message if any
             )
 
     except Exception as ex:

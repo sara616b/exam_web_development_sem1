@@ -13,7 +13,7 @@
                 % include('error_message_backend', name='display_name')
                 <span class="error_message error_span hidden">Display name <span></span></span>
 
-                <input type="text" name="user_display_name" id="user_display_name" placeholder="Name" data-min="1" data-max="100" data-required="true" data-no-special-characters="true" value="{{form_values['user_display_name'] or user_to_edit['user_display_name']}}">
+                <input type="text" name="user_display_name" id="user_display_name" placeholder="Name" data-min="1" data-max="100" data-required="true" value="{{form_values['user_display_name'] or user_to_edit['user_display_name']}}">
             </label>
 
             % # USERNAME INPUT

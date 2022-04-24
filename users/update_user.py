@@ -1,5 +1,4 @@
 from bottle import redirect, request, put, response
-import time
 import sqlite3
 import os
 import jwt
@@ -81,13 +80,12 @@ def _(user_id):
             updated_user_data["user_display_name"] = display_name
         if username and username != current_user_data[1]:
             updated_user_data["user_username"] = username
-        if user_header_color != current_user_data[3]:
+        if user_header_color and user_header_color != current_user_data[3]:
             updated_user_data["user_profile_header"] = user_header_color
 
         ##### image - remove, add new
         current_image = current_user_data[2]
         new_image_name = request.forms.get("image_name")
-        # updated_user_data["user_profile_image"] = ''
         ##### if there's no image or the image name isn't the same as the current image name, delete current image
         if new_image_name and current_image != "NULL" and current_image != '':
             if os.path.exists(f"{get_file_path()}/static/images/profiles/{current_image}"):
@@ -114,6 +112,7 @@ def _(user_id):
 
             ##### build query string with errors and return
             error_string = f'{"=error&".join(errors)}=error'
+
             redirect_path = f"/edit/{user_id}?{error_string}{form_input_string.replace('#', '%23')}"
             return
 
@@ -143,7 +142,8 @@ def _(user_id):
     except Exception as ex:
         print("Exception: " + str(ex))
         response.status = 500
-        return redirect("/home?alert-info=Editing user failed. Please try again.")
+        redirect_path = "/home?alert-info=Editing user failed. Please try again."
+        return
 
     finally:
         if db != None:

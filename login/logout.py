@@ -8,6 +8,7 @@ def _():
     if not confirm_user_is_logged_in():
         return redirect("/login", code=303)
 
+    db = None
     try:
         ##### get session from cookie
         session_id = request.get_cookie("jwt", secret="secret")

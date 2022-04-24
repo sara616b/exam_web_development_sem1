@@ -73,7 +73,7 @@ def _():
             ]
         }
 
-        ##### possible errors in list
+        ##### list of possible errors 
         possible_errors_list = []
         for value in possible_errors:
             for error_dict in possible_errors[value]:
@@ -82,7 +82,7 @@ def _():
         ##### get errors from query string
         errors = {}
         for error in possible_errors_list:
-            errors[error] = request.params.get(error.replace("_", "-")) if request.params.get(error.replace("_", "-")) else 'none'
+            errors[error] = request.params.get(error.replace("_", "-")) if request.params.get(error.replace("_", "-")) else 'None'
 
         ##### get values for form from query string
         form_values = {}

@@ -1,4 +1,4 @@
-<form method="post" action="/tweets/{{get('tweet_id', 'new')}}" enctype="multipart/form-data" id="tweet_form">
+<form enctype="multipart/form-data" id="tweet_form">
     <section id="profile_icon_container">
         % # GET CORRECT USER IMAGE
         % user_image = [user for user in users if user_id == user['user_id']][0]['user_profile_image']

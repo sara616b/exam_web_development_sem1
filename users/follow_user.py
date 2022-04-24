@@ -5,7 +5,7 @@ from common import get_file_path, confirm_user_is_logged_in, is_uuid, JWT_KEY
 
 @post("/users/follow/<user_id_to_follow>")
 def _(user_id_to_follow):
-    ##### the user needs to be logged in to access this page else redirect to login
+    ##### the user needs to be logged in to follow a user
     if not confirm_user_is_logged_in():
         return redirect("/login?alert-info=You're not logged in.", code=303)
 
@@ -35,7 +35,7 @@ def _(user_id_to_follow):
             VALUES(
                 :fk_user_id_follower,
                 :fk_user_id_to_follow)
-            """, (str(user_id), str(user_id_to_follow))).rowcount
+                """, (str(user_id), str(user_id_to_follow))).rowcount
         
         ##### if no row or more than one row was affected, return error
         if counter != 1:
@@ -43,7 +43,6 @@ def _(user_id_to_follow):
             return
 
         db.commit()
-
         return
 
     except Exception as ex:

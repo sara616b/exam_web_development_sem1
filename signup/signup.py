@@ -87,7 +87,7 @@ def _():
             ##### build query string with errors
             error_string = f'{"=error&".join(errors)}=error'
 
-            ##### add form inputs to query string
+            ##### build query string with form inputs 
             form_input_string = ''
             for value in form_inputs:
                 form_input_string += f"&{value}={form_inputs[value]}"
@@ -127,7 +127,7 @@ def _():
                 '',
                 '',
                 :user_is_verified)
-            """, new_user).rowcount
+                """, new_user).rowcount
 
         ##### if no row or more than one row was affected, return error
         if counter != 1:
@@ -195,4 +195,3 @@ def _():
             db.close()
         if redirect_path != None:
             return redirect(redirect_path)
-

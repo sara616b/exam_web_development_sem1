@@ -31,12 +31,11 @@ def _(username):
         ##### return view
         return dict(
             user_id=user_id,                                            # user who's logged in
-            users=get_all_users(user_id),                                                # all users to display 'who to follow'
+            users=get_all_users(user_id),                               # all users to display 'who to follow'
             posts=get_all_posts(user_id, user_to_display["user_id"]),   # all posts from the user to display
             tweets=get_all_tweets(user_id),                             # all tweets 
             url=f"/users/{username}",                                   # url
             title=f"@{username}",                                       # title
-            modal=None,                                                 # what modal is open
             only_update_body=only_update_body(),                        # load header and footer?
             user_to_display=user_to_display,                            # the user whose info we're viewing
             )

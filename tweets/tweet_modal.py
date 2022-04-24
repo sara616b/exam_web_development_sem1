@@ -45,7 +45,7 @@ def _(tweet_id):
             redirect_path = "/home?alert-info=Trying to open tweet modal failed. Please try again."
             return
 
-        ##### get all users data and all tweets data
+        ##### get all users, tweets and posts data
         users = get_all_users(user_id)
         tweets = get_all_tweets(user_id)
         posts = get_all_posts(user_id)
@@ -76,18 +76,6 @@ def _(tweet_id):
             ###### connect to database
             db = sqlite3.connect(f"{get_file_path()}/database/database.db")
 
-            ##### check that the tweet belongs to the user logged in
-            tweet_and_user_id_match = len(db.execute(f"""
-                SELECT *
-                FROM tweets
-                WHERE tweet_id == :tweet_id AND tweet_user_id == :user_id
-                """, (tweet_id, user_id)).fetchall())
-            if tweet_and_user_id_match != 1:
-                redirect_path = "/home?alert-info=Tweet doesn't exist or isn't yours"
-                return
-
-            tweet_to_edit = {}
-
             # get tweet info from database
             tweet = db.execute("""
                 SELECT tweet_text, tweet_image
@@ -99,6 +87,18 @@ def _(tweet_id):
             if not tweet:
                 redirect_path = "/home?alert-info=Tweet not found."
                 return
+
+            ##### check that the tweet belongs to the user logged in
+            tweet_and_user_id_match = len(db.execute(f"""
+                SELECT *
+                FROM tweets
+                WHERE tweet_id == :tweet_id AND tweet_user_id == :user_id
+                """, (tweet_id, user_id)).fetchall())
+            if tweet_and_user_id_match != 1:
+                redirect_path = "/home?alert-info=Tweet isn't yours."
+                return
+
+            tweet_to_edit = {}
 
             # if tweet is found, set info that's needed to display the editing inputs
             tweet_to_edit = {

@@ -8,7 +8,7 @@ from common import get_file_path, validate_tweet_text, check_the_image, confirm_
 @put("/tweets/<tweet_id>")
 def _(tweet_id):
         
-    ##### the user needs to be logged in to access this page
+    ##### the user needs to be logged in to edit a tweet
     if not confirm_user_is_logged_in():
         return redirect("/login?alert-info=You're not logged in.", code=303)
 
@@ -25,9 +25,6 @@ def _(tweet_id):
         if not user_id or is_uuid(user_id) == False:
             redirect_path = "/home?alert-info=Trying to edit tweet failed. Please try again."
             return
-        
-        ##### tweet id stays the same
-        updated_tweet_data = {"tweet_id":tweet_id}
 
         ##### connect database
         db = sqlite3.connect(f"{get_file_path()}/database/database.db")
@@ -41,6 +38,9 @@ def _(tweet_id):
         if tweet_and_user_id_match != 1:
             redirect_path = "/home?alert-info=Tweet doesn't exsist or isn't yours."
             return
+
+        ##### tweet id stays the same
+        updated_tweet_data = {"tweet_id":tweet_id}
 
         ##### tweet text - get + if found, validate and add to update values
         tweet_text = request.forms.get("tweet_text")
@@ -68,7 +68,7 @@ def _(tweet_id):
                 if os.path.exists(f"{get_file_path()}/static/images/tweets/{current_image}"):
                     os.remove(f"{get_file_path()}/static/images/tweets/{current_image}")
             updated_tweet_data["tweet_image"] = ''
-            
+
             ##### check if there's an image in request.files and if so, validate it 
             redirect_image_error, new_image_name = check_the_image(request.files.get("tweet_image"), "tweets")
             if redirect_image_error:
@@ -102,7 +102,6 @@ def _(tweet_id):
             return
 
         db.commit()
-
         return
 
     except Exception as ex:

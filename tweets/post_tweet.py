@@ -7,7 +7,7 @@ from common import get_file_path, check_the_image, is_uuid, validate_tweet_text,
 
 @post("/tweets/new")
 def _():
-    ##### the user needs to be logged in to access this page
+    ##### the user needs to be logged in to post a tweet
     if not confirm_user_is_logged_in():
         return redirect("/login?alert-info=You're not logged in.", code=303)
 
@@ -25,7 +25,6 @@ def _():
         if redirect_error_path:
             redirect_path = redirect_error_path
             return
-        new_tweet_text = new_tweet_text
 
         ##### check if there's an image in request.files and if so, validate it 
         redirect_image_error, image_name = check_the_image(request.files.get("tweet_image"), "tweets")
@@ -33,7 +32,7 @@ def _():
             redirect_path = f"/tweets/new{redirect_image_error}&text={new_tweet_text}"
             return
 
-        ##### append new tweet with values
+        ##### create dictionary for new tweet
         new_tweet = {
             "tweet_id": str(uuid.uuid4()),
             "tweet_text": new_tweet_text,
@@ -56,11 +55,11 @@ def _():
                 :tweet_updated_at,
                 :tweet_image,
                 :tweet_user_id)
-            """, new_tweet).rowcount
+                """, new_tweet).rowcount
         
         ##### check that 1 and only 1 tweet was inserted
         if counter != 1:
-            redirect_path = "/home?alert-info=Couldn't like tweet. Please try again."
+            redirect_path = "/home?alert-info=Trying to post tweet failed. Please try again."
             return
 
         db.commit()

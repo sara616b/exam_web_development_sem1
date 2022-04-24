@@ -43,7 +43,6 @@ def _(user_id_to_follow):
             return
 
         db.commit()
-            
         return
 
     except Exception as ex:

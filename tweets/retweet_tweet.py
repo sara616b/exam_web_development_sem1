@@ -36,15 +36,14 @@ def _(tweet_id):
                 :user_id,
                 :tweet_id,
                 :retweeted_at)
-            """, (str(uuid.uuid4()), str(user_id), str(tweet_id), str(time.time()).split('.')[0])).rowcount
-        
+                """, (str(uuid.uuid4()), str(user_id), str(tweet_id), str(time.time()).split('.')[0])).rowcount
+
         ##### check that 1 and only 1 retweet was inserted
         if counter != 1:
             redirect_path = "/home?alert-info=Couldn't retweet tweet. Please try again."
             return
 
         db.commit()
-
         return
 
     except Exception as ex:

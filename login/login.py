@@ -60,18 +60,18 @@ def _():
 
         ##### set session in cookie
         response.set_cookie("jwt", session_id, secret="secret")
+
         return
 
     except Exception as ex:
         print("Exception: " + str(ex))
         response.status = 500
-        redirect_path = "/login?alert-info=Sorry, an error occured. Please try again."
         return
 
     finally:
         if db != None:
             db.close()
 
-        ##### redirect with query string (errors and email)
         if redirect_path != None:
+            ##### redirect with query string (errors and email)
             return redirect(redirect_path)

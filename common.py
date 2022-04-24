@@ -401,7 +401,7 @@ def check_the_image(image_file, type):
     except Exception as ex:
         print("Exception: " + str(ex))
         response.status = 500
-        return
+        return None, None
 
 ##### validate tweet text - returns the text and a redirection path if an error is found
 def validate_tweet_text(tweet_text, tweet_id):

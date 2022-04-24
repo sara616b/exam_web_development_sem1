@@ -82,7 +82,6 @@ const is_it_valid = (form) => {
       ) {
         show_error("isn't a valid hex color code");
       }
-
       //      email -- data-email="true"
       else if (
         input.dataset.email &&

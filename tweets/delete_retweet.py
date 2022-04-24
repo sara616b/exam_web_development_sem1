@@ -3,7 +3,7 @@ from common import delete_retweet, confirm_user_is_logged_in, is_uuid
 
 @delete("/retweets/delete/<retweet_id>")
 def _(retweet_id):
-    ##### the user needs to be logged in to access this page
+    ##### the user needs to be logged in to delete retweet
     if not confirm_user_is_logged_in():
         return redirect("/login?alert-info=You're not logged in.", code=303)
 
@@ -11,7 +11,6 @@ def _(retweet_id):
     try:
         ##### check whether the id is a uuid4
         if is_uuid(retweet_id) == False:
-            response.status = 400
             redirect_path = "/home?alert-info=Trying to delete the retweet failed. Please try again."
             return
 

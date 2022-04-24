@@ -111,6 +111,7 @@ def _(user_id):
 
         #############################
         ##### the modal is displayed on top of the user profile, so get the data that's nessesary to display the user view
+        #############################
 
         ###### specify user profile to display
         user_to_display, error_redirect_path = get_one_user(user_to_edit["user_username"].lower(), user_id)
@@ -121,19 +122,18 @@ def _(user_id):
         ##### return view
         return dict(
             user_id=user_id,                                            # user who's logged in
-            users=get_all_users(user_id),                                                # all users to display 'who to follow'
+            users=get_all_users(user_id),                               # all users to display 'who to follow'
             posts=get_all_posts(user_id, user_to_display["user_id"]),   # all posts from the user to display
             tweets=get_all_tweets(user_id),                             # all tweets 
             url=f"/edit/{user_id}",                                     # url
             title=f"Edit user",                                         # title
-            modal='user',                                               # what modal is open
             only_update_body=only_update_body(),                        # load header and footer?
-            user_to_display=user_to_display,                            # the user whose info we're viewing
+            user_to_display=user_to_display,                            # the user whose info we're viewing, user to display behind modal
             user_to_edit=user_to_edit,                                  # user to edit
-            user_displayed_username=user_to_display['user_username'],
+            user_displayed_username=user_to_display['user_username'],   # user to display behind modal's username
             possible_errors=possible_errors,                            # possible errors for form input
-            errors=errors,
-            form_values=form_values
+            errors=errors,                                              # validation errors
+            form_values=form_values                                     # form values
             )
 
     except Exception as ex:

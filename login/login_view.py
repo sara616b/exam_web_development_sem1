@@ -47,9 +47,9 @@ def _():
             title="Log in",                                         # title
             only_update_body=only_update_body(),                    # load header and footer?
             error=request.params.get("error"),                      # form input validation error
-            possible_errors=possible_errors,                        # the possible errors that could be with the validation
+            possible_errors=possible_errors,                        # the possible validation errors
             email=request.params.get("email"),                      # email to display in input
-            alert_info=request.params.get("alert-info") or None,    # alert message
+            alert_info=request.params.get("alert-info") or None,    # alert message if any
             )
 
     except Exception as ex:

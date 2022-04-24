@@ -5,7 +5,7 @@ from common import get_file_path, confirm_user_is_logged_in, is_uuid, JWT_KEY
 
 @post("/tweets/like/<tweet_id>")
 def _(tweet_id):
-    ##### the user needs to be logged in to access this page
+    ##### the user needs to be logged in to like a tweet
     if not confirm_user_is_logged_in():
         return redirect("/login?alert-info=You're not logged in.", code=303)
 
@@ -40,7 +40,6 @@ def _(tweet_id):
             return
 
         db.commit()
-
         return
 
     except Exception as ex:

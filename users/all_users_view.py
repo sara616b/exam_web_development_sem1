@@ -5,7 +5,7 @@ from common import only_update_body, get_all_users, confirm_user_is_logged_in, i
 @get("/users")
 @view("all_users.html")
 def _():
-    ##### the user needs to be logged in to access this page else redirect to login page
+    ##### the user needs to be logged in to access this page
     if not confirm_user_is_logged_in():
         return redirect("/login?alert-info=You're not logged in.", code=303)
 
